@@ -1,33 +1,42 @@
-import {onRequest} from "firebase-functions/v2/https";
-import * as admin from "firebase-admin";
+import express from "express";
+import admin from "firebase-admin";
 
+const router = express.Router();
 const db = admin.firestore();
 
-export const submitReport = onRequest(async (req, res) => {
-  if (req.method !== "POST") {
-    res.status(405).send("Method Not Allowed");
-    return;
-  }
-
+router.post("/", async (req, res) => {
   try {
-    const {type, message, location, mediaUrl} = req.body;
+    const { description, mediaUrl, location, place } = req.body;
 
-    if (!type || !message || !location?.lat || !location?.lng) {
-      res.status(400).send({error: "Missing required fields"});
-      return;
+    if (!description || !mediaUrl || !location || !place) {
+      return res.status(400).json({ error: "All fields are required." });
     }
 
-    const docRef = await db.collection("reports").add({
-      type,
-      message,
-      location,
-      mediaUrl: mediaUrl || null,
-      status: "pending",
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
+    if (
+      typeof location.latitude !== "number" ||
+      typeof location.longitude !== "number"
+    ) {
+      return res.status(400).json({ error: "Invalid location coordinates." });
+    }
 
-    res.status(200).send({success: true, id: docRef.id});
-  } catch (err) {
-    res.status(500).send({error: "Error submitting report"});
+    const report = {
+      description,
+      mediaUrl,
+      location: {
+        latitude: location.latitude,
+        longitude: location.longitude,
+      },
+      place,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const docRef = await db.collection("user_reports").add(report);
+
+    res.status(201).json({ message: "Report submitted", id: docRef.id });
+  } catch (error) {
+    console.error("Error submitting report:", error);
+    res.status(500).json({ error: "Failed to submit report" });
   }
 });
+
+export default router;
