@@ -1,0 +1,11 @@
+fastapi
+pydantic
+google-adk
+google-genai
+praw
+python-dotenv
+uvicorn
+firebase-admin
+google-cloud-firestore
+requests
+httpx

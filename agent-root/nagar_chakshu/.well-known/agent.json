@@ -1,0 +1,12 @@
+{
+  "name": "Nagar Chakshu Agent",
+  "description": "An agent which will give you the intelligent view of your city",
+  "endpoints": ["run"],
+  "version": "1.0.0",
+  "capabilities": ["data_fusing"],
+  "input_format": "application/json",
+  "output_format": "application/json",
+  "dependencies": [],
+  "author": "Ambuj Kulshrestha",
+  "documentation": ""
+}
