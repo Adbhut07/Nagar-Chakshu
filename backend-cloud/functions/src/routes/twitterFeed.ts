@@ -1,7 +1,7 @@
 import express from "express";
 import admin from "firebase-admin";
 
-const router = express.Router();
+const router = express.Router(); 
 const db = admin.firestore();
 
 router.get("/", async (req, res) => {
