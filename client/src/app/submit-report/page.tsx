@@ -9,15 +9,23 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { UploadCloud } from 'lucide-react';
 import { uploadFile } from "@/lib/uploadMedia";
+import { testFirebaseConnection } from "@/lib/firebase";
+import { debugFirebaseStorage, getStorageInfo } from "@/lib/debug";
 
 export default function SubmitReport() {
   const [description, setDescription] = useState('');
   const [mediaUrl, setMediaUrl] = useState('');
+  const [fileName, setFileName] = useState('');
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [place, setPlace] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Test Firebase connection and debug info
+    getStorageInfo();
+    testFirebaseConnection();
+    debugFirebaseStorage();
+    
     // Fetch user location on mount
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -41,12 +49,15 @@ export default function SubmitReport() {
   
     try {
       setLoading(true);
+      toast.loading('Uploading file...', { id: 'file-upload' });
       const uploadedUrl = await uploadFile(file); 
-      setMediaUrl(uploadedUrl); 
-      toast.success('File uploaded successfully!');
+      setMediaUrl(uploadedUrl);
+      setFileName(file.name);
+      toast.success('File uploaded successfully!', { id: 'file-upload' });
     } catch (error) {
-      toast.error('Failed to upload file');
-      console.error(error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to upload file';
+      toast.error(errorMessage, { id: 'file-upload' });
+      console.error('Upload error:', error);
     } finally {
       setLoading(false);
     }
@@ -71,6 +82,7 @@ export default function SubmitReport() {
       toast.success('Report submitted successfully!');
       setDescription('');
       setMediaUrl('');
+      setFileName('');
       setLocation({ latitude: 0, longitude: 0 });
       setPlace('');
     } catch (error) {
@@ -111,8 +123,11 @@ export default function SubmitReport() {
             <p className="text-xs mt-1">Max 1 file, up to 10MB</p>
             <Input type="file" accept="image/*,video/*" onChange={handleUpload} className="hidden" />
           </label>
-          {mediaUrl && (
-            <div className="mt-2 text-green-500 text-sm">File selected ✓</div>
+          {mediaUrl && fileName && (
+            <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-lg">
+              <div className="text-green-700 text-sm font-medium">✓ File uploaded successfully</div>
+              <div className="text-green-600 text-xs">{fileName}</div>
+            </div>
           )}
         </div>
 
