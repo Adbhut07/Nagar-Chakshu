@@ -17,8 +17,6 @@ class TaskManager:
     """Task Manager for the Reddit Scout App in A2A mode."""
 
     def __init__(self, agent: Agent):
-        """Initialize with an Agent instance and set up ADK Runner."""
-        logger.info(f"Initializing TaskManager for agent: {agent.name}")
         self.agent = agent
 
         # Initialize ADK services
@@ -32,7 +30,6 @@ class TaskManager:
             session_service=self.session_service,
             artifact_service=self.artifact_service
         )
-        logger.info(f"ADK Runner initialized for app '{self.runner.app_name}'")
 
     async def process_task(self, message: str, context: Dict[str, Any], session_id: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -70,11 +67,15 @@ class TaskManager:
             raw_events = []
             async for event in events_async:
                 raw_events.append(event.model_dump(exclude_none=True))
+                
+            # Final response
+            final_raw_event = raw_events[len(raw_events) - 1] if raw_events else {}
+            final_response = final_raw_event['content']['parts'][0]['text'] if 'content' in final_raw_event else "No response generated"
 
             return {
                 "message": f"{len(raw_events)} events processed",
                 "status": "success",
-                "raw_events": raw_events
+                "final_response": final_response,
             }
 
         except Exception as e:

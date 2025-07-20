@@ -15,7 +15,7 @@ class AgentRequest(BaseModel):
 
 class AgentResponse(BaseModel):
     """Standard A2A agent response format."""
-    data: Dict[str, Any] = Field(default_factory=dict, description="Response data from the agent")
+    data: Dict[str, Any] = Field(..., description="Response data containing message, status, and final response")
 
 def create_agent_server(
     name: str, 
@@ -59,13 +59,19 @@ def create_agent_server(
         """Run the agent task."""
         try:
             result = await task_manager.process_task(request.message, request.context, request.session_id)
-            return AgentResponse(data=result)
+            return AgentResponse(
+                data = {
+                    "message": result.get("message", "Task processed successfully"),
+                    "status": result.get("status", "success"),
+                    "final_response": result.get("final_response", "")
+                }
+            )
         except Exception as e:
             return AgentResponse(
-                data={
+                data = {
                     "message": f"Error processing request: {str(e)}",
                     "status": "error",
-                    "error_type": type(e).__name__
+                    "final_response": "None"
                 }
             )
 
