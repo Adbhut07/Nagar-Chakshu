@@ -17,7 +17,7 @@ source venv/Scripts/activate
 ```firebase-adminsdk-key.json```
 
 ### Start the agent
-```python -m nagarchakshu```
+```python -m nagar_chakshu```
 
 ### Endpoint
 
