@@ -22,8 +22,8 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
       
       // Not authenticated - redirect to sign in
       if (!user) {
-        if (currentPath !== '/signin') {
-          router.push('/signin');
+        if (currentPath !== '/signIn') {
+          router.push('/signIn');
         }
         return;
       }
@@ -39,7 +39,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
       // User is authenticated and registered
       if (user && isUserRegistered) {
         // Redirect away from auth pages
-        if (currentPath === '/signin' || currentPath === '/register') {
+        if (currentPath === '/signIn' || currentPath === '/register') {
           router.push('/dashboard');
           return;
         }
@@ -65,7 +65,6 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
     );
   }
 
-  // Show redirecting message while navigation is happening
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
