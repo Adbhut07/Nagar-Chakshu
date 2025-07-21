@@ -5,6 +5,7 @@ import "../styles/globals.css";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { ThemeProvider } from "next-themes";
+import { AuthProvider } from '../contexts/AuthContext';
 import { Toaster } from "sonner";
 
 const geistSans = Geist({
@@ -34,9 +35,11 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
+          <AuthProvider>
           <main className="flex-grow container mx-auto px-4 py-6">
             {children}
           </main>
+          </AuthProvider>
           <Footer />
           <Toaster />
         </ThemeProvider>
