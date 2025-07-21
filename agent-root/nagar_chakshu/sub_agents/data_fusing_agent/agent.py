@@ -250,7 +250,7 @@ class DataFusingService:
             
             self.raw_data = self._process_raw_data(data, api_endpoint)
             
-            print(f"Fetched data: {self.raw_data}")
+            print(f"Fetched data")
             
             return {
                 "status": "success",
@@ -272,26 +272,21 @@ class DataFusingService:
             error_msg = f"Unhandled error during API request: {str(e)}"
             logger.error(error_msg)
             return {"error": error_msg}
-        
-    @staticmethod 
-    def normalize_coordinates(item: Dict[str, Any]) -> Dict[str, float] | None:
+         
+    def normalize_coordinates(self,item: Dict[str, Any]) -> Dict[str, float] | None:
         """
-        Extract and normalize coordinates from a nested 'coordinates' field.
-        Expected structure:
-        {
-            "coordinates": {
-                "lat": <latitude as float>,
-                "lng": <longitude as float>
-            }
-        }
+        Extract coordinates from item
         """
         coords = item.get("coordinates")
-        if isinstance(coords, dict):
-            lat = coords.get("lat") or coords.get("latitude")
-            lng = coords.get("lng") or coords.get("lng") or coords.get("longitude")
-            if lat is not None and lng is not None:
-                return {'lat': float(lat), 'lng': float(lng)}
-        return None
+        if not coords:
+            return {
+                'lat': 0.0,
+                'lng': 0.0
+            }
+        return {
+            'lat':coords[0],
+            'lng':coords[1]
+        }
     
     
     def _process_raw_data(
@@ -302,37 +297,31 @@ class DataFusingService:
         """Process raw data items with metadata, detecting city from coordinates"""
         processed_data = []
         current_time = datetime.now().isoformat()
+        
+
 
         for item in data:
-            if isinstance(item, dict):
-                processed_item = item.copy()
+            processed_item = item.copy()
 
-                # Normalize coordinates first
-                coords = DataFusingService.normalize_coordinates(processed_item)
-                if coords:
-                    processed_item['coordinates'] = coords
+            # Normalize coordinates first
+            coords = self.normalize_coordinates(processed_item)
 
-                    # Find city name based on coordinates
-                    city_name = self._get_city_from_coordinates(coords)
-                else:
-                    # Fallback if no coordinates available
-                    city_name = "Unknown"
+            if coords:
+                processed_item['coordinates'] = coords
 
-                processed_item.update({
-                    'fetched_at': current_time,
-                    'source_city': city_name,
-                    'api_endpoint': api_endpoint
-                })
-
-                processed_data.append(processed_item)
+                # Find city name based on coordinates
+                city_name = self._get_city_from_coordinates(coords)
             else:
-                # For non-dict items, we can't extract coordinates
-                processed_data.append({
-                    'data': item,
-                    'fetched_at': current_time,
-                    'source_city': "Unknown",
-                    'api_endpoint': api_endpoint
-                })
+                # Fallback if no coordinates available
+                city_name = "Unknown"
+
+            processed_item.update({
+                'fetched_at': current_time,
+                'source_city': city_name,
+                'api_endpoint': api_endpoint
+            })
+
+            processed_data.append(processed_item)
 
         return processed_data
 
@@ -367,6 +356,8 @@ class DataFusingService:
             }
 
             response = requests.get(url, params=params, timeout=5)
+            
+            
             if response.status_code == 200:
                 results = response.json().get("results", [])
                 for result in results:

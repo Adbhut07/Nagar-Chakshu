@@ -22,6 +22,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+logging.disable(logging.CRITICAL)
+
+
 # Load environment variables
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
 load_status = load_dotenv(dotenv_path=dotenv_path, override=True) # Use override just in case
