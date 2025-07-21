@@ -12,7 +12,7 @@ import requests
 import dotenv
 from dotenv import load_dotenv
 from typing import List, Dict, Tuple
-from .util import KEYWORDS, is_within_radius, CATEGORY_VALIDITY_DURATION
+from ..util import KEYWORDS, CATEGORY_VALIDITY_DURATION
 import random
 from datetime import datetime, timedelta
 
@@ -229,7 +229,7 @@ class DataFusingService:
         self.firebase_manager = FirebaseManager()
         self.base_api_url = os.getenv("BASE_API_URL", "https://your-api-domain.com")
         self.raw_data: List[Dict[str, Any]] = []
-        self.summaries: List[Dict[str, Any]] = []
+        self.processed_data: List[Dict[str, Any]] = []
     
     
     
@@ -240,7 +240,7 @@ class DataFusingService:
         Returns:
             dict: Result with data or error information
         """
-        api_endpoint = f"{self.base_api_url}/api/twitter-feed/twitter-feed"
+        api_endpoint = f"{self.base_api_url}/api/twitter-feed"
         take_data = 5  # Number of random items to select
         
         try:
@@ -449,13 +449,13 @@ class DataFusingService:
             return {"error": "No raw data available to analyze. Please fetch data first."}
         
         try:
-            self.summaries = []
+            self.processed_data = []
             
             for idx, data_item in enumerate(self.raw_data):
                 try:
-                    summary = self._analyze_data_item(data_item, idx)
-                    if summary:
-                        self.summaries.append(summary)
+                    data = self._analyze_data_item(data_item, idx)
+                    if data:
+                        self.processed_data.append(data)
                         
                 except Exception as item_error:
                     logger.error(f"Error analyzing item {idx}: {str(item_error)}")
@@ -463,9 +463,9 @@ class DataFusingService:
             
             return {
                 "status": "success",
-                "analyzed_count": len(self.summaries),
+                "analyzed_count": len(self.processed_data),
                 "total_items": len(self.raw_data),
-                "message": f"Successfully analyzed {len(self.summaries)} items"
+                "message": f"Successfully analyzed {len(self.processed_data)} items"
             }
             
         except Exception as e:
@@ -482,7 +482,7 @@ class DataFusingService:
         return datetime.now() + max(durations, default=timedelta(hours=1))
     
     def _analyze_data_item(self, data_item: Dict[str, Any], idx: int) -> Optional[Dict[str, Any]]:
-        """Analyze a single data item and create summary"""
+        """Analyze a single data item """
         if not isinstance(data_item, dict):
             return None
         
@@ -506,42 +506,18 @@ class DataFusingService:
             "source_id": data_item.get("id", f"unknown_{idx}"),
             "source_city": data_item.get("source_city", location),
             "image_url": data_item.get("image_url"),
-            "occurrences":1,
-            "votes":0
         }
     
-    def get_duplicate_doc_id(self,new_summary, existing_docs) -> str | None:
-        
-        new_categories = set(new_summary.get("categories", []))
-        new_coords = new_summary.get("coordinates", {})
-        new_lat = new_coords.get("lat", 0)
-        new_lng = new_coords.get("lng", 0)
 
-
-        for doc_id, doc in existing_docs.items():
-            existing_categories = set(doc.get("categories", []))
-            doc_coords = doc.get("coordinates", {})
-            doc_lat = doc_coords.get("lat", 0)
-            doc_lng = doc_coords.get("lng", 0)
-            
-            print()
-
-            if new_categories & existing_categories:
-                if is_within_radius(doc_lat, doc_lng, new_lat, new_lng, radius_meters=100):
-                    return doc_id  
-
-        return None
-    
-
-    def store_summary(self) -> Dict[str, Any]:
+    def store_processed_data(self) -> Dict[str, Any]:
         """
-        Tool 4: Store analyzed summaries in Firestore
+        Tool 4: Store processed data in Firestore
 
         Returns:
             dict: Result of storage operation
         """
-        if not self.summaries:
-            return {"error": "No summaries available to store. Please analyze data first."}
+        if not self.processed_data:
+            return {"error": "No processed data available to store. Please analyze data first."}
 
         try:
             collection_ref = self.firebase_manager.db.collection(FirestoreConfig.PROCESSED_DATA_COLLECTION)
@@ -550,35 +526,13 @@ class DataFusingService:
             stored_docs = []
             errors = []
 
-            # Fetch all existing documents
-            existing_docs = {
-                doc.id: doc.to_dict()
-                for doc in collection_ref.stream()
-            }
-            
-            print(existing_docs)
-
-            for i, summary in enumerate(self.summaries):
-                duplicate_doc_id = self.get_duplicate_doc_id(summary, existing_docs)
-
-                if duplicate_doc_id:
+            for i, data in enumerate(self.processed_data):
                     try:
-                        # 🔁 Increment the 'occurrences' field of the existing doc
-                        collection_ref.document(duplicate_doc_id).update({
-                            "occurrences": Increment(1)
-                        })
-                        updated_count += 1
-                    except Exception as update_error:
-                        error_msg = f"Error updating duplicate {duplicate_doc_id}: {str(update_error)}"
-                        logger.error(error_msg)
-                        errors.append(error_msg)
-                else:
-                    try:
-                        doc_ref = collection_ref.add(summary)
+                        doc_ref = collection_ref.add(data)
                         stored_docs.append(doc_ref[1].id)
                         stored_count += 1
                     except Exception as insert_error:
-                        error_msg = f"Error storing summary {i}: {str(insert_error)}"
+                        error_msg = f"Error storing processed data {i}: {str(insert_error)}"
                         logger.error(error_msg)
                         errors.append(error_msg)
 
@@ -586,7 +540,7 @@ class DataFusingService:
                 "status": "success" if stored_count > 0 or updated_count > 0 else "partial_failure",
                 "stored_count": stored_count,
                 "updated_count": updated_count,
-                "total_summaries": len(self.summaries),
+                "total_processed_data": len(self.processed_data),
                 "collection": FirestoreConfig.PROCESSED_DATA_COLLECTION,
                 "document_ids": stored_docs
             }
@@ -595,12 +549,12 @@ class DataFusingService:
                 result["errors"] = errors
 
             logger.info(
-                f"Stored {stored_count}, updated {updated_count} summaries in collection '{FirestoreConfig.PROCESSED_DATA_COLLECTION}'"
+                f"Stored {stored_count}, updated {updated_count} processed data in collection '{FirestoreConfig.PROCESSED_DATA_COLLECTION}'"
             )
             return result
 
         except Exception as e:
-            error_msg = f"Error storing summaries in Firestore: {str(e)}"
+            error_msg = f"Error storing processed data in Firestore: {str(e)}"
             logger.error(error_msg)
             return {"error": error_msg}
 
@@ -621,7 +575,7 @@ data_fusing_agent = Agent(
     1. Fetches live data from API endpoint 
     2. Stores raw data in predefined Firestore collection
     3. Analyzes and categorizes data (traffic/water-logging/events/stampede/emergency)
-    4. Stores analyzed summaries with advice in another Firestore collection
+    4. Stores processed with advice in another Firestore collection
     
     Each summary includes: description, category, advice, location, coordinates
     """,
@@ -631,7 +585,7 @@ data_fusing_agent = Agent(
     1. Call get_live_data to fetch data from API
     2. Call store_raw_data to save raw data to Firestore
     3. Call analyze_raw_data to categorize and analyze the data
-    4. Call store_summary to save analyzed results with advice
+    4. Call store_processed_data to save analyzed results with advice
     
     Handle errors gracefully and provide detailed feedback for each step.
 
@@ -640,6 +594,6 @@ data_fusing_agent = Agent(
         service.get_live_data,
         service.store_raw_data,
         service.analyze_raw_data,
-        service.store_summary,
+        service.store_processed_data,
     ]
 )
