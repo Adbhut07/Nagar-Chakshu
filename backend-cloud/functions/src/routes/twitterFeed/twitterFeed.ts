@@ -4,7 +4,7 @@ import admin from "firebase-admin";
 const router = express.Router(); 
 const db = admin.firestore();
 
-router.get("/", async (req, res) => {
+router.get("/twitter-feed", async (req, res) => {
   try {
     const snapshot = await db.collection("social_media_posts").get();
     const posts = snapshot.docs.map((doc) => doc.data());
