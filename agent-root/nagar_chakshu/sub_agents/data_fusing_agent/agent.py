@@ -3,15 +3,18 @@ import json
 import logging
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Union
-
 import firebase_admin
 import httpx
 from firebase_admin import credentials, firestore
 from google.adk.agents import Agent
-from google.cloud.firestore_v1 import GeoPoint
+from google.cloud.firestore_v1 import GeoPoint, Increment
 import requests
 import dotenv
 from dotenv import load_dotenv
+from typing import List, Dict, Tuple
+from .util import KEYWORDS, is_within_radius, CATEGORY_VALIDITY_DURATION
+import random
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -27,47 +30,6 @@ class FirestoreConfig:
     """Configuration constants for Firestore collections"""
     RAW_DATA_COLLECTION = "raw_data"
     PROCESSED_DATA_COLLECTION = "processed_data"
-
-
-class CategoryConfig:
-    """Configuration for data categorization"""
-    
-    KEYWORDS = {
-        "traffic": [
-            "traffic", "jam", "congestion", "vehicle", "road", "highway", 
-            "blocked", "slow", "delay", "gridlock", "commuter", "pothole", "repair"
-        ],
-        "water-logging": [
-            "flood", "water", "rain", "drainage", "waterlogged", "overflow", 
-            "inundated", "submerged", "sewage", "drain", "flooding"
-        ],
-        "events": [
-            "event", "festival", "concert", "gathering", "celebration", 
-            "parade", "rally", "protest", "march", "jogging", "group", "crowding"
-        ],
-        "stampede": [
-            "crowd", "stampede", "rush", "panic", "overcrowded", 
-            "pushing", "crush", "mob"
-        ],
-        "emergency": [
-            "emergency", "accident", "fire", "medical", "ambulance", 
-            "police", "rescue", "disaster"
-        ],
-        "infrastructure": [
-            "pothole", "repair", "maintenance", "construction", 
-            "road work", "sidewalk", "footpath"
-        ]
-    }
-    
-    ADVICE = {
-        "traffic": "Road conditions may cause delays. Consider alternative routes or allow extra travel time. Check for ongoing repairs.",
-        "water-logging": "Avoid the area completely. Roads may be unsafe for vehicles. Risk of vehicle damage or getting stranded.",
-        "events": "Expect minor delays and increased foot traffic. Cycling lanes may still be accessible. Plan accordingly.",
-        "stampede": "URGENT: Avoid the area immediately. Seek alternative routes and stay safe. Emergency situation.",
-        "emergency": "Emergency services are active in the area. Avoid if possible and follow official instructions.",
-        "infrastructure": "Infrastructure issues reported. Exercise caution when traveling through this area. Repairs may be needed.",
-        "other": "Monitor the situation closely and stay alert. Follow local advisories and exercise caution."
-    }
 
 
 class FirebaseManager:
@@ -193,20 +155,71 @@ class DataProcessor:
         return "Unknown"
     
     @staticmethod
-    def categorize_content(text_content: str) -> tuple[str, float, int]:
-        """Categorize content based on keywords"""
-        category = "other"
-        max_matches = 0
-        confidence_score = 0
+    def categorize_content(description: str, score_output: bool = False) -> List[str] | List[Tuple[str, int]]:
+        """
+        Returns a list of matched categories from the description.
+        If score_output=True, returns a sorted list of tuples: (category, match_count).
+        """
+        description = description.lower()
+        matched = {}
+
+        for category, keywords in KEYWORDS.items():
+            count = 0
+            for keyword in keywords:
+                # Use in-string match to allow phrase detection
+                if keyword in description:
+                    count += 1
+            if count > 0:
+                matched[category] = count
+
+        if score_output:
+            # Return categories sorted by most matches
+            return sorted(matched.items(), key=lambda x: x[1], reverse=True)
+        else:
+            return list(matched.keys())
         
-        for cat, keywords in CategoryConfig.KEYWORDS.items():
-            matches = sum(1 for keyword in keywords if keyword in text_content)
-            if matches > max_matches:
-                max_matches = matches
-                category = cat
-                confidence_score = matches / len(keywords)
-        
-        return category, confidence_score, max_matches
+    @staticmethod
+    def get_combined_advice(categories: List[str]) -> str:
+        """
+        Return a single, concise 2–3 line advice summary based on combined categories.
+        """
+        if not categories:
+            return "No specific issues detected. Stay safe and follow local updates."
+
+        parts = []
+
+        if "emergency" in categories:
+            parts.append("An emergency has been reported nearby.")
+        if "traffic" in categories:
+            parts.append("Expect traffic delays — consider alternate routes.")
+        if "water-logging" in categories:
+            parts.append("Avoid flooded areas and check for waterlogging.")
+        if "weather" in categories:
+            parts.append("Severe weather may affect visibility or safety.")
+        if "public-transport" in categories:
+            parts.append("Public transport may be delayed or disrupted.")
+        if "infrastructure" in categories:
+            parts.append("Watch out for damaged roads or civic works.")
+        if "civic-issues" in categories:
+            parts.append("Civic issues like garbage or pollution may be present.")
+        if "security" in categories:
+            parts.append("Stay alert to any suspicious or unsafe activity.")
+        if "events" in categories:
+            parts.append("Large gatherings may cause congestion in some areas.")
+        if "stampede" in categories:
+            parts.append("Avoid dense crowds due to potential safety risks.")
+        if "utility" in categories:
+            parts.append("There might be service interruptions like power or water cuts.")
+
+        # Generate a clean summary
+        summary = " ".join(parts)
+
+        # Trim to ~2-3 lines, if needed
+        if len(summary.split()) > 45:
+            summary = "Multiple issues reported in your area. Please stay alert and follow local advisories."
+
+        return summary
+    
 
 
 class DataFusingService:
@@ -227,47 +240,51 @@ class DataFusingService:
         Returns:
             dict: Result with data or error information
         """
-        api_endpoint = f"{self.base_api_url}/api/twitter-feed"
+        api_endpoint = f"{self.base_api_url}/api/twitter-feed/twitter-feed"
+        take_data = 5  # Number of random items to select
         
         try:
-            
             async with httpx.AsyncClient() as client:
                 response = await client.get(api_endpoint, timeout=30)
-            
+
             if response.status_code != 200:
                 error_msg = f"API request failed with status {response.status_code}: {response.text}"
                 logger.error(error_msg)
                 return {"error": error_msg, "status_code": response.status_code}
-            
+
             api_response = response.json()
             data = api_response.get('data', api_response)
-            
+
             # Normalize data structure
             if isinstance(data, dict):
                 data = [data]
             elif not isinstance(data, list):
                 data = [data] if data is not None else []
-            
-            self.raw_data = self._process_raw_data(data, api_endpoint)
-            
-            print(f"Fetched data")
-            
+
+            # Randomly sample the data
+            if len(data) > take_data:
+                data = random.sample(data, take_data)
+
+            self.raw_data = self._process_raw_data(data)
+
+            print(f"Fetched {len(data)} random items")
+
             return {
                 "status": "success",
                 "data_count": len(self.raw_data),
-                "message": f"Fetched {len(self.raw_data)} items"
+                "message": f"Fetched {len(self.raw_data)} random items"
             }
-            
+
         except httpx.TimeoutException:
-            error_msg = f"Request timed out "
+            error_msg = f"Request timed out"
             logger.error(error_msg)
             return {"error": error_msg}
-        
+
         except httpx.ConnectError:
-            error_msg = f"Connection error "
+            error_msg = f"Connection error"
             logger.error(error_msg)
             return {"error": error_msg}
-        
+
         except Exception as e:
             error_msg = f"Unhandled error during API request: {str(e)}"
             logger.error(error_msg)
@@ -291,8 +308,7 @@ class DataFusingService:
     
     def _process_raw_data(
         self,
-        data: List[Any],
-        api_endpoint: str
+        data: List[Any]
     ) -> List[Dict[str, Any]]:
         """Process raw data items with metadata, detecting city from coordinates"""
         processed_data = []
@@ -317,8 +333,7 @@ class DataFusingService:
 
             processed_item.update({
                 'fetched_at': current_time,
-                'source_city': city_name,
-                'api_endpoint': api_endpoint
+                'source_city': city_name
             })
 
             processed_data.append(processed_item)
@@ -446,16 +461,10 @@ class DataFusingService:
                     logger.error(f"Error analyzing item {idx}: {str(item_error)}")
                     continue
             
-            # Sort by confidence score (highest first)
-            self.summaries.sort(key=lambda x: x.get('confidence_score', 0), reverse=True)
-            
-            logger.info(f"Analyzed {len(self.raw_data)} items and generated {len(self.summaries)} summaries")
-            
             return {
                 "status": "success",
                 "analyzed_count": len(self.summaries),
                 "total_items": len(self.raw_data),
-                "categories": self._get_category_counts(),
                 "message": f"Successfully analyzed {len(self.summaries)} items"
             }
             
@@ -463,6 +472,14 @@ class DataFusingService:
             error_msg = f"Error analyzing raw data: {str(e)}"
             logger.error(error_msg)
             return {"error": error_msg}
+        
+    def get_resolution_time(self,categories: list[str]) -> datetime:
+        """Returns the latest valid_upto from the matched categories."""
+        durations = [
+            CATEGORY_VALIDITY_DURATION.get(cat, timedelta(hours=1))  # default to 1hr
+            for cat in categories
+        ]
+        return datetime.now() + max(durations, default=timedelta(hours=1))
     
     def _analyze_data_item(self, data_item: Dict[str, Any], idx: int) -> Optional[Dict[str, Any]]:
         """Analyze a single data item and create summary"""
@@ -472,105 +489,120 @@ class DataFusingService:
         text_content = DataProcessor.extract_text_content(data_item)
         location = DataProcessor.extract_location(data_item)
         coordinates = DataProcessor.normalize_coordinates(data_item)
-        category, confidence_score, max_matches = DataProcessor.categorize_content(text_content)
+        categories = DataProcessor.categorize_content(text_content)
         
-        # Generate description
-        description_text = text_content[:150] if text_content else "No description available"
-        if max_matches > 0:
-            description = f"Detected {category} situation in {location}: {description_text}"
-        else:
-            description = f"Situation reported in {location}: {description_text}"
+        # Get combined advice for all categories
+        advice = DataProcessor.get_combined_advice(categories)
         
-        # Ensure description is not too long
-        if len(description) > 200:
-            description = description[:197] + "..."
+        resolution_time = self.get_resolution_time(categories)
         
         return {
-            "description": description,
-            "category": category,
-            "advice": CategoryConfig.ADVICE.get(category, CategoryConfig.ADVICE["other"]),
+            "description": data_item.get("text", ""),
+            "categories": categories,  # Now an array
+            "advice": advice,
             "location": location,
             "coordinates": coordinates,
-            "analyzed_at": datetime.now(),
-            "confidence_score": round(confidence_score, 2),
-            "keyword_matches": max_matches,
+            "resolution_time": resolution_time,
             "source_id": data_item.get("id", f"unknown_{idx}"),
             "source_city": data_item.get("source_city", location),
-            "image_url": data_item.get("image_url")
+            "image_url": data_item.get("image_url"),
+            "occurrences":1,
+            "votes":0
         }
     
-    def _get_category_counts(self) -> Dict[str, int]:
-        """Get count of items per category"""
-        return {
-            cat: len([s for s in self.summaries if s['category'] == cat]) 
-            for cat in CategoryConfig.KEYWORDS.keys()
-        }
+    def get_duplicate_doc_id(self,new_summary, existing_docs) -> str | None:
+        
+        new_categories = set(new_summary.get("categories", []))
+        new_coords = new_summary.get("coordinates", {})
+        new_lat = new_coords.get("lat", 0)
+        new_lng = new_coords.get("lng", 0)
+
+
+        for doc_id, doc in existing_docs.items():
+            existing_categories = set(doc.get("categories", []))
+            doc_coords = doc.get("coordinates", {})
+            doc_lat = doc_coords.get("lat", 0)
+            doc_lng = doc_coords.get("lng", 0)
+            
+            print()
+
+            if new_categories & existing_categories:
+                if is_within_radius(doc_lat, doc_lng, new_lat, new_lng, radius_meters=100):
+                    return doc_id  
+
+        return None
     
+
     def store_summary(self) -> Dict[str, Any]:
         """
         Tool 4: Store analyzed summaries in Firestore
-        
+
         Returns:
             dict: Result of storage operation
         """
         if not self.summaries:
             return {"error": "No summaries available to store. Please analyze data first."}
-        
+
         try:
             collection_ref = self.firebase_manager.db.collection(FirestoreConfig.PROCESSED_DATA_COLLECTION)
             stored_count = 0
+            updated_count = 0
             stored_docs = []
             errors = []
+
+            # Fetch all existing documents
+            existing_docs = {
+                doc.id: doc.to_dict()
+                for doc in collection_ref.stream()
+            }
             
+            print(existing_docs)
+
             for i, summary in enumerate(self.summaries):
-                try:
-                    storage_summary = self._prepare_summary_for_storage(summary)
-                    doc_ref = collection_ref.add(storage_summary)
-                    stored_docs.append(doc_ref[1].id)
-                    stored_count += 1
-                    
-                except Exception as item_error:
-                    error_msg = f"Error storing summary {i}: {str(item_error)}"
-                    logger.error(error_msg)
-                    errors.append(error_msg)
-            
+                duplicate_doc_id = self.get_duplicate_doc_id(summary, existing_docs)
+
+                if duplicate_doc_id:
+                    try:
+                        # 🔁 Increment the 'occurrences' field of the existing doc
+                        collection_ref.document(duplicate_doc_id).update({
+                            "occurrences": Increment(1)
+                        })
+                        updated_count += 1
+                    except Exception as update_error:
+                        error_msg = f"Error updating duplicate {duplicate_doc_id}: {str(update_error)}"
+                        logger.error(error_msg)
+                        errors.append(error_msg)
+                else:
+                    try:
+                        doc_ref = collection_ref.add(summary)
+                        stored_docs.append(doc_ref[1].id)
+                        stored_count += 1
+                    except Exception as insert_error:
+                        error_msg = f"Error storing summary {i}: {str(insert_error)}"
+                        logger.error(error_msg)
+                        errors.append(error_msg)
+
             result = {
-                "status": "success" if stored_count > 0 else "partial_failure",
+                "status": "success" if stored_count > 0 or updated_count > 0 else "partial_failure",
                 "stored_count": stored_count,
+                "updated_count": updated_count,
                 "total_summaries": len(self.summaries),
                 "collection": FirestoreConfig.PROCESSED_DATA_COLLECTION,
                 "document_ids": stored_docs
             }
-            
+
             if errors:
                 result["errors"] = errors
-            
-            logger.info(f"Stored {stored_count} summaries in Firestore collection '{FirestoreConfig.PROCESSED_DATA_COLLECTION}'")
+
+            logger.info(
+                f"Stored {stored_count}, updated {updated_count} summaries in collection '{FirestoreConfig.PROCESSED_DATA_COLLECTION}'"
+            )
             return result
-            
+
         except Exception as e:
             error_msg = f"Error storing summaries in Firestore: {str(e)}"
             logger.error(error_msg)
             return {"error": error_msg}
-    
-    def _prepare_summary_for_storage(self, summary: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare summary for Firestore storage"""
-        storage_summary = summary.copy()
-        
-        # Convert coordinates to GeoPoint if available
-        if storage_summary.get("coordinates") and isinstance(storage_summary["coordinates"], dict):
-            coords = storage_summary["coordinates"]
-            lat = coords.get("lat")
-            lng = coords.get("lng")
-            
-            if lat is not None and lng is not None:
-                try:
-                    storage_summary["coordinates"] = GeoPoint(float(lat), float(lng))
-                except (ValueError, TypeError) as coord_error:
-                    logger.warning(f"Invalid coordinates: {lat}, {lng} - {coord_error}")
-                    storage_summary["coordinates"] = None
-        
-        return storage_summary
 
 
 # Initialize the service
