@@ -9,3 +9,6 @@ firebase-admin
 google-cloud-firestore
 requests
 httpx
+google-generativeai
+opencv-python
+pillow

@@ -12,12 +12,12 @@ from collections import defaultdict
 
 load_dotenv()
 
-from google.adk.agents import Agent
-
-from .sub_agents.data_fusing_agent.agent import data_fusing_agent  # your sub-agent
+from .sub_agents.data_fusing_agent.agent import data_fusing_agent
+from .sub_agents.multimodal_intake_agent.agent import multimodal_intake_agent
+from .sub_agents.synthesis_agent.agent import synthesis_agent
 
 root_agent = SequentialAgent(
     name="AgenticPipeline",
     description="A pipeline that fuses data, processes it, and generates insights.",
-    sub_agents=[data_fusing_agent],
+    sub_agents=[data_fusing_agent, multimodal_intake_agent, synthesis_agent],
 )
