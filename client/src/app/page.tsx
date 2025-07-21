@@ -82,7 +82,7 @@ useEffect(() => {
     if (!loading) {
       if (!user) {
         // Not authenticated, redirect to sign in
-        router.push('/signin');
+        router.push('/signIn');
       } else if (!isUserRegistered) {
         // Authenticated but not registered, redirect to registration
         router.push('/register');
