@@ -3,6 +3,10 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import ProtectedRoute from '@/components/AuthGuard';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { 
   MapPin, 
   Clock, 
@@ -71,6 +75,35 @@ const weatherData = {
 };
 
 export default function HomePage() {
+const { user, loading, isUserRegistered } = useAuth();
+const router = useRouter();
+
+useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        // Not authenticated, redirect to sign in
+        router.push('/signin');
+      } else if (!isUserRegistered) {
+        // Authenticated but not registered, redirect to registration
+        router.push('/register');
+      } else {
+        // Fully authenticated and registered, redirect to dashboard
+        router.push('/dashboard');
+      }
+    }
+  }, [user, loading, isUserRegistered, router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high': return 'bg-red-100 text-red-800 border-red-200';
@@ -90,8 +123,9 @@ export default function HomePage() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+  return (      
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
       <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-12">
@@ -364,5 +398,7 @@ export default function HomePage() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
+    
   );
 }
