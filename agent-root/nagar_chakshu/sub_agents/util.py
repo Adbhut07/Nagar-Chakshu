@@ -1,5 +1,6 @@
 import math
 from datetime import datetime, timedelta
+from math import log10
 
 KEYWORDS = {
     "traffic": [
@@ -75,7 +76,72 @@ CATEGORY_VALIDITY_DURATION = {
     "utility": timedelta(hours=8),
 }
 
+__base32 = '0123456789bcdefghjkmnpqrstuvwxyz'
+
+def encode(latitude, longitude, precision=12):
+    """
+    Encode a position given in float arguments latitude, longitude to
+    a geohash which will have the character count precision.
+    """
+    lat_interval, lon_interval = (-90.0, 90.0), (-180.0, 180.0)
+    geohash = []
+    bits = [ 16, 8, 4, 2, 1 ]
+    bit = 0
+    ch = 0
+    even = True
+    while len(geohash) < precision:
+        if even:
+            mid = (lon_interval[0] + lon_interval[1]) / 2
+            if longitude > mid:
+                ch |= bits[bit]
+                lon_interval = (mid, lon_interval[1])
+            else:
+                lon_interval = (lon_interval[0], mid)
+        else:
+            mid = (lat_interval[0] + lat_interval[1]) / 2
+            if latitude > mid:
+                ch |= bits[bit]
+                lat_interval = (mid, lat_interval[1])
+            else:
+                lat_interval = (lat_interval[0], mid)
+        even = not even
+        if bit < 4:
+            bit += 1
+        else:
+            geohash += __base32[ch]
+            bit = 0
+            ch = 0
+    return ''.join(geohash)
 
 
 
+COMMON_SENTIMENTS = [
+    # Positive
+    "Happy", "Excited", "Hopeful", "Grateful", "Proud",
+
+    # Neutral
+    "Calm", "Indifferent", "Uncertain", "Waiting",
+
+    # Negative
+    "Frustrated", "Angry", "Worried", "Disappointed", "Helpless"
+]
+
+
+
+PROMPT_SENTIMENT_ANALYSIS = """
+You are an exper in sentiment analysis. Your task is to analyze the sentiment of the provided combined descriptions text.
+You have to just return the sentiment of the text in one word. You have to decide 
+the sentiment from the following list of common sentiments:
+
+
+
+"""+"\n".join(COMMON_SENTIMENTS)+"Combined Description:\n"
+
+PROMPT_PREDICTIVE_ANALYSIS = """
+
+You are an expert in predictive analysis. Your task is to analyze the summary and make predictions based on it.
+You have to return the prediction in 2-3 lines. It should be crisp and to the point.
+
+Summary:\n
+"""
 

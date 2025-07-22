@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 from google.generativeai import GenerativeModel
 import google.generativeai as genai
 import math
-from ..util import CATEGORY_VALIDITY_DURATION
+from ..util import CATEGORY_VALIDITY_DURATION, encode
 
 load_dotenv()
 
@@ -238,7 +238,12 @@ class SynthesisAgent:
         intelligent_cluster_summary  =  self.get_intelligent_summary(cluster_data)
         intelligent_advice = self.get_intelligent_advice(intelligent_cluster_summary)
         image_urls = [data.get('image_url') for data in cluster_data if 'image_url' in data]
+        descriptions = [data.get('description', '') for data in cluster_data]
         resolution_time = self.get_resolution_time(unique_categories)
+        
+        
+        hash_code = encode(lat, lng, precision=9)
+        
         
         return {
             'summary': intelligent_cluster_summary,
@@ -251,9 +256,10 @@ class SynthesisAgent:
             },
             'categories': unique_categories,
             'advice': intelligent_advice,
-            'image_urls': image_urls,
+            'descriptions': descriptions,
             'location': location,
-            'source_city': source_city
+            'source_city': source_city,
+            'geohash':hash_code
         }
         
     def store_summaries(self) -> None:

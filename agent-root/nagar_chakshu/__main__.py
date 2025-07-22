@@ -97,7 +97,7 @@ async def main(): # Make main async
         await server.serve()
         
         # This part will be reached after the server is stopped (e.g., Ctrl+C)
-        logger.info("Scout Agent A2A server stopped.")
+        logger.info("NagarChakshu Agent A2A server stopped.")
 
 if __name__ == "__main__":
     try:
