@@ -7,11 +7,17 @@ import { useRouter } from 'next/navigation';
 interface AdditionalUserData {
   radius_km?: number;
   categories?: string[];
+  notifications?: {
+    enabled?: boolean;
+    quietHours?: any;
+  };
   preferences?: {
     useCurrentLocation?: boolean;
+    manualLocality?: string | null;
   };
-  [key: string]: any;
+  fcmToken?: string;
 }
+
 
 const Registration: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,20 +25,21 @@ const Registration: React.FC = () => {
   const [radius, setRadius] = useState<number>(5);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['restaurants', 'events']);
   const [useCurrentLocation, setUseCurrentLocation] = useState<boolean>(true);
-  
+  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(true);
+
   const { user, registerUser } = useAuth();
   const router = useRouter();
 
   const availableCategories = [
-    'Water-Logging',
-    'Events',
-    'Traffic',
-    'Tree Falling',
-    'Fire',
-    'education',
-    'transportation',
-    'services'
-  ];
+  'Water-Logging',
+  'Events', 
+  'Traffic',
+  'Tree Falling',
+  'Fire',
+  'Education',
+  'Transportation',
+  'Services'
+];
 
   const handleCategoryToggle = (category: string) => {
     setSelectedCategories(prev => 
@@ -43,34 +50,39 @@ const Registration: React.FC = () => {
   };
 
   const handleRegistration = async (): Promise<void> => {
-    if (!user) {
-      setError('No user found. Please sign in first.');
-      return;
-    }
+  if (!user) {
+    setError('No user found. Please sign in first.');
+    return;
+  }
 
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const additionalData: AdditionalUserData = {
-        radius_km: radius,
-        categories: selectedCategories,
-        preferences: {
-          useCurrentLocation: useCurrentLocation
-        }
-      };
+  try {
+    setLoading(true);
+    setError(null);
+    
+    const additionalData: AdditionalUserData = {
+      radius_km: radius,
+      categories: selectedCategories,
+      notifications: {
+        enabled: notificationsEnabled,
+        quietHours: null
+      },
+      preferences: {
+        useCurrentLocation: useCurrentLocation,
+        manualLocality: useCurrentLocation ? null : 'Manual location not set'
+      }
+    };
 
-      await registerUser(additionalData);
-      
-      // Redirect to dashboard after successful registration
-      router.push('/dashboard');
-    } catch (error: any) {
-      console.error('Registration error:', error);
-      setError(error.message || 'Failed to complete registration');
-    } finally {
-      setLoading(false);
-    }
-  };
+    await registerUser(additionalData);
+    
+    // Redirect to dashboard after successful registration
+    router.push('/dashboard');
+  } catch (error: any) {
+    console.error('Registration error:', error);
+    setError(error.message || 'Failed to complete registration');
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (!user) {
     return (
@@ -165,6 +177,20 @@ const Registration: React.FC = () => {
             </span>
           </label>
         </div>
+
+        <div>
+  <label className="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      checked={notificationsEnabled}
+      onChange={(e) => setNotificationsEnabled(e.target.checked)}
+      className="rounded border-gray-300"
+    />
+    <span className="text-sm font-medium text-gray-700">
+      Enable push notifications
+    </span>
+  </label>
+</div>
 
         <button
           onClick={handleRegistration}

@@ -25,6 +25,7 @@ interface UserRegistrationData {
     useCurrentLocation?: boolean;
     manualLocality?: string | null;
   };
+  fcmToken?: string;
 }
 
 interface UserUpdateData {
@@ -44,6 +45,7 @@ interface UserUpdateData {
     useCurrentLocation?: boolean;
     manualLocality?: string | null;
   };
+  fcmToken?: string;
 }
 
 interface UserPreferences {
@@ -57,6 +59,7 @@ interface UserPreferences {
   };
   categories?: string[];
   radius_km?: number;
+  fcmToken?: string;
 }
 
 // Helper function to create headers with auth token
@@ -94,13 +97,12 @@ export async function submitReport(data: Report) {
   }
 }
 
-// Auth API Functions
-
 // Register new user
 export async function registerUser(userData: UserRegistrationData, token: string) {
   try {
     console.log('Registering user:', userData.email);
     
+    console.log('Using auth token:', token);
     const res = await fetch(`${AUTH_ENDPOINT}/register`, {
       method: "POST",
       headers: createAuthHeaders(token),
@@ -129,6 +131,7 @@ export async function getUserProfile(token: string) {
       method: "GET",
       headers: createAuthHeaders(token),
     });
+    console.log("hello",res);
 
     if (!res.ok) {
       if (res.status === 404) {
@@ -216,6 +219,57 @@ export async function updateUserLocation(location: { lat: number; lng: number },
   }
 }
 
+// Update FCM token
+export async function updateFCMToken(fcmToken: string, token: string) {
+  try {
+    console.log('Updating FCM token');
+    
+    const res = await fetch(`${AUTH_ENDPOINT}/user/fcm-token`, {
+      method: "POST",
+      headers: createAuthHeaders(token),
+      body: JSON.stringify({ fcmToken }),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('Update FCM token Error Response:', errorText);
+      throw new Error(`Failed to update FCM token: ${res.status} ${res.statusText}`);
+    }
+    
+    const result = await res.json();
+    console.log('FCM token updated successfully:', result);
+    return result;
+  } catch (error) {
+    console.error('Update FCM token error:', error);
+    throw error;
+  }
+}
+
+// Remove FCM token (for logout)
+export async function removeFCMToken(token: string) {
+  try {
+    console.log('Removing FCM token');
+    
+    const res = await fetch(`${AUTH_ENDPOINT}/user/fcm-token`, {
+      method: "DELETE",
+      headers: createAuthHeaders(token),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('Remove FCM token Error Response:', errorText);
+      throw new Error(`Failed to remove FCM token: ${res.status} ${res.statusText}`);
+    }
+    
+    const result = await res.json();
+    console.log('FCM token removed successfully:', result);
+    return result;
+  } catch (error) {
+    console.error('Remove FCM token error:', error);
+    throw error;
+  }
+}
+
 // Get user preferences
 export async function getUserPreferences(token: string) {
   try {
@@ -280,5 +334,59 @@ export async function getUserStats(token: string) {
   } catch (error) {
     console.error('Get user stats error:', error);
     throw error;
+  }
+}
+
+// FCM Token Management Utilities
+
+/**
+ * Helper function to handle FCM token registration/update during user login
+ * This should be called after successful authentication
+ */
+export async function handleFCMTokenOnLogin(fcmToken: string, authToken: string) {
+  try {
+    // First check if user is already registered
+    const userProfile = await getUserProfile(authToken);
+    
+    if (userProfile) {
+      // User exists, just update the FCM token
+      await updateFCMToken(fcmToken, authToken);
+    }
+    // If user doesn't exist, FCM token will be handled during registration
+    
+    return true;
+  } catch (error) {
+    console.error('Error handling FCM token on login:', error);
+    // Don't throw error as FCM token is not critical for app functionality
+    return false;
+  }
+}
+
+/**
+ * Helper function to handle FCM token removal during logout
+ */
+export async function handleFCMTokenOnLogout(authToken: string) {
+  try {
+    await removeFCMToken(authToken);
+    return true;
+  } catch (error) {
+    console.error('Error removing FCM token on logout:', error);
+    // Don't throw error as this is cleanup operation
+    return false;
+  }
+}
+
+/**
+ * Helper function to refresh FCM token
+ * Call this when you receive a new FCM token from Firebase
+ */
+export async function refreshFCMToken(newFcmToken: string, authToken: string) {
+  try {
+    await updateFCMToken(newFcmToken, authToken);
+    console.log('FCM token refreshed successfully');
+    return true;
+  } catch (error) {
+    console.error('Error refreshing FCM token:', error);
+    return false;
   }
 }
