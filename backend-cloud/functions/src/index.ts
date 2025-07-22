@@ -8,6 +8,8 @@ import admin from "./utils/firebase";
 import twitterFeedRoute from "./routes/twitterFeed/twitterFeed";
 import submitReportRoute from "./routes/userReports/submitReport";
 import authRoute from "./routes/auth/auth";
+import summaryRoute from "./routes/summary/getIncidents";
+import predictionsRoute from "./routes/predictions/predictions";
 
 const app = express();
 
@@ -98,6 +100,8 @@ app.get('/api/health', (req, res) => {
 app.use("/api/twitter-feed", twitterFeedRoute);
 app.use("/api/reports", submitReportRoute);
 app.use("/api", authRoute);
+app.use("/api/incidents", summaryRoute);
+app.use("/api/predictions", predictionsRoute);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
