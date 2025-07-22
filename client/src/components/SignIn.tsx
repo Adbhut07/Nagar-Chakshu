@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 const SignIn: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { signInWithGoogle, user, isUserRegistered } = useAuth();
+  const { signInWithGoogle, user, isUserRegistered, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const handleGoogleSignIn = async (): Promise<void> => {
@@ -15,19 +15,33 @@ const SignIn: React.FC = () => {
       setLoading(true);
       setError(null);
       
-      await signInWithGoogle();
+      const signedInUser = await signInWithGoogle();
+      console.log('Sign in completed for:', signedInUser.email);
       
-      // The AuthGuard will handle the redirect based on registration status
-      // No need to manually redirect here
+      // Don't redirect immediately - let AuthGuard handle it
+      // The auth state change will trigger registration check
+      
     } catch (error: any) {
       console.error('Sign in error:', error);
-      setError(error.message || 'Failed to sign in');
+      setError(error.message || 'Failed to sign in with Google');
     } finally {
       setLoading(false);
     }
   };
 
-  // If user is already signed in and registered
+  // Show loading while auth is being initialized
+  if (authLoading) {
+    return (
+      <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If user is already signed in and registered, show welcome message
   if (user && isUserRegistered) {
     return (
       <div className="text-center p-8">
@@ -38,6 +52,22 @@ const SignIn: React.FC = () => {
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Go to Dashboard
+        </button>
+      </div>
+    );
+  }
+
+  // If user is signed in but not registered, redirect to registration
+  if (user && !isUserRegistered) {
+    return (
+      <div className="text-center p-8">
+        <h2 className="text-2xl font-bold mb-4">Almost there!</h2>
+        <p className="text-gray-600 mb-4">Please complete your registration.</p>
+        <button
+          onClick={() => router.push('/register')}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Complete Registration
         </button>
       </div>
     );

@@ -1,7 +1,7 @@
 // lib/firebase.ts
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, connectAuthEmulator } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,12 +12,37 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+// Validate Firebase config
+const validateFirebaseConfig = () => {
+  const requiredKeys = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
+  for (const key of requiredKeys) {
+    if (!firebaseConfig[key as keyof typeof firebaseConfig]) {
+      console.error(`Missing Firebase config: ${key}`);
+      throw new Error(`Firebase configuration incomplete: ${key} is missing`);
+    }
+  }
+};
+
+// Validate config before initializing
+validateFirebaseConfig();
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Storage and get a reference to the service
-export const storage = getStorage(app);
+// Initialize Firebase Auth
 export const auth = getAuth(app);
+
+// Configure Google Auth Provider
 export const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope('email');
+googleProvider.addScope('profile');
+
+// Optional: Configure custom parameters
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
+// Initialize Firebase Storage
+export const storage = getStorage(app);
 
 export default app;

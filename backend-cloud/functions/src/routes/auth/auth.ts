@@ -5,7 +5,6 @@ import geohash from "ngeohash";
 const router = express.Router();
 const db = admin.firestore();
 
-// Middleware to verify Firebase token
 const verifyToken = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     const authHeader = req.headers.authorization;
@@ -23,7 +22,7 @@ const verifyToken = async (req: express.Request, res: express.Response, next: ex
   }
 };
 
-// POST /register - Register new user
+// Fix: Apply verifyToken middleware to the register route
 router.post("/register", verifyToken, async (req: express.Request, res: express.Response) => {
   try {
     const { 
@@ -35,10 +34,13 @@ router.post("/register", verifyToken, async (req: express.Request, res: express.
       radius_km = 2,
       categories = [],
       notifications,
-      preferences
+      preferences,
+      fcmToken
     } = req.body;
 
     // Verify that the token uid matches the request uid
+    console.log("Request UID:", uid);
+    console.log("Decoded Token UID:", req.user?.uid);
     if (req.user?.uid !== uid) {
       return res.status(403).json({ error: "Forbidden: UID mismatch" });
     }
@@ -80,6 +82,7 @@ router.post("/register", verifyToken, async (req: express.Request, res: express.
         useCurrentLocation: preferences?.useCurrentLocation ?? true,
         manualLocality: preferences?.manualLocality || null,
       },
+      fcmToken: fcmToken || null,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       lastActiveAt: admin.firestore.FieldValue.serverTimestamp(),
     };
@@ -99,6 +102,10 @@ router.post("/register", verifyToken, async (req: express.Request, res: express.
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+// Middleware to verify Firebase token
+
+
 
 // GET /user/profile - Get user profile (used to check registration status)
 router.get("/user/profile", verifyToken, async (req: express.Request, res: express.Response) => {
@@ -159,7 +166,8 @@ router.put("/user/profile", verifyToken, async (req: express.Request, res: expre
       radius_km,
       categories,
       notifications,
-      preferences
+      preferences,
+      fcmToken
     } = req.body;
 
     const updateData: any = {
@@ -173,6 +181,7 @@ router.put("/user/profile", verifyToken, async (req: express.Request, res: expre
     if (categories !== undefined) updateData.categories = categories;
     if (notifications !== undefined) updateData.notifications = notifications;
     if (preferences !== undefined) updateData.preferences = preferences;
+    if (fcmToken !== undefined) updateData.fcmToken = fcmToken;
 
     // Handle location update
     if (location && typeof location.lat === "number" && typeof location.lng === "number") {
@@ -265,6 +274,66 @@ router.post("/user/location", verifyToken, async (req: express.Request, res: exp
   }
 });
 
+// POST /user/fcm-token - Update FCM token
+router.post("/user/fcm-token", verifyToken, async (req: express.Request, res: express.Response) => {
+  try {
+    const uid = req.user?.uid;
+    
+    if (!uid) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    const { fcmToken } = req.body;
+
+    if (!fcmToken || typeof fcmToken !== "string") {
+      return res.status(400).json({ error: "Invalid FCM token" });
+    }
+
+    // Check if user exists
+    const userDoc = await db.collection("users").doc(uid).get();
+    if (!userDoc.exists) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    await db.collection("users").doc(uid).update({
+      fcmToken,
+      lastActiveAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(200).json({ message: "FCM token updated successfully" });
+  } catch (error) {
+    console.error("Error updating FCM token:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// DELETE /user/fcm-token - Remove FCM token (for logout)
+router.delete("/user/fcm-token", verifyToken, async (req: express.Request, res: express.Response) => {
+  try {
+    const uid = req.user?.uid;
+    
+    if (!uid) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    // Check if user exists
+    const userDoc = await db.collection("users").doc(uid).get();
+    if (!userDoc.exists) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    await db.collection("users").doc(uid).update({
+      fcmToken: null,
+      lastActiveAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(200).json({ message: "FCM token removed successfully" });
+  } catch (error) {
+    console.error("Error removing FCM token:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // GET /user/preferences - Get user preferences
 router.get("/user/preferences", verifyToken, async (req: express.Request, res: express.Response) => {
   try {
@@ -286,7 +355,8 @@ router.get("/user/preferences", verifyToken, async (req: express.Request, res: e
       preferences: userData?.preferences || {},
       notifications: userData?.notifications || {},
       categories: userData?.categories || [],
-      radius_km: userData?.radius_km || 2
+      radius_km: userData?.radius_km || 2,
+      fcmToken: userData?.fcmToken || null
     });
   } catch (error) {
     console.error("Error getting user preferences:", error);
@@ -303,7 +373,7 @@ router.put("/user/preferences", verifyToken, async (req: express.Request, res: e
       return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    const { preferences, notifications, categories, radius_km } = req.body;
+    const { preferences, notifications, categories, radius_km, fcmToken } = req.body;
 
     // Check if user exists
     const userDoc = await db.collection("users").doc(uid).get();
@@ -319,6 +389,7 @@ router.put("/user/preferences", verifyToken, async (req: express.Request, res: e
     if (notifications !== undefined) updateData.notifications = notifications;
     if (categories !== undefined) updateData.categories = categories;
     if (radius_km !== undefined) updateData.radius_km = radius_km;
+    if (fcmToken !== undefined) updateData.fcmToken = fcmToken;
 
     await db.collection("users").doc(uid).update(updateData);
 
@@ -352,7 +423,8 @@ router.get("/user/stats", verifyToken, async (req: express.Request, res: express
       lastActive: userData?.lastActiveAt,
       categoriesCount: userData?.categories?.length || 0,
       currentRadius: userData?.radius_km || 2,
-      locationEnabled: userData?.preferences?.useCurrentLocation || false
+      locationEnabled: userData?.preferences?.useCurrentLocation || false,
+      pushNotificationsEnabled: !!userData?.fcmToken
     };
 
     res.status(200).json({
