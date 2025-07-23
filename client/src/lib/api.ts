@@ -97,17 +97,36 @@ export async function submitReport(data: Report) {
   }
 }
 
+const fetchWithTimeout = async (url:any, options:any, timeout = 10000) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if ((error as Error).name === 'AbortError') {
+      throw new Error('Request timeout');
+    }
+    throw error;
+  }
+};
+
 // Register new user
 export async function registerUser(userData: UserRegistrationData, token: string) {
   try {
     console.log('Registering user:', userData.email);
     
-    console.log('Using auth token:', token);
-    const res = await fetch(`${AUTH_ENDPOINT}/register`, {
+    const res = await fetchWithTimeout(`${AUTH_ENDPOINT}/register`, {
       method: "POST",
       headers: createAuthHeaders(token),
       body: JSON.stringify(userData),
-    });
+    }, 15000); // 15 second timeout for mobile
 
     if (!res.ok) {
       const errorText = await res.text();

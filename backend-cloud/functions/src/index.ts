@@ -10,6 +10,10 @@ import submitReportRoute from "./routes/userReports/submitReport";
 import authRoute from "./routes/auth/auth";
 import summaryRoute from "./routes/summary/getIncidents";
 import predictionsRoute from "./routes/predictions/predictions";
+import processedRoute from "./routes/processed/processed";
+
+// Import scheduled functions
+import { notifyUsersOnNewIncidents } from "./scheduler/notificationCron";
 
 const app = express();
 
@@ -100,8 +104,9 @@ app.get('/api/health', (req, res) => {
 app.use("/api/twitter-feed", twitterFeedRoute);
 app.use("/api/reports", submitReportRoute);
 app.use("/api", authRoute);
-app.use("/api/incidents", summaryRoute);
+app.use("/api/summary", summaryRoute);
 app.use("/api/predictions", predictionsRoute);
+app.use("/api/processed", processedRoute);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -140,3 +145,6 @@ app.use((req, res) => {
 
 // Export the function
 export const api = functions.https.onRequest(app);
+
+// Export scheduled functions
+export { notifyUsersOnNewIncidents };
