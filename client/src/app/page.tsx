@@ -561,7 +561,7 @@ export default function HomePage() {
     } catch (error) {
       console.error("Failed to fetch processed data:", error);
       // Only show toast for non-auth errors
-      if (error.message && !error.message.includes('auth')) {
+      if ((error as Error).message && !(error as Error).message.includes('auth')) {
         toast.error("Failed to fetch processed data");
       }
     }
