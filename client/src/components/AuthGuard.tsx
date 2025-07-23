@@ -30,9 +30,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
 
       // User is authenticated but not registered
       if (user && !isUserRegistered) {
-        if (currentPath !== '/register') {
-          router.push('/register');
-        }
+        router.push('/register');
         return;
       }
 
@@ -40,7 +38,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
       if (user && isUserRegistered) {
         // Redirect away from auth pages
         if (currentPath === '/signIn' || currentPath === '/register') {
-          router.push('/dashboard');
+          router.push('/');
           return;
         }
         

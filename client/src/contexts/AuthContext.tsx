@@ -53,6 +53,7 @@ interface AuthContextType {
   isUserRegistered: boolean;
   registrationLoading: boolean;
   fcmToken: string | null;
+  userProfile: UserData | null;
   signInWithGoogle: (additionalUserData?: Partial<UserData>) => Promise<User>;
   signOut: () => Promise<void>;
   registerUser: (additionalUserData?: Partial<UserData>) => Promise<any>;
@@ -87,6 +88,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isUserRegistered, setIsUserRegistered] = useState<boolean>(false);
   const [registrationLoading, setRegistrationLoading] = useState<boolean>(false);
   const [fcmToken, setFcmToken] = useState<string | null>(null);
+  const [userProfile, setUserProfile] = useState<UserData | null>(null);
+  
 
   // Initialize FCM token when component mounts
   useEffect(() => {
@@ -186,6 +189,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const result = await getUserProfile(token);
       if (result && result.user) {
         setIsUserRegistered(true);
+        setUserProfile(result.user);
+
       } else {
         setIsUserRegistered(false);
       }
@@ -359,6 +364,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     fcmToken,
     signInWithGoogle,
     signOut,
+    userProfile,
     registerUser: completeUserRegistration,
     checkUserRegistrationStatus,
     refreshFCMToken

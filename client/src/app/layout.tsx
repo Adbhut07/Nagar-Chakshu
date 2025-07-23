@@ -35,12 +35,12 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-            <Header />
-            <main className="flex-grow container mx-auto px-4 py-6">
+            <Header/>
+            <main className="flex-grow container mx-auto">
               {children}
             </main>
+            
           </AuthProvider>
-          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>
