@@ -2,7 +2,7 @@ import { Report } from "@/types/report";
 
 // API Configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api-m3fkgk42eq-uc.a.run.app/api";
-const REPORTS_ENDPOINT = `${API_BASE_URL}/api/reports`;
+const REPORTS_ENDPOINT = `${API_BASE_URL}/reports`;
 const AUTH_ENDPOINT = `${API_BASE_URL}`;
 
 // Types
@@ -390,3 +390,38 @@ export async function refreshFCMToken(newFcmToken: string, authToken: string) {
     return false;
   }
 }
+
+
+export async function fetchProcessedData(
+  location: { lat: number; lng: number },
+  radius: number,
+  token: string
+) {
+  try {
+    const queryParams = new URLSearchParams({
+      lat: location.lat.toString(),
+      lng: location.lng.toString(),
+      radius: radius.toString()
+    });
+
+    const res = await fetch(`${API_BASE_URL}/incidents?${queryParams.toString()}`, {
+      method: "GET",
+      headers: createAuthHeaders(token)
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Fetch processed data Error Response:", errorText);
+      throw new Error(`Failed to fetch processed data: ${res.status} ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch processed data error:", error);
+    throw error;
+  }
+}
+
+
+

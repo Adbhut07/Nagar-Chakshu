@@ -7,9 +7,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  experimental: {
-    serverComponentsExternalPackages: ['firebase-admin'],
-  },
+
+ serverExternalPackages:['firebase-admin'],
+  
   // Prevent prerender manifest issues
   trailingSlash: false,
   poweredByHeader: false,
