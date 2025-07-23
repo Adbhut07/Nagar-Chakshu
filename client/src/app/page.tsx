@@ -19,10 +19,25 @@ import {
   TrendingUp,
   CheckCircle2,
   ArrowRight,
-  ExternalLink
+  ExternalLink,
+  Map
 } from 'lucide-react';
 import Link from 'next/link';
 import FCMTestComponent from '@/components/CMTestComponent';
+import dynamic from 'next/dynamic';
+
+// Dynamic import to prevent SSR issues with Google Maps
+const MapDashboard = dynamic(() => import('@/components/MapDashboard'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-96 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Loading map...</p>
+      </div>
+    </div>
+  )
+});
 
 // Realistic mock data
 const cityStats = {
@@ -234,6 +249,29 @@ useEffect(() => {
                 <Button variant="outline" className="w-full mt-4">
                   View All Updates <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+              </CardContent>
+            </Card>
+
+            {/* Interactive City Map */}
+            <Card className="shadow-sm border-gray-200 dark:border-gray-700">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+                    <Map className="h-5 w-5 mr-2 text-blue-600" />
+                    Live City Map
+                  </CardTitle>
+                  <Link href="/dashboard">
+                    <Button variant="outline" size="sm">
+                      Full Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                  View real-time incidents and community reports across Bengaluru
+                </div>
+                <MapDashboard />
               </CardContent>
             </Card>
 
