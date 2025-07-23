@@ -423,10 +423,11 @@ export async function fetchProcessedData(
       radius: radius.toString()
     });
 
-    const res = await fetch(`${API_BASE_URL}/incidents?${queryParams.toString()}`, {
+    const res = await fetch(`${API_BASE_URL}/processed?${queryParams.toString()}`, {
       method: "GET",
       headers: createAuthHeaders(token)
     });
+
 
     if (!res.ok) {
       const errorText = await res.text();
