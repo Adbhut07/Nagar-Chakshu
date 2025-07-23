@@ -24,8 +24,8 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
   // Add your actual production domains here
-  'https://your-actual-domain.com',
-  'https://your-vercel-app.vercel.app',
+  'https://nagar-chakshu.vercel.app',
+  'https://nagar-chakshu-adbhut07s-projects.vercel.app',
   // Add your Firebase hosting domain if you're using it
   'https://your-project-id.web.app',
   'https://your-project-id.firebaseapp.com'
