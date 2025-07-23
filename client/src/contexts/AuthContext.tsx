@@ -252,79 +252,289 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   // Complete user registration with location and additional data
-  const completeUserRegistration = async (additionalUserData: Partial<UserData> = {}): Promise<any> => {
-    if (!user) {
-      throw new Error('No user found');
-    }
+  // const completeUserRegistration = async (additionalUserData: Partial<UserData> = {}): Promise<any> => {
+  //   if (!user) {
+  //     throw new Error('No user found');
+  //   }
 
-    try {
-      const token = await user.getIdToken();
+  //   try {
+  //     const token = await user.getIdToken();
 
-      // Get user location (optional)
-      let location: Location | null = null;
-      if (navigator.geolocation) {
-        try {
-          const position: GeolocationPosition = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, {
-              timeout: 10000,
-              enableHighAccuracy: true
-            });
-          });
-          location = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-        } catch (error) {
-          console.log('Location access denied or failed');
-        }
-      }
+  //     // Get user location (optional)
+  //     let location: Location | null = null;
+  //     if (navigator.geolocation) {
+  //       try {
+  //         const position: GeolocationPosition = await new Promise((resolve, reject) => {
+  //           navigator.geolocation.getCurrentPosition(resolve, reject, {
+  //             timeout: 10000,
+  //             enableHighAccuracy: true
+  //           });
+  //         });
+  //         location = {
+  //           lat: position.coords.latitude,
+  //           lng: position.coords.longitude
+  //         };
+  //       } catch (error) {
+  //         console.log('Location access denied or failed');
+  //       }
+  //     }
 
-      // CRITICAL: Always try to get fresh FCM token during registration
-      console.log('Getting FCM token for registration...');
-      let currentFcmToken = null;
+  //     // CRITICAL: Always try to get fresh FCM token during registration
+  //     console.log('Getting FCM token for registration...');
+  //     let currentFcmToken = null;
       
+  //     try {
+  //       // Try to get fresh token (this will ask for permission if not granted)
+  //       currentFcmToken = await getFCMToken();
+  //       if (currentFcmToken) {
+  //         setFcmToken(currentFcmToken);
+  //         console.log('Fresh FCM token obtained for registration:', currentFcmToken.substring(0, 20) + '...');
+  //       } else {
+  //         console.log('No FCM token available - user may have denied notifications');
+  //       }
+  //     } catch (fcmError) {
+  //       console.error('Error getting FCM token during registration:', fcmError);
+  //       // Continue with registration even if FCM fails
+  //     }
+
+  //     // Prepare user data for registration - match API structure
+  //     const userData: UserData = {
+  //       uid: user.uid,
+  //       name: user.displayName || '',
+  //       email: user.email || '',
+  //       profilePhotoUrl: user.photoURL || undefined,
+  //       location: location || { lat: 0, lng: 0 },
+  //       radius_km: 2,
+  //       categories: [],
+  //       notifications: {
+  //         enabled: true,
+  //         quietHours: null
+  //       },
+  //       preferences: {
+  //         useCurrentLocation: !!location,
+  //         manualLocality: null
+  //       },
+  //       fcmToken: currentFcmToken || undefined, // This will be null if token generation failed
+  //       ...additionalUserData
+  //     };
+
+  //     console.log('Registering user with FCM token:', currentFcmToken ? 'Present' : 'Null');
+  //     return await registerUserBackend(userData, token);
+  //   } catch (error) {
+  //     console.error('Error completing user registration:', error);
+  //     throw error;
+  //   }
+  // };
+  
+  // Complete user registration with location and additional data
+const completeUserRegistration = async (additionalUserData: Partial<UserData> = {}): Promise<any> => {
+  if (!user) {
+    throw new Error('No user found');
+  }
+
+  try {
+    console.log('Starting user registration process...');
+    
+    // Step 1: Get fresh auth token (force refresh for mobile reliability)
+    console.log('Step 1: Getting fresh auth token...');
+    const token = await user.getIdToken(true); // Force refresh
+    console.log('Auth token obtained successfully');
+
+    // Step 2: Detect device type for mobile-specific handling
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    console.log('Device type detected:', isMobile ? 'Mobile' : 'Desktop');
+
+    // Step 4: Get user location (with timeout and error handling)
+    console.log('Step 4: Attempting to get user location...');
+    let location: Location | null = null;
+    
+    if (navigator.geolocation) {
       try {
-        // Try to get fresh token (this will ask for permission if not granted)
-        currentFcmToken = await getFCMToken();
-        if (currentFcmToken) {
-          setFcmToken(currentFcmToken);
-          console.log('Fresh FCM token obtained for registration:', currentFcmToken.substring(0, 20) + '...');
-        } else {
-          console.log('No FCM token available - user may have denied notifications');
-        }
-      } catch (fcmError) {
-        console.error('Error getting FCM token during registration:', fcmError);
-        // Continue with registration even if FCM fails
+        const position: GeolocationPosition = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+            resolve, 
+            reject, 
+            {
+              timeout: isMobile ? 15000 : 10000, // Longer timeout for mobile
+              enableHighAccuracy: true,
+              maximumAge: 60000 // Accept cached location up to 1 minute old
+            }
+          );
+        });
+        
+        location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        console.log('Location obtained successfully:', location);
+      } catch (locationError) {
+        console.log('Location access denied or failed:', locationError);
+        // Continue without location - it's not critical
+      }
+    } else {
+      console.log('Geolocation not supported by browser');
+    }
+
+    // Step 5: Get FCM token (non-blocking, with retries)
+    console.log('Step 5: Attempting to get FCM token...');
+    let currentFcmToken = null;
+    
+    try {
+      // Mobile devices might need more time for FCM initialization
+      if (isMobile) {
+        console.log('Mobile device detected, adding initialization delay...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
 
-      // Prepare user data for registration - match API structure
-      const userData: UserData = {
-        uid: user.uid,
-        name: user.displayName || '',
-        email: user.email || '',
-        profilePhotoUrl: user.photoURL || undefined,
-        location: location || { lat: 0, lng: 0 },
-        radius_km: 2,
-        categories: [],
-        notifications: {
-          enabled: true,
-          quietHours: null
-        },
-        preferences: {
-          useCurrentLocation: !!location,
-          manualLocality: null
-        },
-        fcmToken: currentFcmToken || undefined, // This will be null if token generation failed
-        ...additionalUserData
-      };
+      // Try to get FCM token with retry logic
+      let fcmAttempts = 0;
+      const maxFcmAttempts = isMobile ? 3 : 2;
+      
+      while (fcmAttempts < maxFcmAttempts && !currentFcmToken) {
+        try {
+          console.log(`FCM token attempt ${fcmAttempts + 1}/${maxFcmAttempts}`);
+          currentFcmToken = await getFCMToken();
+          
+          if (currentFcmToken) {
+            setFcmToken(currentFcmToken);
+            console.log('FCM token obtained successfully:', currentFcmToken.substring(0, 20) + '...');
+            break;
+          }
+        } catch (fcmError) {
+          console.error(`FCM attempt ${fcmAttempts + 1} failed:`, fcmError);
+        }
+        
+        fcmAttempts++;
+        if (fcmAttempts < maxFcmAttempts) {
+          console.log(`Retrying FCM token in ${fcmAttempts * 1000}ms...`);
+          await new Promise(resolve => setTimeout(resolve, fcmAttempts * 1000));
+        }
+      }
 
-      console.log('Registering user with FCM token:', currentFcmToken ? 'Present' : 'Null');
-      return await registerUserBackend(userData, token);
-    } catch (error) {
-      console.error('Error completing user registration:', error);
-      throw error;
+      if (!currentFcmToken) {
+        console.log('FCM token generation failed after all attempts - continuing without notifications');
+      }
+    } catch (fcmError) {
+      console.error('FCM token generation failed:', fcmError);
+      // Continue registration without FCM token - notifications are not critical
     }
-  };
+
+    // Step 6: Prepare user data for registration
+    console.log('Step 6: Preparing user data...');
+    const userData: UserData = {
+      uid: user.uid,
+      name: user.displayName || '',
+      email: user.email || '',
+      profilePhotoUrl: user.photoURL || undefined,
+      location: location || { lat: 0, lng: 0 }, // Default location if not available
+      radius_km: 2, // Default radius
+      categories: [], // Default empty categories
+      notifications: {
+        enabled: true,
+        quietHours: null
+      },
+      preferences: {
+        useCurrentLocation: !!location,
+        manualLocality: null
+      },
+      fcmToken: currentFcmToken || undefined,
+      ...additionalUserData // Override with provided data
+    };
+
+    console.log('User data prepared:', {
+      ...userData,
+      fcmToken: userData.fcmToken ? 'Present' : 'Not available'
+    });
+
+    // Step 7: Register user with backend (with retry logic)
+    console.log('Step 7: Registering user with backend...');
+    let registrationAttempts = 0;
+    const maxRegistrationAttempts = 3;
+    let lastError = null;
+
+    while (registrationAttempts < maxRegistrationAttempts) {
+      try {
+        console.log(`Registration attempt ${registrationAttempts + 1}/${maxRegistrationAttempts}`);
+        
+        const result = await registerUserBackend(userData, token);
+        console.log('User registration completed successfully:', result);
+        return result;
+        
+      } catch (registrationError: any) {
+        console.error(`Registration attempt ${registrationAttempts + 1} failed:`, registrationError);
+        lastError = registrationError;
+        registrationAttempts++;
+
+        // Don't retry on certain errors (like authentication failures)
+        if (registrationError.message?.includes('401') || 
+            registrationError.message?.includes('403') ||
+            registrationError.message?.includes('Invalid token')) {
+          console.log('Authentication error detected, not retrying');
+          throw registrationError;
+        }
+
+        // Don't retry on the last attempt
+        if (registrationAttempts >= maxRegistrationAttempts) {
+          break;
+        }
+
+        // Wait before retry (exponential backoff)
+        const waitTime = Math.min(1000 * Math.pow(2, registrationAttempts - 1), 5000);
+        console.log(`Waiting ${waitTime}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+
+        // Get fresh token for retry
+        try {
+          const freshToken = await user.getIdToken(true);
+          userData.fcmToken = currentFcmToken || undefined; 
+          console.log('Fresh token obtained for retry');
+        } catch (tokenError) {
+          console.error('Failed to get fresh token for retry:', tokenError);
+          throw new Error('Authentication failed during retry');
+        }
+      }
+    }
+
+    // If we get here, all attempts failed
+    console.error('All registration attempts failed');
+    throw lastError || new Error('Registration failed after multiple attempts');
+
+  } catch (error: any) {
+    console.error('Error completing user registration:', error);
+    
+    // Provide user-friendly error messages
+    if (error.message?.includes('Failed to fetch')) {
+      throw new Error('Network connection error. Please check your internet connection and try again.');
+    } else if (error.message?.includes('timeout')) {
+      throw new Error('Request timed out. Please try again.');
+    } else if (error.message?.includes('auth')) {
+      throw new Error('Authentication error. Please sign in again.');
+    } else {
+      throw new Error(error.message || 'Registration failed. Please try again.');
+    }
+  }
+};
+
+// Helper function with timeout support
+const fetchWithTimeout = async (url: string, options: any, timeout = 15000) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('Request timeout - please check your connection and try again');
+    }
+    throw error;
+  }
+};
 
   // Sign out
   const signOut = async (): Promise<void> => {
