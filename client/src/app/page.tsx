@@ -422,17 +422,16 @@ import LiveData from "@/components/LiveData"
 import ProtectedRoute from '@/components/AuthGuard';
 
 
-const API_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api/';
-
 export default function HomePage() {
   const [showReportModal, setShowReportModal] = useState(false)
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 })
+  const [processedData, setProcessedData] = useState<any>(null)
 
   const openModal = () => setShowReportModal(true)
   const closeModal = () => setShowReportModal(false)
 
   const { user } = useAuth()
-  const {userProfile} = useAuth()
+  const { userProfile } = useAuth()
 
 
   useEffect(() => {
@@ -477,14 +476,17 @@ export default function HomePage() {
       const token = await user.getIdToken(true);
       if (!token) throw new Error("Auth token missing");
 
-      const radius = (userProfile?.radius_km || 5)*1000; // Default to 5km if not set
+
+      //TODO change this radius back to userProfile?.radius_km
+      // const radius = (userProfile?.radius_km || 5)*1000; // Default to 5km if not set
+      const radius = 10000000;
 
       const result = await fetchProcessedData(
         { lat: location.latitude, lng: location.longitude },
         radius,
         token
       );
-      console.log("Processed data:", result);
+      setProcessedData(result.processed_data);
     } catch (error) {
       console.error("Failed to fetch processed data:", error);
       toast.error("Failed to fetch processed data");
@@ -616,7 +618,11 @@ export default function HomePage() {
       {/* Submit Report Modal */}
       <AnimatePresence>{showReportModal && <UserSubmitReport onClose={closeModal} />}</AnimatePresence>
 
-      <LiveData />
+
+      <div className="min-h-screen bg-black p-8 flex items-center justify-center">
+              <LiveData processedData={processedData} />
+      </div>
+      
     </div>
 
     </ProtectedRoute>
