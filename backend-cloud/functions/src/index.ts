@@ -11,9 +11,16 @@ import authRoute from "./routes/auth/auth";
 import summaryRoute from "./routes/summary/getIncidents";
 import predictionsRoute from "./routes/predictions/predictions";
 import processedRoute from "./routes/processed/processed";
+import aiSearchRoute from "./ai-search/aiSearch";
 
 // Import scheduled functions
 import { notifyUsersOnNewIncidents } from "./scheduler/notificationCron";
+import { 
+  syncFirestoreToVertexAI, 
+  syncOnDocumentChange, 
+  syncOnDocumentDelete, 
+  fullSyncFirestoreToVertexAI 
+} from "./scheduler/scheduledSync";
 
 const app = express();
 
@@ -107,6 +114,7 @@ app.use("/api", authRoute);
 app.use("/api/summary", summaryRoute);
 app.use("/api/predictions", predictionsRoute);
 app.use("/api/processed", processedRoute);
+app.use("/api/ai-search", aiSearchRoute);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -148,3 +156,11 @@ export const api = functions.https.onRequest(app);
 
 // Export scheduled functions
 export { notifyUsersOnNewIncidents };
+
+// Export Vertex AI sync functions
+export { 
+  syncFirestoreToVertexAI, 
+  syncOnDocumentChange, 
+  syncOnDocumentDelete, 
+  fullSyncFirestoreToVertexAI 
+};
