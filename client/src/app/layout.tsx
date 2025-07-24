@@ -31,13 +31,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen  flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             <Header/>
-            <main className="flex-grow container mx-auto">
-              {children}
+            <main className=" ">
+              <div>{children}</div>
             </main>
             
           </AuthProvider>
