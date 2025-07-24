@@ -8,9 +8,7 @@ type SummarizedDataItem = {
   summary: string
   advice: string
   occurrences: number
-  resolution_time: {
-    _nanoseconds: number
-  }
+  resolution_time: any
   categories: string[]
   location: string
 }
@@ -112,12 +110,34 @@ const SummarizedData: React.FC<LiveDataProps> = ({ summarizedData, setHideLiveDa
     return badgeColors[index % badgeColors.length]
   }
 
-  const formatResolutionTime = (nanoseconds: number) => {
-    const hours = Math.floor(nanoseconds / 3600000000000)
-    const minutes = Math.floor((nanoseconds % 3600000000000) / 60000000000)
-    if (hours > 0) return `${hours}h ${minutes}m`
-    return `${minutes}m`
+
+ 
+
+const getEtaText = (data: SummarizedDataItem) => {
+  const etaInSeconds = data.resolution_time._seconds;
+  const nowInSeconds = Math.floor(Date.now() / 1000);
+  const remainingSeconds = etaInSeconds - nowInSeconds;
+
+  if (remainingSeconds > 0) {
+    const days = Math.floor(remainingSeconds / 86400);
+    const hours = Math.floor((remainingSeconds % 86400) / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
+    
+    let etaText = '';
+    
+    if (days > 0) {
+      etaText = hours > 0 ? `${days}d ${hours}h ${minutes}m` : `${days}d ${minutes}m`;
+    } else if (hours > 0) {
+      etaText = `${hours}h ${minutes}m`;
+    } else {
+      etaText = `${minutes}m`;
+    }
+
+    return <p>ETA: {etaText}</p>;
+  } else {
+    return <p>Resolved</p>;
   }
+};
 
   useEffect(() => {
     if (!isLoading) {
@@ -184,13 +204,12 @@ const SummarizedData: React.FC<LiveDataProps> = ({ summarizedData, setHideLiveDa
               {loadingSteps.map((step, index) => (
                 <div key={index} className="flex flex-col items-center space-y-2">
                   <div
-                    className={`w-4 h-4 rounded-full transition-all duration-700 shadow-lg ${
-                      index < loadingStep
+                    className={`w-4 h-4 rounded-full transition-all duration-700 shadow-lg ${index < loadingStep
                         ? "bg-gradient-to-r from-green-400 to-green-500 shadow-green-400/50"
                         : index === loadingStep
                           ? `bg-gradient-to-r ${step.color} shadow-lg animate-pulse`
                           : "bg-slate-600 shadow-slate-600/30"
-                    }`}
+                      }`}
                   />
                   <div className="text-xs text-slate-500 font-medium opacity-60">{index + 1}</div>
                 </div>
@@ -299,7 +318,7 @@ const SummarizedData: React.FC<LiveDataProps> = ({ summarizedData, setHideLiveDa
                       <div className="flex items-center gap-2 text-slate-400 group-hover:text-slate-300 transition-colors duration-200">
                         <Clock className="w-4 h-4 flex-shrink-0" />
                         <span className="text-xs font-medium">
-                          ETA: {formatResolutionTime(data.resolution_time._nanoseconds)}
+                         {getEtaText(data)}
                         </span>
                       </div>
                     )}
