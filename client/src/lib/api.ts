@@ -443,37 +443,5 @@ export async function fetchProcessedData(
   }
 }
 
-export async function fetchSummarizedData(
-  location: { lat: number; lng: number },
-  radius: number,
-  token: string
-) {
-  try {
-    const queryParams = new URLSearchParams({
-      lat: location.lat.toString(),
-      lng: location.lng.toString(),
-      radius: radius.toString()
-    });
-
-    const res = await fetch(`${API_BASE_URL}/summary?${queryParams.toString()}`, {
-      method: "GET",
-      headers: createAuthHeaders(token)
-    });
-
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Fetch summarized data Error Response:", errorText);
-      throw new Error(`Failed to fetch summarized data: ${res.status} ${res.statusText}`);
-    }
-
-    const result = await res.json();
-    return result;
-  } catch (error) {
-    console.error("Fetch summarized data error:", error);
-    throw error;
-  }
-}
-
 
 
