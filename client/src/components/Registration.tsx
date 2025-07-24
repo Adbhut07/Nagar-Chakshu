@@ -1,36 +1,48 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { useAuth } from "../contexts/AuthContext"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface AdditionalUserData {
-  radius_km?: number
-  categories?: string[]
+  radius_km?: number;
+  categories?: string[];
   notifications?: {
-    enabled?: boolean
-    quietHours?: any
-  }
+    enabled?: boolean;
+    quietHours?: any;
+  };
   preferences?: {
-    useCurrentLocation?: boolean
-    manualLocality?: string | null
-  }
-  fcmToken?: string
+    useCurrentLocation?: boolean;
+    manualLocality?: string | null;
+  };
+  fcmToken?: string;
 }
 
 const Registration: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
-  const [radius, setRadius] = useState<number>(5)
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(["Events", "Traffic"])
-  const [useCurrentLocation, setUseCurrentLocation] = useState<boolean>(true)
-  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(true)
-  const [currentUseCaseIndex, setCurrentUseCaseIndex] = useState(0)
-  const { user, registerUser } = useAuth()
-  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [radius, setRadius] = useState<number>(5);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    "Events",
+    "Traffic",
+  ]);
+  const [useCurrentLocation, setUseCurrentLocation] = useState<boolean>(true);
+  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(true);
+  const [currentUseCaseIndex, setCurrentUseCaseIndex] = useState(0);
+  const {
+    user,
+    registerUser,
+    fcmToken,
+    isTokenReady,
+    notificationPermissionStatus,
+    requestTokenManually,
+  } = useAuth();
+  const router = useRouter();
+  const [fcmTokenStatus, setFcmTokenStatus] = useState<string>('Checking...')
+
 
   const useCases = [
     "Monitor real-time traffic conditions and find optimal routes",
@@ -39,7 +51,7 @@ const Registration: React.FC = () => {
     "Report and track infrastructure issues like fallen trees",
     "Receive emergency notifications for fire incidents",
     "Access educational resources and transportation updates",
-  ]
+  ];
 
   const availableCategories = [
     { name: "Water-Logging", color: "bg-blue-500" },
@@ -50,61 +62,100 @@ const Registration: React.FC = () => {
     { name: "Education", color: "bg-indigo-500" },
     { name: "Transportation", color: "bg-yellow-500" },
     { name: "Services", color: "bg-pink-500" },
-  ]
+  ];
+
+  useEffect(() => {
+  if (isTokenReady) {
+    if (fcmToken) {
+      setFcmTokenStatus('✓ Ready')
+    } else if (notificationPermissionStatus === 'denied') {
+      setFcmTokenStatus('Notifications disabled')
+    } else {
+      setFcmTokenStatus('Not available')
+    }
+  } else {
+    setFcmTokenStatus('Loading...')
+  }
+}, [fcmToken, isTokenReady, notificationPermissionStatus])
+
 
   // Animate use cases
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentUseCaseIndex((prev) => (prev + 1) % useCases.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [useCases.length])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentUseCaseIndex((prev) => (prev + 1) % useCases.length);
+  //   }, 3000);
+  //   return () => clearInterval(interval);
+  // }, [useCases.length]);
 
   const handleCategoryToggle = (category: string) => {
     setSelectedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
-    )
-  }
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
 
   const handleRegistration = async (): Promise<void> => {
-    if (!user) {
-      setError("No user found. Please sign in first.")
-      return
-    }
-
-    try {
-      setLoading(true)
-      setError(null)
-
-      const additionalData: AdditionalUserData = {
-        radius_km: radius,
-        categories: selectedCategories,
-        notifications: {
-          enabled: notificationsEnabled,
-          quietHours: null,
-        },
-        preferences: {
-          useCurrentLocation: useCurrentLocation,
-          manualLocality: useCurrentLocation ? null : "Manual location not set",
-        },
-      }
-
-      await registerUser(additionalData)
-      router.push("/dashboard")
-    } catch (error: any) {
-      console.error("Registration error:", error)
-      setError(error.message || "Failed to complete registration")
-    } finally {
-      setLoading(false)
-    }
+  if (!user) {
+    setError("No user found. Please sign in first.")
+    return
   }
+
+  try {
+    setLoading(true)
+    setError(null)
+
+    // If notifications are enabled but no token and not ready, try to get it
+    if (notificationsEnabled && !fcmToken && !isTokenReady) {
+      console.log('Attempting to get FCM token before registration...')
+      try {
+        await requestTokenManually()
+        // Wait a bit for the token to be set
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      } catch (error) {
+        console.log('Could not get FCM token, proceeding without it')
+      }
+    }
+
+    const additionalData: AdditionalUserData = {
+      radius_km: radius,
+      categories: selectedCategories,
+      notifications: {
+        enabled: notificationsEnabled,
+        quietHours: null,
+      },
+      preferences: {
+        useCurrentLocation: useCurrentLocation,
+        manualLocality: useCurrentLocation ? null : "Manual location not set",
+      },
+    }
+
+    console.log('Starting registration with FCM token:', fcmToken ? 'Available' : 'Not available')
+    await registerUser(additionalData)
+    router.push("/dashboard")
+  } catch (error: any) {
+    console.error("Registration error:", error)
+    setError(error.message || "Failed to complete registration")
+  } finally {
+    setLoading(false)
+  }
+}
 
   if (!user) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center"
+        >
           <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-orange-500 rounded-lg flex items-center justify-center">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -113,7 +164,9 @@ const Registration: React.FC = () => {
               />
             </svg>
           </div>
-          <p className="text-white/60 mb-6 text-lg">Please sign in first to continue</p>
+          <p className="text-white/60 mb-6 text-lg">
+            Please sign in first to continue
+          </p>
           <button
             onClick={() => router.push("/signIn")}
             className="px-8 py-3 bg-white text-black font-medium rounded-lg hover:bg-white/90 transition-all duration-300"
@@ -122,7 +175,7 @@ const Registration: React.FC = () => {
           </button>
         </motion.div>
       </div>
-    )
+    );
   }
 
   return (
@@ -142,7 +195,9 @@ const Registration: React.FC = () => {
                 Chakshu
               </span>
             </h1>
-            <p className="text-white/60 text-base sm:text-lg">AI-powered civic monitoring platform</p>
+            <p className="text-white/60 text-base sm:text-lg">
+              AI-powered civic monitoring platform
+            </p>
           </motion.div>
 
           {/* Fixed height container to prevent layout shifts */}
@@ -174,7 +229,9 @@ const Registration: React.FC = () => {
           className="w-full max-w-md"
         >
           <div className="mb-6 lg:mb-8">
-            <h2 className="text-xl sm:text-2xl font-light text-white mb-2">Complete Registration</h2>
+            <h2 className="text-xl sm:text-2xl font-light text-white mb-2">
+              Complete Registration
+            </h2>
             <p className="text-white/60 text-sm">Set up your preferences</p>
           </div>
 
@@ -186,7 +243,9 @@ const Registration: React.FC = () => {
               className="w-10 h-10 rounded-full mr-3 border border-white/20"
             />
             <div>
-              <div className="text-white text-sm font-medium">{user.displayName}</div>
+              <div className="text-white text-sm font-medium">
+                {user.displayName}
+              </div>
               <div className="text-white/50 text-xs">{user.email}</div>
             </div>
           </div>
@@ -209,7 +268,8 @@ const Registration: React.FC = () => {
             {/* Search Radius */}
             <div>
               <label className="block text-white text-sm font-medium mb-2">
-                Search Radius: <span className="text-purple-400">{radius} km</span>
+                Search Radius:{" "}
+                <span className="text-purple-400">{radius} km</span>
               </label>
               <input
                 type="range"
@@ -227,7 +287,9 @@ const Registration: React.FC = () => {
 
             {/* Categories */}
             <div>
-              <label className="block text-white text-sm font-medium mb-3">Categories of Interest</label>
+              <label className="block text-white text-sm font-medium mb-3">
+                Categories of Interest
+              </label>
               <div className="flex flex-wrap gap-2">
                 {availableCategories.map((category) => (
                   <button
@@ -255,7 +317,9 @@ const Registration: React.FC = () => {
                   onChange={(e) => setUseCurrentLocation(e.target.checked)}
                   className="w-4 h-4 text-purple-500 bg-transparent border-white/30 rounded focus:ring-purple-500 focus:ring-2"
                 />
-                <span className="text-white/80 text-sm">Use current location</span>
+                <span className="text-white/80 text-sm">
+                  Use current location
+                </span>
               </label>
 
               <label className="flex items-center space-x-3 cursor-pointer">
@@ -265,7 +329,9 @@ const Registration: React.FC = () => {
                   onChange={(e) => setNotificationsEnabled(e.target.checked)}
                   className="w-4 h-4 text-orange-500 bg-transparent border-white/30 rounded focus:ring-orange-500 focus:ring-2"
                 />
-                <span className="text-white/80 text-sm">Enable notifications</span>
+                <span className="text-white/80 text-sm">
+                  Enable notifications
+                </span>
               </label>
             </div>
 
@@ -286,9 +352,29 @@ const Registration: React.FC = () => {
             </button>
           </div>
 
+          {/* FCM Token Status */}
+<div className="mb-4 p-3 bg-white/5 border border-white/10 rounded text-sm">
+  <div className="flex justify-between items-center">
+    <span className="text-white/60">Notification Token:</span>
+    <span className={`text-xs ${
+      fcmTokenStatus === '✓ Ready' ? 'text-green-400' : 
+      fcmTokenStatus === 'Notifications disabled' ? 'text-yellow-400' : 
+      'text-white/40'
+    }`}>
+      {fcmTokenStatus}
+    </span>
+  </div>
+  {fcmToken && (
+    <div className="text-xs text-white/30 mt-1 font-mono">
+      {fcmToken.substring(0, 20)}...
+    </div>
+  )}
+</div>
+
           <div className="mt-6 text-center">
             <p className="text-white/40 text-xs">
-              Selected {selectedCategories.length} of {availableCategories.length} categories
+              Selected {selectedCategories.length} of{" "}
+              {availableCategories.length} categories
             </p>
           </div>
         </motion.div>
@@ -314,7 +400,7 @@ const Registration: React.FC = () => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default Registration
+export default Registration;

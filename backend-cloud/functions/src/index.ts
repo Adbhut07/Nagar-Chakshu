@@ -30,6 +30,8 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
+  'https://localhost:3000',
+  'https://192.168.18.159:3000',
   // Add your actual production domains here
   'https://nagar-chakshu.vercel.app',
   'https://nagar-chakshu-adbhut07s-projects.vercel.app',
