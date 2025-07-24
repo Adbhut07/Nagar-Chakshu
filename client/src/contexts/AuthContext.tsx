@@ -7,7 +7,8 @@ import {
   signOut as firebaseSignOut,
   User
 } from 'firebase/auth';
-import { auth, googleProvider, getFCMToken, onForegroundMessage } from '@/lib/firebase';
+import { auth, googleProvider, fetchToken } from '@/lib/firebase';
+import useFcmToken from '@/hooks/useFcmToken';
 
 // Types
 interface Location {
@@ -53,12 +54,15 @@ interface AuthContextType {
   isUserRegistered: boolean;
   registrationLoading: boolean;
   fcmToken: string | null;
+  notificationPermissionStatus: NotificationPermission | null;
   userProfile: UserData | null;
+  isTokenReady: boolean; // Add this
   signInWithGoogle: (additionalUserData?: Partial<UserData>) => Promise<User>;
   signOut: () => Promise<void>;
   registerUser: (additionalUserData?: Partial<UserData>) => Promise<any>;
   checkUserRegistrationStatus: () => Promise<void>;
   refreshFCMToken: () => Promise<void>;
+  requestTokenManually: () => Promise<string | null>; // Add this
 }
 
 interface AuthProviderProps {
@@ -87,49 +91,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isUserRegistered, setIsUserRegistered] = useState<boolean>(false);
   const [registrationLoading, setRegistrationLoading] = useState<boolean>(false);
-  const [fcmToken, setFcmToken] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<UserData | null>(null);
   
+  // Use the FCM token hook for managing notifications
+  // This hook handles token generation, permission requests, and message listening
+  const { token: fcmToken, notificationPermissionStatus, isTokenReady, requestTokenManually } = useFcmToken();
+  
 
-  // Initialize FCM token when component mounts
-  useEffect(() => {
-    const initializeFCM = async () => {
-      try {
-        console.log('Initializing FCM token...');
-        const token = await getFCMToken();
-        if (token) {
-          setFcmToken(token);
-          console.log('FCM token initialized successfully:', token.substring(0, 20) + '...');
-        } else {
-          console.log('No FCM token received');
-        }
-      } catch (error) {
-        console.error('Error initializing FCM:', error);
-      }
-    };
-
-    // Add a small delay to ensure the page is fully loaded
-    setTimeout(() => {
-      initializeFCM();
-    }, 1000);
-
-    // Set up foreground message listener
-    const unsubscribeFromMessages = onForegroundMessage((payload) => {
-      console.log('Foreground message received:', payload);
-      // Handle foreground notifications here
-      // You can show a toast, update UI, etc.
-    });
-
-    return unsubscribeFromMessages;
-  }, []);
-
-  // Refresh FCM token function
+  // Refresh FCM token function - now using fetchToken from updated firebase.ts
   const refreshFCMToken = async (): Promise<void> => {
     try {
-      const newToken = await getFCMToken();
+      const newToken = await fetchToken();
       if (newToken && newToken !== fcmToken) {
-        setFcmToken(newToken);
-        
         // If user is logged in and registered, update the token in backend
         if (user && isUserRegistered) {
           const authToken = await user.getIdToken();
@@ -335,17 +308,17 @@ const completeUserRegistration = async (additionalUserData: Partial<UserData> = 
   try {
     console.log('Starting user registration process...');
     
-    // Step 1: Get fresh auth token (force refresh for mobile reliability)
+    // Step 1: Get fresh auth token
     console.log('Step 1: Getting fresh auth token...');
-    const token = await user.getIdToken(true); // Force refresh
+    const token = await user.getIdToken(true);
     console.log('Auth token obtained successfully');
 
-    // Step 2: Detect device type for mobile-specific handling
+    // Step 2: Detect device type
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     console.log('Device type detected:', isMobile ? 'Mobile' : 'Desktop');
 
-    // Step 4: Get user location (with timeout and error handling)
-    console.log('Step 4: Attempting to get user location...');
+    // Step 3: Get user location
+    console.log('Step 3: Attempting to get user location...');
     let location: Location | null = null;
     
     if (navigator.geolocation) {
@@ -355,9 +328,9 @@ const completeUserRegistration = async (additionalUserData: Partial<UserData> = 
             resolve, 
             reject, 
             {
-              timeout: isMobile ? 15000 : 10000, // Longer timeout for mobile
+              timeout: isMobile ? 15000 : 10000,
               enableHighAccuracy: true,
-              maximumAge: 60000 // Accept cached location up to 1 minute old
+              maximumAge: 60000
             }
           );
         });
@@ -369,66 +342,52 @@ const completeUserRegistration = async (additionalUserData: Partial<UserData> = 
         console.log('Location obtained successfully:', location);
       } catch (locationError) {
         console.log('Location access denied or failed:', locationError);
-        // Continue without location - it's not critical
       }
-    } else {
-      console.log('Geolocation not supported by browser');
     }
 
-    // Step 5: Get FCM token (non-blocking, with retries)
-    console.log('Step 5: Attempting to get FCM token...');
-    let currentFcmToken = null;
+    // Step 4: Handle FCM token - wait for it to be ready or request manually
+    console.log('Step 4: Handling FCM token...');
+    let currentFcmToken = fcmToken;
     
-    try {
-      // Mobile devices might need more time for FCM initialization
-      if (isMobile) {
-        console.log('Mobile device detected, adding initialization delay...');
-        await new Promise(resolve => setTimeout(resolve, 2000));
+    // If token is not ready, try to get it manually
+    if (!currentFcmToken && !isTokenReady) {
+      console.log('FCM token not ready, requesting manually...');
+      try {
+        currentFcmToken = await requestTokenManually();
+      } catch (error) {
+        console.error('Manual FCM token request failed:', error);
       }
-
-      // Try to get FCM token with retry logic
-      let fcmAttempts = 0;
-      const maxFcmAttempts = isMobile ? 3 : 2;
-      
-      while (fcmAttempts < maxFcmAttempts && !currentFcmToken) {
-        try {
-          console.log(`FCM token attempt ${fcmAttempts + 1}/${maxFcmAttempts}`);
-          currentFcmToken = await getFCMToken();
-          
-          if (currentFcmToken) {
-            setFcmToken(currentFcmToken);
-            console.log('FCM token obtained successfully:', currentFcmToken.substring(0, 20) + '...');
-            break;
-          }
-        } catch (fcmError) {
-          console.error(`FCM attempt ${fcmAttempts + 1} failed:`, fcmError);
+    }
+    
+    // Final fallback - try fetchToken directly
+    if (!currentFcmToken) {
+      console.log('Attempting final FCM token fetch...');
+      try {
+        currentFcmToken = await fetchToken();
+        if (currentFcmToken) {
+          console.log('Final fallback FCM token obtained:', currentFcmToken.substring(0, 20) + '...');
         }
-        
-        fcmAttempts++;
-        if (fcmAttempts < maxFcmAttempts) {
-          console.log(`Retrying FCM token in ${fcmAttempts * 1000}ms...`);
-          await new Promise(resolve => setTimeout(resolve, fcmAttempts * 1000));
-        }
+      } catch (fcmError) {
+        console.error('Final FCM token fetch failed:', fcmError);
       }
-
-      if (!currentFcmToken) {
-        console.log('FCM token generation failed after all attempts - continuing without notifications');
-      }
-    } catch (fcmError) {
-      console.error('FCM token generation failed:', fcmError);
-      // Continue registration without FCM token - notifications are not critical
     }
 
-    // Step 6: Prepare user data for registration
-    console.log('Step 6: Preparing user data...');
+    if (currentFcmToken) {
+      console.log('FCM token available for registration:', currentFcmToken.substring(0, 20) + '...');
+    } else {
+      console.log('No FCM token available - proceeding without notifications');
+    }
+
+    // Step 5: Prepare user data
+    console.log('Step 5: Preparing user data...');
     const userData: UserData = {
       uid: user.uid,
       name: user.displayName || '',
       email: user.email || '',
       profilePhotoUrl: user.photoURL || undefined,
-      location: location || { lat: 0, lng: 0 }, // Default location if not available
-      radius_km: 2, // Default radius
-      categories: [], // Default empty categories
+      location: location || { lat: 0, lng: 0 },
+      radius_km: 2,
+      categories: [],
       notifications: {
         enabled: true,
         quietHours: null
@@ -438,80 +397,20 @@ const completeUserRegistration = async (additionalUserData: Partial<UserData> = 
         manualLocality: null
       },
       fcmToken: currentFcmToken || undefined,
-      ...additionalUserData // Override with provided data
+      ...additionalUserData
     };
 
-    console.log('User data prepared:', {
-      ...userData,
-      fcmToken: userData.fcmToken ? 'Present' : 'Not available'
-    });
+    console.log('User data prepared with FCM token:', userData.fcmToken ? 'Present' : 'Not available');
 
-    // Step 7: Register user with backend (with retry logic)
-    console.log('Step 7: Registering user with backend...');
-    let registrationAttempts = 0;
-    const maxRegistrationAttempts = 3;
-    let lastError = null;
-
-    while (registrationAttempts < maxRegistrationAttempts) {
-      try {
-        console.log(`Registration attempt ${registrationAttempts + 1}/${maxRegistrationAttempts}`);
-        
-        const result = await registerUserBackend(userData, token);
-        console.log('User registration completed successfully:', result);
-        return result;
-        
-      } catch (registrationError: any) {
-        console.error(`Registration attempt ${registrationAttempts + 1} failed:`, registrationError);
-        lastError = registrationError;
-        registrationAttempts++;
-
-        // Don't retry on certain errors (like authentication failures)
-        if (registrationError.message?.includes('401') || 
-            registrationError.message?.includes('403') ||
-            registrationError.message?.includes('Invalid token')) {
-          console.log('Authentication error detected, not retrying');
-          throw registrationError;
-        }
-
-        // Don't retry on the last attempt
-        if (registrationAttempts >= maxRegistrationAttempts) {
-          break;
-        }
-
-        // Wait before retry (exponential backoff)
-        const waitTime = Math.min(1000 * Math.pow(2, registrationAttempts - 1), 5000);
-        console.log(`Waiting ${waitTime}ms before retry...`);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
-
-        // Get fresh token for retry
-        try {
-          const freshToken = await user.getIdToken(true);
-          userData.fcmToken = currentFcmToken || undefined; 
-          console.log('Fresh token obtained for retry');
-        } catch (tokenError) {
-          console.error('Failed to get fresh token for retry:', tokenError);
-          throw new Error('Authentication failed during retry');
-        }
-      }
-    }
-
-    // If we get here, all attempts failed
-    console.error('All registration attempts failed');
-    throw lastError || new Error('Registration failed after multiple attempts');
+    // Step 6: Register with backend
+    console.log('Step 6: Registering user with backend...');
+    const result = await registerUserBackend(userData, token);
+    console.log('User registration completed successfully:', result);
+    return result;
 
   } catch (error: any) {
     console.error('Error completing user registration:', error);
-    
-    // Provide user-friendly error messages
-    if (error.message?.includes('Failed to fetch')) {
-      throw new Error('Network connection error. Please check your internet connection and try again.');
-    } else if (error.message?.includes('timeout')) {
-      throw new Error('Request timed out. Please try again.');
-    } else if (error.message?.includes('auth')) {
-      throw new Error('Authentication error. Please sign in again.');
-    } else {
-      throw new Error(error.message || 'Registration failed. Please try again.');
-    }
+    throw new Error(error.message || 'Registration failed. Please try again.');
   }
 };
 
@@ -540,7 +439,7 @@ const fetchWithTimeout = async (url: string, options: any, timeout = 15000) => {
   const signOut = async (): Promise<void> => {
     try {
       // Remove FCM token before signing out
-      if (user) {
+      if (user && fcmToken) {
         try {
           const { handleFCMTokenOnLogout } = await import('@/lib/api');
           const token = await user.getIdToken();
@@ -551,7 +450,7 @@ const fetchWithTimeout = async (url: string, options: any, timeout = 15000) => {
       }
       
       setIsUserRegistered(false);
-      setFcmToken(null); // Clear FCM token on sign out
+      setUserProfile(null);
       await firebaseSignOut(auth);
     } catch (error) {
       console.error('Error signing out:', error);
@@ -567,18 +466,21 @@ const fetchWithTimeout = async (url: string, options: any, timeout = 15000) => {
   }, [user, loading]);
 
   const value: AuthContextType = {
-    user,
-    loading,
-    isUserRegistered,
-    registrationLoading,
-    fcmToken,
-    signInWithGoogle,
-    signOut,
-    userProfile,
-    registerUser: completeUserRegistration,
-    checkUserRegistrationStatus,
-    refreshFCMToken
-  };
+  user,
+  loading,
+  isUserRegistered,
+  registrationLoading,
+  fcmToken,
+  notificationPermissionStatus,
+  signInWithGoogle,
+  signOut,
+  userProfile,
+  registerUser: completeUserRegistration,
+  checkUserRegistrationStatus,
+  refreshFCMToken,
+  isTokenReady, // Add this
+  requestTokenManually // Add this
+};
 
   return (
     <AuthContext.Provider value={value}>
