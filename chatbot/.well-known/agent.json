@@ -1,0 +1,12 @@
+{
+  "name": "Nagar Chakshu Chatbot Agent",
+  "description": "An ai powered chatbot for any type of query",
+  "endpoints": ["run"],
+  "version": "1.0.0",
+  "capabilities": ["general_chat"],
+  "input_format": "application/json",
+  "output_format": "application/json",
+  "dependencies": [],
+  "author": "Ambuj Kulshrestha",
+  "documentation": ""
+}

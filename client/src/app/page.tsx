@@ -1,426 +1,14 @@
-// 'use client';
-
-// import { Button } from '@/components/ui/button';
-// import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-// import { Badge } from '@/components/ui/badge';
-// import ProtectedRoute from '@/components/AuthGuard';
-// import { useAuth } from '@/contexts/AuthContext';
-// import { useRouter } from 'next/navigation';
-// import { useEffect } from 'react';
-// import { 
-//   MapPin, 
-//   Clock, 
-//   AlertTriangle,
-//   Wind,
-//   Droplets,
-//   BarChart3,
-//   Shield,
-//   Building,
-//   TrendingUp,
-//   CheckCircle2,
-//   ArrowRight,
-//   ExternalLink
-// } from 'lucide-react';
-// import Link from 'next/link';
-// import FCMTestComponent from '@/components/CMTestComponent';
-
-// // Realistic mock data
-// const cityStats = {
-//   activeReports: 156,
-//   resolvedToday: 43,
-//   avgResponseTime: '2.5h',
-//   satisfaction: '94%'
-// };
-
-// const newsItems = [
-//   {
-//     id: 1,
-//     title: 'Outer Ring Road Traffic Update: 40% Congestion Detected',
-//     source: 'Traffic Control Center',
-//     time: '3 min ago',
-//     category: 'Traffic',
-//     priority: 'high'
-//   },
-//   {
-//     id: 2,
-//     title: 'Water Supply Maintenance in JP Nagar - Expected 4 Hour Outage',
-//     source: 'BWSSB',
-//     time: '12 min ago',
-//     category: 'Utilities',
-//     priority: 'medium'
-//   },
-//   {
-//     id: 3,
-//     title: 'Metro Purple Line: Normal Operations Resumed After Technical Issue',
-//     source: 'BMRCL',
-//     time: '25 min ago',
-//     category: 'Transport',
-//     priority: 'low'
-//   }
-// ];
-
-// const recentReports = [
-//   { id: 1, issue: 'Pothole on 100ft Road, Indiranagar', status: 'In Progress', time: '15 min ago', area: 'Indiranagar' },
-//   { id: 2, issue: 'Street light outage near Forum Mall', status: 'Resolved', time: '1 hour ago', area: 'Koramangala' },
-//   { id: 3, issue: 'Garbage collection missed - Jayanagar 4th Block', status: 'Assigned', time: '2 hours ago', area: 'Jayanagar' },
-//   { id: 4, issue: 'Water logging after rain on Bannerghatta Road', status: 'Under Review', time: '4 hours ago', area: 'Bannerghatta' }
-// ];
-
-// const weatherData = {
-//   temperature: 26,
-//   condition: 'Partly Cloudy',
-//   humidity: 68,
-//   windSpeed: 14,
-//   visibility: '10 km',
-//   uvIndex: 5
-// };
-
-// export default function HomePage() {
-// const { user, loading, isUserRegistered } = useAuth();
-// const router = useRouter();
-
-// useEffect(() => {
-//     if (!loading) {
-//       if (!user) {
-//         // Not authenticated, redirect to sign in
-//         router.push('/signIn');
-//       } else if (!isUserRegistered) {
-//         // Authenticated but not registered, redirect to registration
-//         router.push('/register');
-//       } else {
-//         // Fully authenticated and registered, redirect to dashboard
-//         router.push('/dashboard');
-//       }
-//     }
-//   }, [user, loading, isUserRegistered, router]);
-
-//   if (loading) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <div className="text-center">
-//           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-//           <p>Loading...</p>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   const getPriorityColor = (priority: string) => {
-//     switch (priority) {
-//       case 'high': return 'bg-red-100 text-red-800 border-red-200';
-//       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-//       case 'low': return 'bg-green-100 text-green-800 border-green-200';
-//       default: return 'bg-gray-100 text-gray-800 border-gray-200';
-//     }
-//   };
-
-//   const getStatusColor = (status: string) => {
-//     switch (status) {
-//       case 'Resolved': return 'bg-green-500';
-//       case 'In Progress': return 'bg-blue-500';
-//       case 'Assigned': return 'bg-yellow-500';
-//       case 'Under Review': return 'bg-gray-500';
-//       default: return 'bg-gray-400';
-//     }
-//   };
-
-//   return (      
-//     <ProtectedRoute>
-//       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-//       {/* Hero Section */}
-//       <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-//         <div className="max-w-7xl mx-auto px-4 py-12">
-//           <div className="text-center mb-12">
-//             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-//               Bengaluru City Dashboard
-//             </h1>
-//             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-//               Real-time insights and civic reporting platform for a better Bengaluru
-//             </p>
-//           </div>
-
-//           {/* Key Metrics */}
-//           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-//             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Reports</p>
-//                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{cityStats.activeReports}</p>
-//                 </div>
-//                 <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-full">
-//                   <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Resolved Today</p>
-//                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{cityStats.resolvedToday}</p>
-//                 </div>
-//                 <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full">
-//                   <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Avg Response</p>
-//                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{cityStats.avgResponseTime}</p>
-//                 </div>
-//                 <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-//                   <Clock className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Satisfaction</p>
-//                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{cityStats.satisfaction}</p>
-//                 </div>
-//                 <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-//                   <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* Main Content */}
-//       <div className="max-w-7xl mx-auto px-4 py-8">
-//         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-//           <FCMTestComponent />
-
-
-
-//           {/* Left Column - Main Content */}
-//           <div className="lg:col-span-2 space-y-8">
-
-//             {/* City News & Alerts */}
-//             <Card className="shadow-sm border-gray-200 dark:border-gray-700">
-//               <CardHeader className="pb-4">
-//                 <div className="flex items-center justify-between">
-//                   <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
-//                     Live City Updates
-//                   </CardTitle>
-//                   <Badge variant="destructive" className="bg-red-500">Live</Badge>
-//                 </div>
-//               </CardHeader>
-//               <CardContent className="space-y-4">
-//                 {newsItems.map((news) => (
-//                   <div key={news.id} className="flex items-start space-x-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-//                     <div className={`px-2 py-1 rounded-full text-xs font-medium border ${getPriorityColor(news.priority)}`}>
-//                       {news.category}
-//                     </div>
-//                     <div className="flex-1 min-w-0">
-//                       <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1">
-//                         {news.title}
-//                       </h3>
-//                       <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
-//                         <span>{news.source}</span>
-//                         <span>•</span>
-//                         <span>{news.time}</span>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 ))}
-//                 <Button variant="outline" className="w-full mt-4">
-//                   View All Updates <ArrowRight className="ml-2 h-4 w-4" />
-//                 </Button>
-//               </CardContent>
-//             </Card>
-
-//             {/* Report an Issue */}
-//             <Card className="shadow-sm border-gray-200 dark:border-gray-700 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20">
-//               <CardContent className="p-8">
-//                 <div className="text-center">
-//                   <div className="w-16 h-16 mx-auto mb-4 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-//                     <AlertTriangle className="h-8 w-8 text-orange-600 dark:text-orange-400" />
-//                   </div>
-//                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-//                     Report a City Issue
-//                   </h2>
-//                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-//                     Help improve Bengaluru by reporting issues in your area with photos and precise location
-//                   </p>
-//                   <Link href="/submit-report">
-//                     <Button size="lg" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3">
-//                       Submit Report
-//                       <ArrowRight className="ml-2 h-4 w-4" />
-//                     </Button>
-//                   </Link>
-//                 </div>
-//               </CardContent>
-//             </Card>
-
-//             {/* Recent Reports */}
-//             <Card className="shadow-sm border-gray-200 dark:border-gray-700">
-//               <CardHeader>
-//                 <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
-//                   Recent Community Reports
-//                 </CardTitle>
-//               </CardHeader>
-//               <CardContent>
-//                 <div className="space-y-4">
-//                   {recentReports.map((report) => (
-//                     <div key={report.id} className="flex items-center space-x-4 p-3 border border-gray-200 dark:border-gray-600 rounded-lg">
-//                       <div className={`w-3 h-3 rounded-full ${getStatusColor(report.status)}`}></div>
-//                       <div className="flex-1">
-//                         <h3 className="font-medium text-gray-900 dark:text-white text-sm">
-//                           {report.issue}
-//                         </h3>
-//                         <div className="flex items-center space-x-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
-//                           <span className="flex items-center">
-//                             <MapPin className="h-3 w-3 mr-1" />
-//                             {report.area}
-//                           </span>
-//                           <span className="flex items-center">
-//                             <Clock className="h-3 w-3 mr-1" />
-//                             {report.time}
-//                           </span>
-//                         </div>
-//                       </div>
-//                       <Badge variant="outline" className="text-xs">
-//                         {report.status}
-//                       </Badge>
-//                     </div>
-//                   ))}
-//                 </div>
-//               </CardContent>
-//             </Card>
-//           </div>
-
-//           {/* Right Sidebar */}
-//           <div className="space-y-6">
-
-//             {/* Weather Widget */}
-//             <Card className="shadow-sm border-gray-200 dark:border-gray-700">
-//               <CardHeader className="pb-4">
-//                 <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-//                   Current Weather
-//                 </CardTitle>
-//               </CardHeader>
-//               <CardContent>
-//                 <div className="text-center mb-4">
-//                   <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">
-//                     {weatherData.temperature}°C
-//                   </div>
-//                   <p className="text-gray-600 dark:text-gray-300">{weatherData.condition}</p>
-//                 </div>
-
-//                 <div className="grid grid-cols-2 gap-4 text-sm">
-//                   <div className="flex items-center space-x-2">
-//                     <Droplets className="h-4 w-4 text-blue-500" />
-//                     <div>
-//                       <p className="text-gray-500 dark:text-gray-400">Humidity</p>
-//                       <p className="font-medium text-gray-900 dark:text-white">{weatherData.humidity}%</p>
-//                     </div>
-//                   </div>
-
-//                   <div className="flex items-center space-x-2">
-//                     <Wind className="h-4 w-4 text-gray-500" />
-//                     <div>
-//                       <p className="text-gray-500 dark:text-gray-400">Wind</p>
-//                       <p className="font-medium text-gray-900 dark:text-white">{weatherData.windSpeed} km/h</p>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </CardContent>
-//             </Card>
-
-//             {/* Quick Actions */}
-//             <Card className="shadow-sm border-gray-200 dark:border-gray-700">
-//               <CardHeader>
-//                 <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-//                   Quick Actions
-//                 </CardTitle>
-//               </CardHeader>
-//               <CardContent className="space-y-3">
-//                 <Button variant="outline" className="w-full justify-between text-left" size="sm">
-//                   <div className="flex items-center">
-//                     <BarChart3 className="h-4 w-4 mr-3 text-blue-600" />
-//                     <span>View Analytics Dashboard</span>
-//                   </div>
-//                   <ExternalLink className="h-4 w-4" />
-//                 </Button>
-
-//                 <Button variant="outline" className="w-full justify-between text-left" size="sm">
-//                   <div className="flex items-center">
-//                     <Shield className="h-4 w-4 mr-3 text-red-600" />
-//                     <span>Emergency Services</span>
-//                   </div>
-//                   <ExternalLink className="h-4 w-4" />
-//                 </Button>
-
-//                 <Button variant="outline" className="w-full justify-between text-left" size="sm">
-//                   <div className="flex items-center">
-//                     <Building className="h-4 w-4 mr-3 text-green-600" />
-//                     <span>Government Portal</span>
-//                   </div>
-//                   <ExternalLink className="h-4 w-4" />
-//                 </Button>
-//               </CardContent>
-//             </Card>
-
-//             {/* System Status */}
-//             <Card className="shadow-sm border-gray-200 dark:border-gray-700">
-//               <CardHeader>
-//                 <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-//                   System Status
-//                 </CardTitle>
-//               </CardHeader>
-//               <CardContent className="space-y-3">
-//                 <div className="flex justify-between items-center">
-//                   <span className="text-sm text-gray-600 dark:text-gray-400">Data Services</span>
-//                   <div className="flex items-center">
-//                     <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-//                     <span className="text-sm font-medium text-green-600">Operational</span>
-//                   </div>
-//                 </div>
-
-//                 <div className="flex justify-between items-center">
-//                   <span className="text-sm text-gray-600 dark:text-gray-400">Report Processing</span>
-//                   <div className="flex items-center">
-//                     <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-//                     <span className="text-sm font-medium text-green-600">Normal</span>
-//                   </div>
-//                 </div>
-
-//                 <div className="flex justify-between items-center">
-//                   <span className="text-sm text-gray-600 dark:text-gray-400">Response Time</span>
-//                   <Badge variant="secondary">{"< 200ms"}</Badge>
-//                 </div>
-//               </CardContent>
-//             </Card>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//     </ProtectedRoute>
-
-//   );
-// }
-
-
 "use client"
-
 import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import UserSubmitReport from "@/components/UserSubmitReport"
 import { Plus, FileText } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
-import { updateUserLocation, fetchProcessedData } from "@/lib/api"
+import { updateUserLocation, fetchProcessedData, fetchSummarizedData } from "@/lib/api"
 import { toast } from "sonner"
 import LiveData from "@/components/LiveData"
-import ProtectedRoute from '@/components/AuthGuard';
-
+import ProtectedRoute from "@/components/AuthGuard"
+import SummarizedData from "@/components/SummarizedData"
 
 // Define proper types
 interface Location {
@@ -429,30 +17,30 @@ interface Location {
 }
 
 interface ProcessedData {
-  // Define your processed data structure here
   [key: string]: any
 }
 
 export default function HomePage() {
-
-  const [showReportModal, setShowReportModal] = useState(false);
-  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
-  const [processedData, setProcessedData] = useState<any>(null);
+  const [showReportModal, setShowReportModal] = useState(false)
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 })
+  const [processedData, setProcessedData] = useState<any>(null)
+  const [summarizedData, setSummarizedData] = useState<any>(null)
+  const [hideLiveData, setHideLiveData] = useState<boolean>(false)
 
   // Single context call
-  const { user, userProfile } = useAuth();
+  const { user, userProfile } = useAuth()
 
-  const openModal = () => setShowReportModal(true);
-  const closeModal = () => setShowReportModal(false);
+  const openModal = () => setShowReportModal(true)
+  const closeModal = () => setShowReportModal(false)
 
   // Track whether location was successfully fetched and synced
-  const locationFetched = useRef(false);
+  const locationFetched = useRef(false)
 
   // Fetch user location on mount
   useEffect(() => {
     if (!navigator.geolocation) {
-      toast.error("Geolocation is not supported by this browser");
-      return;
+      toast.error("Geolocation is not supported by this browser")
+      return
     }
 
     navigator.geolocation.getCurrentPosition(
@@ -460,109 +48,127 @@ export default function HomePage() {
         const newLocation = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-        };
-
-        console.log("Location fetched:", newLocation);
-
+        }
+        console.log("Location fetched:", newLocation)
         // Only set if not already set or if coordinates are different
         setLocation((prev) => {
           if (prev.latitude !== newLocation.latitude || prev.longitude !== newLocation.longitude) {
-            locationFetched.current = true;
-            return newLocation;
+            locationFetched.current = true
+            return newLocation
           }
-          return prev;
-        });
+          return prev
+        })
       },
       (error) => {
-        console.error("Geolocation error:", error);
-        locationFetched.current = false;
-        
-        switch(error.code) {
+        console.error("Geolocation error:", error)
+        locationFetched.current = false
+        switch (error.code) {
           case error.PERMISSION_DENIED:
-            toast.error("Location access denied by user");
-            break;
+            toast.error("Location access denied by user")
+            break
           case error.POSITION_UNAVAILABLE:
-            toast.error("Location information unavailable");
-            break;
+            toast.error("Location information unavailable")
+            break
           case error.TIMEOUT:
-            toast.error("Location request timed out");
-            break;
+            toast.error("Location request timed out")
+            break
           default:
-            toast.error("Could not get location");
-            break;
+            toast.error("Could not get location")
+            break
         }
       },
       {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 300000 // 5 minutes cache
-      }
-    );
-  }, []);
+        maximumAge: 300000, // 5 minutes cache
+      },
+    )
+  }, [])
 
   async function updateLocation() {
     try {
       if (!user) {
-        console.log("No user available for location update");
-        return;
+        console.log("No user available for location update")
+        return
       }
-      
       // Check if location is valid
       if (location.latitude === 0 && location.longitude === 0) {
-        console.log("Invalid location coordinates, skipping update");
-        return;
+        console.log("Invalid location coordinates, skipping update")
+        return
       }
 
-      const token = await user.getIdToken(true);
+      const token = await user.getIdToken(true)
       if (!token) {
-        console.log("No auth token available");
-        return;
+        console.log("No auth token available")
+        return
       }
 
-      console.log("Updating location:", { lat: location.latitude, lng: location.longitude });
-      
-      const result = await updateUserLocation(
-        { lat: location.latitude, lng: location.longitude },
-        token
-      );
-      console.log("Location updated successfully:", result);
+      console.log("Updating location:", { lat: location.latitude, lng: location.longitude })
+      const result = await updateUserLocation({ lat: location.latitude, lng: location.longitude }, token)
+      console.log("Location updated successfully:", result)
     } catch (error) {
-      console.error("Failed to update location:", error);
+      console.error("Failed to update location:", error)
     }
   }
 
   async function getProcessedData() {
     try {
       if (!user) {
-        console.log("No user available for processed data");
-        return;
+        console.log("No user available for processed data")
+        return
       }
-      
       // Check if location is valid
       if (location.latitude === 0 && location.longitude === 0) {
-        console.log("Invalid location coordinates, skipping processed data fetch");
-        return;
+        console.log("Invalid location coordinates, skipping processed data fetch")
+        return
       }
 
-      const token = await user.getIdToken(true);
+      const token = await user.getIdToken(true)
       if (!token) {
-        console.log("No auth token available for processed data");
-        return;
+        console.log("No auth token available for processed data")
+        return
       }
 
-      const radius = (userProfile?.radius_km || 5) * 1000; // Fallback radius
-
-      const result = await fetchProcessedData(
-        { lat: location.latitude, lng: location.longitude },
-        radius,
-        token
-      );
-      setProcessedData(result.processed_data);
+      //TODO: change this to (userProfile?.radius_km || 5) * 1000
+      const radius = 10000000
+      const result = await fetchProcessedData({ lat: location.latitude, lng: location.longitude }, radius, token)
+      setProcessedData(result.processed_data)
     } catch (error) {
-      console.error("Failed to fetch processed data:", error);
+      console.error("Failed to fetch processed data:", error)
       // Only show toast for non-auth errors
-      if ((error as Error).message && !(error as Error).message.includes('auth')) {
-        toast.error("Failed to fetch processed data");
+      if ((error as Error).message && !(error as Error).message.includes("auth")) {
+        toast.error("Failed to fetch processed data")
+      }
+    }
+  }
+
+  async function getSummarizedData() {
+    try {
+      if (!user) {
+        console.log("No user available for summarized data")
+        return
+      }
+      // Check if location is valid
+      if (location.latitude === 0 && location.longitude === 0) {
+        console.log("Invalid location coordinates, skipping summarized data fetch")
+        return
+      }
+
+      const token = await user.getIdToken(true)
+      if (!token) {
+        console.log("No auth token available for summarized data")
+        return
+      }
+
+      //TODO: change this to (userProfile?.radius_km || 5) * 1000
+      const radius = 10000000
+      const result = await fetchSummarizedData({ lat: location.latitude, lng: location.longitude }, radius, token)
+      setSummarizedData(result.incidents)
+    } catch (error) {
+      console.error("Failed to fetch summarized data:", error)
+      // Only show toast for non-auth errors
+      if ((error as Error).message && !(error as Error).message.includes("auth")) {
+        toast.error("Failed to fetch summarized data")
       }
     }
   }
@@ -571,150 +177,171 @@ export default function HomePage() {
   useEffect(() => {
     // Don't proceed if location is not set or user is not available
     if (location.latitude === 0 && location.longitude === 0) {
-      console.log("Location not yet available");
-      return;
+      console.log("Location not yet available")
+      return
     }
-
     if (!user) {
-      console.log("User not yet available");
-      return;
+      console.log("User not yet available")
+      return
     }
-
     if (!locationFetched.current) {
-      console.log("Location not yet fetched");
-      return;
+      console.log("Location not yet fetched")
+      return
     }
 
     // Add a small delay to ensure auth state is stable
     const timeoutId = setTimeout(() => {
-      updateLocation();
-      getProcessedData();
-    }, 1000);
+      updateLocation()
+      getProcessedData()
+      getSummarizedData()
+    }, 1000)
 
-    return () => clearTimeout(timeoutId);
-  }, [location.latitude, location.longitude, user, userProfile]);
+    return () => clearTimeout(timeoutId)
+  }, [location.latitude, location.longitude, user, userProfile])
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        {/* Main Content */}
-        <div className="text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-4">
-              Nagar
-              <span className="bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent">
-                Chakshu
-              </span>
-            </h1>
-            <p className="text-white/60 text-lg mb-8">AI-powered civic monitoring platform</p>
-          </motion.div>
+      <div className="min-h-screen  bg-black">
+        {/* Responsive Layout Container */}
+        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-200px)]">
+          {/* Left Column - Processed Data & Submit Report */}
+          <div className="w-full lg:flex-[2] border-b lg:border-b-0 lg:border-r border-gray-800 p-3 sm:p-4 lg:p-6 overflow-y-auto">
+            <div className="space-y-4 lg:space-y-6">
+              {/* Processed Data Section */}
+              {!hideLiveData && (
+                <div className="h-full">
+                  <LiveData processedData={processedData} />
+                </div>
+              )}
 
-          {/* Animated Submit Report Button */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <motion.button
-              onClick={openModal}
-              className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-orange-500 text-white font-medium py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {/* Background animation */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              {/* Button content */}
-              <div className="relative flex items-center space-x-3">
-                <motion.div
-                  animate={{ rotate: [0, 180, 360] }}
-                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  className="w-6 h-6"
-                >
-                  <Plus className="w-6 h-6" />
-                </motion.div>
-                <span className="text-lg">Submit a Report!</span>
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                >
-                  <FileText className="w-5 h-5" />
-                </motion.div>
+              {/* Summarized Data Section */}
+              <div className="h-full">
+                <SummarizedData setHideLiveData={setHideLiveData} summarizedData={summarizedData} />
               </div>
 
-              {/* Shine effect */}
-              <div className="absolute inset-0 -top-2 -bottom-2 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            </motion.button>
-          </motion.div>
+              {/* Submit Report Section */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                className="bg-black rounded-xl p-4 lg:p-6 border border-black w-full max-w-[460px] mx-auto lg:mx-0"
+              >
+                <motion.button
+                  onClick={openModal}
+                  className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-orange-500 text-white font-medium py-3 px-4 sm:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl w-full text-sm sm:text-base"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {/* Background animation */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-          {/* Additional Info */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-8 text-white/40 text-sm"
-          >
-            <p>Help improve your city by reporting civic issues</p>
-          </motion.div>
+                  {/* Button content */}
+                  <div className="relative flex items-center justify-center space-x-2 sm:space-x-3">
+                    <motion.div
+                      animate={{ rotate: [0, 180, 360] }}
+                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                      className="w-4 h-4 sm:w-5 sm:h-5"
+                    >
+                      <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </motion.div>
+                    <span className="whitespace-nowrap">Submit a Report</span>
+                    <motion.div
+                      animate={{ x: [0, 3, 0] }}
+                      transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                    >
+                      <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+                    </motion.div>
+                  </div>
 
-          {/* Floating Elements */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-              className="absolute top-1/4 left-1/4 w-2 h-2 bg-purple-500 rounded-full"
-            />
-            <motion.div
-              animate={{
-                y: [0, -15, 0],
-                opacity: [0.2, 0.5, 0.2],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-              className="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-500 rounded-full"
-            />
-            <motion.div
-              animate={{
-                y: [0, -25, 0],
-                opacity: [0.4, 0.7, 0.4],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-              className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-white/30 rounded-full"
-            />
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 -top-2 -bottom-2 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                </motion.button>
+              </motion.div>
+            </div>
           </div>
+
+          {/* Middle Column - Responsive Layout */}
+          <div className="w-full lg:flex-[3] border-b lg:border-b-0 lg:border-r border-gray-800 p-3 sm:p-4 lg:p-6 overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="h-full min-h-[200px] lg:min-h-0 bg-gray-900/30 rounded-xl border border-gray-800 border-dashed flex items-center justify-center"
+            >
+              <div className="text-center text-gray-500 p-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-gray-800 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded"></div>
+                </div>
+                <h3 className="text-base sm:text-lg font-medium mb-2">Middle Section</h3>
+                <p className="text-xs sm:text-sm">Add your component here</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column - Responsive Layout */}
+          <div className="w-full lg:flex-1 p-3 sm:p-4 lg:p-6 overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="h-full min-h-[200px] lg:min-h-0 bg-gray-900/30 rounded-xl border border-gray-800 border-dashed flex items-center justify-center"
+            >
+              <div className="text-center text-gray-500 p-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-gray-800 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded"></div>
+                </div>
+                <h3 className="text-base sm:text-lg font-medium mb-2">Right Section</h3>
+                <p className="text-xs sm:text-sm">Add your component here</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Responsive Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+            className="absolute top-1/4 left-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"
+          />
+          <motion.div
+            animate={{
+              y: [0, -15, 0],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+            className="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-500 rounded-full"
+          />
+          <motion.div
+            animate={{
+              y: [0, -25, 0],
+              opacity: [0.4, 0.7, 0.4],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            className="absolute bottom-1/3 left-1/3 w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white/30 rounded-full"
+          />
         </div>
 
         {/* Submit Report Modal */}
         <AnimatePresence>{showReportModal && <UserSubmitReport onClose={closeModal} />}</AnimatePresence>
-
-
-        <div className="min-h-screen bg-black p-8 flex items-center justify-center">
-          <LiveData processedData={processedData} />
-        </div>
-
       </div>
-
     </ProtectedRoute>
   )
 }
