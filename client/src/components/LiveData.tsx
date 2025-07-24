@@ -51,20 +51,20 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
 
   if (!processedData || processedData.length === 0) {
     return (
-      <div className="w-[480px] h-96">
+      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:w-[480px] h-80 sm:h-96">
         <div className="bg-gray-950/90 backdrop-blur-xl border border-gray-800/50 rounded-xl shadow-2xl h-full flex items-center justify-center">
-          <p className="text-gray-400 text-sm">No live data available.</p>
+          <p className="text-gray-400 text-xs sm:text-sm">No live data available.</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="w-[550px] h-96">
+    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:w-[550px] h-80 sm:h-96">
       <div className="bg-gray-950/90 backdrop-blur-xl border border-gray-800/50 rounded-xl shadow-2xl h-full overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-800/50">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-800/50">
+          <h2 className="text-sm sm:text-base font-semibold text-white flex items-center gap-2">
             Live Data
             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
           </h2>
@@ -72,8 +72,8 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
         </div>
 
         {/* Feed Container */}
-        <div className="p-4 space-y-4 h-80 overflow-hidden">
-          <div key={fadeKey} className="space-y-4 animate-in fade-in duration-700 ease-out">
+        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4 h-64 sm:h-80 overflow-hidden">
+          <div key={fadeKey} className="space-y-3 sm:space-y-4 animate-in fade-in duration-700 ease-out">
             {visibleData.map((data, index) => (
               <div
                 key={`${currentIndex}-${index}`}
@@ -82,11 +82,11 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
                   animationDelay: `${index * 50}ms`,
                 }}
               >
-                <div className="space-y-2">
+                <div className="space-y-1 sm:space-y-2">
                   {/* Main content with categories inline */}
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-2 sm:gap-3">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                      <p className="text-xs sm:text-sm text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
                         {data.description}
                       </p>
                     </div>
@@ -97,13 +97,13 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
                         {data.categories.slice(0, 2).map((category: string, idx: number) => (
                           <span
                             key={idx}
-                            className={`${getBadgeColor(idx)} text-white text-xs font-medium px-2 py-1 rounded text-nowrap`}
+                            className={`${getBadgeColor(idx)} text-white text-xs font-medium px-1.5 py-0.5 sm:px-2 sm:py-1 rounded text-nowrap`}
                           >
                             {category}
                           </span>
                         ))}
                         {data.categories.length > 2 && (
-                          <span className="bg-gray-700 text-gray-300 text-xs font-medium px-2 py-1 rounded">
+                          <span className="bg-gray-700 text-gray-300 text-xs font-medium px-1.5 py-0.5 sm:px-2 sm:py-1 rounded">
                             +{data.categories.length - 2}
                           </span>
                         )}
@@ -128,7 +128,7 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                         />
                       </svg>
-                      <span className="text-xs">{data.location}</span>
+                      <span className="text-xs truncate">{data.location}</span>
                     </div>
                   )}
                 </div>

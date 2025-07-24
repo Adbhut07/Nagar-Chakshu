@@ -500,118 +500,71 @@ export default function HomePage() {
     );
   }, []);
 
-  async function updateLocation() {
-    try {
-      if (!user) {
-        console.log("No user available for location update");
-        return;
-      }
-      
-      // Check if location is valid
-      if (location.latitude === 0 && location.longitude === 0) {
-        console.log("Invalid location coordinates, skipping update");
-        return;
-      }
-
-      const token = await user.getIdToken(true);
-      if (!token) {
-        console.log("No auth token available");
-        return;
-      }
-
-      console.log("Updating location:", { lat: location.latitude, lng: location.longitude });
-      
-      const result = await updateUserLocation(
-        { lat: location.latitude, lng: location.longitude },
-        token
-      );
-      console.log("Location updated successfully:", result);
-    } catch (error) {
-      console.error("Failed to update location:", error);
-    }
-  }
-
-  async function getProcessedData() {
-    try {
-      if (!user) {
-        console.log("No user available for processed data");
-        return;
-      }
-      
-      // Check if location is valid
-      if (location.latitude === 0 && location.longitude === 0) {
-        console.log("Invalid location coordinates, skipping processed data fetch");
-        return;
-      }
-
-      const token = await user.getIdToken(true);
-      if (!token) {
-        console.log("No auth token available for processed data");
-        return;
-      }
-
-      const radius = (userProfile?.radius_km || 5) * 1000; // Fallback radius
-
-      const result = await fetchProcessedData(
-        { lat: location.latitude, lng: location.longitude },
-        radius,
-        token
-      );
-      setProcessedData(result.processed_data);
-    } catch (error) {
-      console.error("Failed to fetch processed data:", error);
-      // Only show toast for non-auth errors
-      if ((error as Error).message && !(error as Error).message.includes('auth')) {
-        toast.error("Failed to fetch processed data");
-      }
-    }
-  }
-
-  // Trigger updates after location is available
+  // Trigger updates after location is available - FIXED to prevent infinite loops
   useEffect(() => {
-    // Don't proceed if location is not set or user is not available
-    if (location.latitude === 0 && location.longitude === 0) {
-      console.log("Location not yet available");
-      return;
+    let timeoutId: NodeJS.Timeout;
+    
+    const performUpdates = async () => {
+      // Don't proceed if location is not set or user is not available
+      if (location.latitude === 0 && location.longitude === 0) {
+        return;
+      }
+
+      if (!user || !locationFetched.current) {
+        return;
+      }
+
+      try {
+        const token = await user.getIdToken(true);
+        if (!token) return;
+
+        // Update location
+        await updateUserLocation(
+          { lat: location.latitude, lng: location.longitude },
+          token
+        );
+
+        // Get processed data  
+        const radius = (userProfile?.radius_km || 5) * 1000;
+        const result = await fetchProcessedData(
+          { lat: location.latitude, lng: location.longitude },
+          radius,
+          token
+        );
+        setProcessedData(result.processed_data);
+      } catch (error) {
+        console.error("Failed to update data:", error);
+      }
+    };
+
+    // Only run if we have valid location and user
+    if (location.latitude !== 0 && location.longitude !== 0 && user && locationFetched.current) {
+      timeoutId = setTimeout(performUpdates, 1000);
     }
 
-    if (!user) {
-      console.log("User not yet available");
-      return;
-    }
-
-    if (!locationFetched.current) {
-      console.log("Location not yet fetched");
-      return;
-    }
-
-    // Add a small delay to ensure auth state is stable
-    const timeoutId = setTimeout(() => {
-      updateLocation();
-      getProcessedData();
-    }, 1000);
-
-    return () => clearTimeout(timeoutId);
-  }, [location.latitude, location.longitude, user, userProfile]);
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [location.latitude, location.longitude, user, userProfile?.radius_km]); // Only essential dependencies
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="min-h-screen bg-black flex items-center justify-center p-2 sm:p-4">
         {/* Main Content */}
-        <div className="text-center">
+        <div className="text-center max-w-lg sm:max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="mb-8 sm:mb-12"
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white mb-3 sm:mb-4">
               Nagar
               <span className="bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent">
                 Chakshu
               </span>
             </h1>
-            <p className="text-white/60 text-lg mb-8">AI-powered civic monitoring platform</p>
+            <p className="text-white/60 text-base sm:text-lg mb-6 sm:mb-8 px-4">AI-powered civic monitoring platform</p>
           </motion.div>
 
           {/* Animated Submit Report Button */}
@@ -622,7 +575,7 @@ export default function HomePage() {
           >
             <motion.button
               onClick={openModal}
-              className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-orange-500 text-white font-medium py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-orange-500 text-white font-medium py-3 px-6 sm:py-4 sm:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -630,20 +583,20 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
               {/* Button content */}
-              <div className="relative flex items-center space-x-3">
+              <div className="relative flex items-center justify-center space-x-2 sm:space-x-3">
                 <motion.div
                   animate={{ rotate: [0, 180, 360] }}
                   transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                 >
-                  <Plus className="w-6 h-6" />
+                  <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.div>
-                <span className="text-lg">Submit a Report!</span>
+                <span className="text-base sm:text-lg">Submit a Report!</span>
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                 >
-                  <FileText className="w-5 h-5" />
+                  <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                 </motion.div>
               </div>
 
@@ -657,7 +610,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-8 text-white/40 text-sm"
+            className="mt-6 sm:mt-8 text-white/40 text-xs sm:text-sm px-4"
           >
             <p>Help improve your city by reporting civic issues</p>
           </motion.div>
@@ -709,7 +662,7 @@ export default function HomePage() {
         <AnimatePresence>{showReportModal && <UserSubmitReport onClose={closeModal} />}</AnimatePresence>
 
 
-        <div className="min-h-screen bg-black p-8 flex items-center justify-center">
+        <div className="min-h-screen bg-black p-2 sm:p-4 md:p-8 flex items-center justify-center">
           <LiveData processedData={processedData} />
         </div>
 

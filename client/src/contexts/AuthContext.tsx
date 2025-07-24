@@ -1,6 +1,6 @@
 // contexts/AuthContext.tsx
 'use client';
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import {
   onAuthStateChanged,
   signInWithPopup,
@@ -149,22 +149,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(user);
       
       if (user) {
-        // Wait a bit for the user token to be ready
-        setTimeout(async () => {
-          setLoading(false);
-          await checkUserRegistrationStatus();
-          
-          // Handle FCM token for authenticated user
-          if (fcmToken) {
-            try {
-              const authToken = await user.getIdToken();
-              const { handleFCMTokenOnLogin } = await import('@/lib/api');
-              await handleFCMTokenOnLogin(fcmToken, authToken);
-            } catch (error) {
-              console.error('Error handling FCM token on login:', error);
-            }
-          }
-        }, 500);
+        setLoading(false);
       } else {
         setIsUserRegistered(false);
         setLoading(false);
@@ -172,10 +157,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
 
     return unsubscribe;
-  }, [fcmToken]);
+  }, []); // No dependencies needed for auth state listener
+
+  // Handle FCM token when user and token are both available
+  useEffect(() => {
+    const handleFCMTokenForUser = async () => {
+      if (user && fcmToken) {
+        try {
+          const authToken = await user.getIdToken();
+          const { handleFCMTokenOnLogin } = await import('@/lib/api');
+          await handleFCMTokenOnLogin(fcmToken, authToken);
+        } catch (error) {
+          console.error('Error handling FCM token on login:', error);
+        }
+      }
+    };
+
+    handleFCMTokenForUser();
+  }, [user, fcmToken]);
 
   // Check if user is registered in backend
-  const checkUserRegistrationStatus = async (): Promise<void> => {
+  const checkUserRegistrationStatus = useCallback(async (): Promise<void> => {
     if (!user) {
       setIsUserRegistered(false);
       return;
@@ -205,7 +207,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       
       setIsUserRegistered(false);
     }
-  };
+  }, [user]);
 
   // Register user with your backend - using the api.ts file
   const registerUserBackend = async (userData: UserData, token: string): Promise<any> => {
@@ -564,7 +566,7 @@ const fetchWithTimeout = async (url: string, options: any, timeout = 15000) => {
     if (user && !loading) {
       checkUserRegistrationStatus();
     }
-  }, [user, loading]);
+  }, [user, loading, checkUserRegistrationStatus]);
 
   const value: AuthContextType = {
     user,

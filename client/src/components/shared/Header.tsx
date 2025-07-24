@@ -45,23 +45,24 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full px-4 py-2 bg-white dark:bg-gray-950 shadow-md sticky top-0 z-50 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <Link href="/" className="text-xl font-bold text-primary hover:text-primary/80 transition-colors">
-          Bengaluru City Pulse
+    <header className="w-full px-2 sm:px-4 py-2 bg-white dark:bg-gray-950 shadow-md sticky top-0 z-50 flex items-center justify-between">
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+        <Link href="/" className="text-base sm:text-xl font-bold text-primary hover:text-primary/80 transition-colors truncate">
+          <span className="hidden sm:inline">Bengaluru City Pulse</span>
+          <span className="sm:hidden">City Pulse</span>
         </Link>
-        <div className="relative">
+        <div className="relative hidden md:block">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
           <Input
             type="text"
             placeholder="Search city data..."
-            className="pl-8 w-72"
+            className="pl-8 w-48 lg:w-72"
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <nav className="flex items-center gap-4">
+      <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-4">
           <Link href="/">
             <Button variant="ghost" size="sm">Home</Button>
           </Link>
@@ -72,7 +73,7 @@ export default function Header() {
 
         <ThemeToggle />
         
-        <Bell className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-gray-800 dark:hover:text-gray-100 transition-colors" />
+        <Bell className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-gray-800 dark:hover:text-gray-100 transition-colors w-5 h-5 sm:w-6 sm:h-6" />
         
         {/* User Avatar and Dropdown */}
         {!loading && user ? (

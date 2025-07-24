@@ -177,7 +177,7 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50"
       onClick={(e) => e.target === e.currentTarget && onClose?.()}
     >
       <motion.div
@@ -185,7 +185,7 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3 }}
-        className="bg-black border border-white/10 rounded-2xl w-full max-w-md lg:max-w-lg xl:max-w-xl max-h-[90vh] overflow-hidden"
+        className="bg-black border border-white/10 rounded-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <AnimatePresence mode="wait">
@@ -194,7 +194,7 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
               key="success"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="p-8 lg:p-12 flex flex-col items-center justify-center min-h-[400px]"
+              className="p-4 sm:p-6 lg:p-8 xl:p-12 flex flex-col items-center justify-center min-h-[350px] sm:min-h-[400px]"
             >
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-orange-500 rounded-full flex items-center justify-center mb-8">
                 <motion.svg
@@ -254,7 +254,7 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
               </div>
 
               {/* Form Content */}
-              <div className="p-6 space-y-6 max-h-[calc(90vh-120px)] overflow-y-auto">
+              <div className="p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6 max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)] overflow-y-auto">
                 {/* Description */}
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                   <label className="block text-white text-sm font-medium mb-2">
@@ -264,7 +264,7 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Describe the issue you want to report..."
-                    className="min-h-[100px] bg-white/5 border-white/10 text-white placeholder:text-white/40 text-sm resize-none"
+                    className="min-h-[80px] sm:min-h-[100px] bg-white/5 border-white/10 text-white placeholder:text-white/40 text-sm resize-none"
                   />
                 </motion.div>
 
@@ -276,9 +276,9 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
                   </label>
 
                   {!mediaUrl ? (
-                    <label className="flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-lg p-6 cursor-pointer hover:border-white/30 transition-colors">
-                      <UploadCloud className="w-6 h-6 text-white/60 mb-2" />
-                      <p className="text-white/80 text-sm">Click to upload or drag and drop</p>
+                    <label className="flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-lg p-4 sm:p-6 cursor-pointer hover:border-white/30 transition-colors">
+                      <UploadCloud className="w-5 h-5 sm:w-6 sm:h-6 text-white/60 mb-2" />
+                      <p className="text-white/80 text-xs sm:text-sm">Click to upload or drag and drop</p>
                       <p className="text-white/40 text-xs mt-1">Max 10MB • Images & Videos</p>
                       <Input
                         type="file"
@@ -377,11 +377,11 @@ export default function UserSubmitReport({ onClose }: UserSubmitReportProps) {
                   <Button
                     onClick={handleSubmit}
                     disabled={loading || uploading}
-                    className="w-full bg-white hover:bg-white/90 text-black font-medium py-3 text-sm disabled:opacity-50"
+                    className="w-full bg-white hover:bg-white/90 text-black font-medium py-2.5 sm:py-3 text-xs sm:text-sm disabled:opacity-50"
                   >
                     {loading ? (
                       <div className="flex items-center justify-center">
-                        <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin mr-2"></div>
+                        <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-black/20 border-t-black rounded-full animate-spin mr-2"></div>
                         Submitting...
                       </div>
                     ) : uploading ? (
