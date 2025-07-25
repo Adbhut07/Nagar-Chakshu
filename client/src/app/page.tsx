@@ -279,7 +279,7 @@ export default function HomePage() {
           </div>
 
           {/* Right Column - Responsive Layout */}
-          <div className="w-full lg:flex-1 p-3 sm:p-4 lg:p-6 overflow-y-auto">
+          <div className="w-full lg:flex-2 p-3 sm:p-4 lg:p-6 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
