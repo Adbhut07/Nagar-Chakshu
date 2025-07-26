@@ -241,7 +241,7 @@ class DataFusingService:
             dict: Result with data or error information
         """
         api_endpoint = f"{self.base_api_url}/api/twitter-feed"
-        take_data = 5  # Number of random items to select
+        take_data = 200# Number of random items to select
         
         try:
             async with httpx.AsyncClient() as client:

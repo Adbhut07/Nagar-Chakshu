@@ -259,7 +259,8 @@ class SynthesisAgent:
             'descriptions': descriptions,
             'location': location,
             'source_city': source_city,
-            'geohash':hash_code
+            'geohash':hash_code,
+            'votes':0
         }
         
     def store_summaries(self) -> None:

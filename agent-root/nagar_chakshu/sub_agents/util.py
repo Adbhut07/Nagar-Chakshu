@@ -18,7 +18,7 @@ KEYWORDS = {
         "event", "events", "festival", "festivals", "concert", "concerts", "gathering", "gatherings",
         "celebration", "celebrations", "parade", "parades", "rally", "rallies", "protest", "protests",
         "march", "marches", "jogging group", "marathon", "crowding", "crowd", "ceremony", "wedding",
-        "marriage", "public meeting", "conference", "seminar", "cultural event", "exhibition"
+        "marriage", "public meeting", "conference", "seminar", "cultural event", "exhibition, hackathon, hackathons"
     ],
     "stampede": [
         "crowd", "stampede", "rush", "panic", "overcrowded", "pushing", "crush", "mob", "trampled",

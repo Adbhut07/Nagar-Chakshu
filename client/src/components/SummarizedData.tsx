@@ -148,76 +148,56 @@ const getEtaText = (data: SummarizedDataItem) => {
   // Loading State
   if (isLoading) {
     return (
-      <div className="w-full max-w-lg mx-auto">
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
-          {/* Enhanced Header */}
-          <div className="relative px-6 py-4 border-b border-slate-700/50 bg-gradient-to-r from-slate-800/50 to-slate-700/50">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-gradient-to-r from-orange-400 to-red-500 rounded-full animate-pulse"></div>
-                <h2 className="text-lg font-semibold text-white">Analyzing Local Events</h2>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-slate-400">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
-                <span>Processing...</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Enhanced Loading Content */}
-          <div className="p-8 min-h-[320px] flex flex-col justify-center items-center space-y-8">
-            {/* Current Step with Animation */}
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className={`text-6xl animate-bounce filter drop-shadow-lg`}>{loadingSteps[loadingStep].icon}</div>
-                <div
-                  className={`absolute inset-0 bg-gradient-to-r ${loadingSteps[loadingStep].color} rounded-full blur-xl opacity-20 animate-pulse`}
-                ></div>
-              </div>
-
-              <div className="space-y-3 max-w-sm">
-                <h3 className="text-xl font-bold text-white tracking-tight">{loadingSteps[loadingStep].title}</h3>
-                <p className="text-sm text-slate-300 leading-relaxed">{loadingSteps[loadingStep].description}</p>
-              </div>
-            </div>
-
-            {/* Enhanced Progress Section */}
-            <div className="w-full max-w-sm space-y-4">
-              <div className="flex justify-between items-center text-xs text-slate-400">
-                <span className="font-medium">
-                  Step {loadingStep + 1} of {loadingSteps.length}
-                </span>
-                <span className="font-mono">{Math.round(loadingProgress)}%</span>
-              </div>
-
-              <div className="relative w-full bg-slate-800 rounded-full h-3 overflow-hidden shadow-inner">
-                <div
-                  className={`h-full bg-gradient-to-r ${loadingSteps[loadingStep].color} rounded-full transition-all duration-500 ease-out shadow-lg`}
-                  style={{ width: `${loadingProgress}%` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
-              </div>
-            </div>
-
-            {/* Enhanced Step Indicators */}
-            <div className="flex space-x-4">
-              {loadingSteps.map((step, index) => (
-                <div key={index} className="flex flex-col items-center space-y-2">
-                  <div
-                    className={`w-4 h-4 rounded-full transition-all duration-700 shadow-lg ${index < loadingStep
-                        ? "bg-gradient-to-r from-green-400 to-green-500 shadow-green-400/50"
-                        : index === loadingStep
-                          ? `bg-gradient-to-r ${step.color} shadow-lg animate-pulse`
-                          : "bg-slate-600 shadow-slate-600/30"
-                      }`}
-                  />
-                  <div className="text-xs text-slate-500 font-medium opacity-60">{index + 1}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+<div className="w-full max-w-md mx-auto">
+  <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-xl overflow-hidden">
+    
+    {/* Compact Header */}
+    <div className="relative px-4 py-3 border-b border-slate-700/50 bg-gradient-to-r from-slate-800/50 to-slate-700/50">
+      <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-red-500 rounded-full animate-pulse"></div>
+          <h2 className="font-semibold text-white">Analyzing Events</h2>
+        </div>
+        <div className="flex items-center gap-1 text-xs text-slate-400">
+          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-ping"></div>
+          <span>Processing</span>
         </div>
       </div>
+    </div>
+
+    {/* Compact Body */}
+    <div className="p-5 min-h-[180px] flex flex-col justify-center items-center space-y-4">
+      <div className="text-center space-y-4">
+        <div className="relative">
+          <div className="text-4xl animate-bounce drop-shadow-md">{loadingSteps[loadingStep].icon}</div>
+          <div className={`absolute inset-0 bg-gradient-to-r ${loadingSteps[loadingStep].color} rounded-full blur-lg opacity-20 animate-pulse`} />
+        </div>
+
+        <div className="space-y-1 max-w-xs">
+          <h3 className="text-base font-semibold text-white tracking-tight">{loadingSteps[loadingStep].title}</h3>
+          <p className="text-xs text-slate-300">{loadingSteps[loadingStep].description}</p>
+        </div>
+      </div>
+
+      {/* Compact Progress Section */}
+      <div className="w-full max-w-xs space-y-2">
+        <div className="flex justify-between items-center text-xs text-slate-400">
+          <span>Step {loadingStep + 1}/{loadingSteps.length}</span>
+          <span className="font-mono">{Math.round(loadingProgress)}%</span>
+        </div>
+
+        <div className="relative w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+          <div
+            className={`h-full bg-gradient-to-r ${loadingSteps[loadingStep].color} rounded-full transition-all duration-500 ease-out`}
+            style={{ width: `${loadingProgress}%` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     )
   }
 
@@ -270,15 +250,6 @@ const getEtaText = (data: SummarizedDataItem) => {
                     <p className="text-slate-200 leading-relaxed text-sm font-medium group-hover:text-white transition-colors duration-200">
                       {data.summary}
                     </p>
-
-                    {data.advice && (
-                      <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                        <p className="text-blue-200 text-sm leading-relaxed">
-                          <span className="font-semibold text-blue-100">Advice: </span>
-                          {data.advice}
-                        </p>
-                      </div>
-                    )}
                   </div>
 
                   {/* Categories */}
