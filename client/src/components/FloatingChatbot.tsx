@@ -61,7 +61,7 @@ const FloatingChatbot: React.FC = () => {
             className="fixed bottom-24 right-6 z-50 w-96 h-[600px] shadow-2xl rounded-xl overflow-hidden"
           >
             <div className="h-full">
-              <Chatbot />
+              <Chatbot isFloating={true} />
             </div>
           </motion.div>
         )}

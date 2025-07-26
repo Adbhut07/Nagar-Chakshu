@@ -15,7 +15,7 @@ interface Message {
   timestamp: Date
 }
 
-export default function Chatbot() {
+export default function Chatbot({ isFloating = false }: { isFloating?: boolean }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -23,11 +23,22 @@ export default function Chatbot() {
   const scrollAreaRef = useRef<HTMLDivElement>(null)
   const { user } = useAuth()
 
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    if (scrollAreaRef.current) {
+      const scrollElement = scrollAreaRef.current;
+      setTimeout(() => {
+        scrollElement.scrollTo({
+          top: scrollElement.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 50);
+    }
+  };
+
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
-    }
+    scrollToBottom();
   }, [messages])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +69,8 @@ export default function Chatbot() {
       }
       
       setMessages((prev) => [...prev, assistantMessage])
+      // Explicitly scroll after adding response
+      setTimeout(scrollToBottom, 100);
     } catch (error) {
       console.error('Chatbot API error:', error)
       
@@ -85,6 +98,8 @@ export default function Chatbot() {
       }
       
       setMessages((prev) => [...prev, errorMessage])
+      // Explicitly scroll after adding error message
+      setTimeout(scrollToBottom, 100);
     } finally {
       setIsLoading(false)
     }
@@ -101,7 +116,7 @@ export default function Chatbot() {
   }
 
   return (
-    <Card className="h-[85vh] max-w-2xl mx-auto bg-black/95 backdrop-blur-xl border border-white shadow-2xl flex flex-col overflow-hidden">
+    <Card className={`${isFloating ? 'h-full' : 'h-[85vh] max-w-2xl mx-auto'} bg-black/95 backdrop-blur-xl border border-white shadow-2xl flex flex-col overflow-hidden`}>
       <CardHeader className="pb-4 border-b border-white/10 bg-black/80 backdrop-blur-sm">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -130,6 +145,7 @@ export default function Chatbot() {
         <div
           className="flex-1 px-6 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
           ref={scrollAreaRef}
+          style={isFloating ? { maxHeight: '400px', overflowY: 'auto' } : {}}
         >
           <div className="space-y-6">
             {messages.length === 0 && (
