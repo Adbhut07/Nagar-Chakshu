@@ -116,6 +116,2729 @@
         "image_url": "https://static.toiimg.com/thumb/113948556.cms?resizemode=4&width=400",
         "location": "Cubbon Road",
         "coordinates": [12.9794, 77.5905]
-      }
+      },
+      {
+      "text": "Waterlogging reported near BTM Layout—vehicles moving slowly, avoid route.",
+      "id": "BGL202507220001",
+      "edit_history_tweet_ids": ["BGL202507220001"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "BTM Layout",
+      "coordinates": [12.9174, 77.6123]
+    },
+    {
+      "text": "Massive traffic jam on Old Airport Road—take alternate routes.",
+      "id": "BGL202507220002",
+      "edit_history_tweet_ids": ["BGL202507220002"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Old Airport Road",
+      "coordinates": [12.9610, 77.6637]
+    },
+    {
+      "text": "Accident on Koramangala—two vehicles collided, lane partially blocked.",
+      "id": "BGL202507220003",
+      "edit_history_tweet_ids": ["BGL202507220003"],
+      "location": "Koramangala",
+      "coordinates": [12.9367, 77.6181]
+    },
+    {
+      "text": "Tree fallen on road near Jayanagar, clearing operation underway.",
+      "id": "BGL202507220004",
+      "edit_history_tweet_ids": ["BGL202507220004"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Jayanagar",
+      "coordinates": [12.9242, 77.5965]
+    },
+    {
+      "text": "Potholes reported on Bannerghatta Road causing bike skids and delays.",
+      "id": "BGL202507220005",
+      "edit_history_tweet_ids": ["BGL202507220005"],
+      "location": "Bannerghatta Road",
+      "coordinates": [12.8677, 77.6131]
+    },
+    {
+      "text": "Waterlogging near Electronic City, several cars stalled on main road.",
+      "id": "BGL202507220006",
+      "edit_history_tweet_ids": ["BGL202507220006"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Electronic City",
+      "coordinates": [12.8469, 77.6582]
+    },
+    {
+      "text": "Heavy rain causes air traffic slowdown at Bengaluru airport—delays reported.",
+      "id": "BGL202507220007",
+      "edit_history_tweet_ids": ["BGL202507220007"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Kempegowda International Airport",
+      "coordinates": [13.1981, 77.7082]
+    },
+    {
+      "text": "Storm toppled tree on RT Nagar, traffic rerouted by police.",
+      "id": "BGL202507220008",
+      "edit_history_tweet_ids": ["BGL202507220008"],
+      "location": "RT Nagar",
+      "coordinates": [13.0178, 77.5941]
+    },
+    {
+      "text": "Major pothole damage spotted on Hebbal, locals urge BBMP repair.",
+      "id": "BGL202507220009",
+      "edit_history_tweet_ids": ["BGL202507220009"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Hebbal",
+      "coordinates": [13.0333, 77.5882]
+    },
+    {
+      "text": "Signal failure causing pile-up at KR Market, traffic police on-site.",
+      "id": "BGL202507220010",
+      "edit_history_tweet_ids": ["BGL202507220010"],
+      "location": "KR Market",
+      "coordinates": [12.9603, 77.5781]
+    },
+    {
+      "text": "Rainwater flooded roads around Rajajinagar, major traffic slowdown.",
+      "id": "BGL202507220011",
+      "edit_history_tweet_ids": ["BGL202507220011"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Rajajinagar",
+      "coordinates": [12.9923, 77.5542]
+    },
+    {
+      "text": "Flights delayed at Kempegowda Airport due to runway congestion and rain.",
+      "id": "BGL202507220012",
+      "edit_history_tweet_ids": ["BGL202507220012"],
+      "location": "Kempegowda International Airport",
+      "coordinates": [13.1992, 77.7064]
+    },
+    {
+      "text": "Crater-like pothole at Bellandur, commuters warning others.",
+      "id": "BGL202507220013",
+      "edit_history_tweet_ids": ["BGL202507220013"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Bellandur",
+      "coordinates": [12.9233, 77.6801]
+    },
+    {
+      "text": "Bike-skid incident at Majestic, minor injuries, traffic diverted.",
+      "id": "BGL202507220014",
+      "edit_history_tweet_ids": ["BGL202507220014"],
+      "location": "Majestic",
+      "coordinates": [12.9763, 77.5695]
+    },
+    {
+      "text": "Overflowing drainage on Cubbon Road—slippery footpaths and jammed side lanes.",
+      "id": "BGL202507220015",
+      "edit_history_tweet_ids": ["BGL202507220015"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Cubbon Road",
+      "coordinates": [12.9782, 77.5912]
+    },
+    {
+      "text": "Accident involving cab and bike at HSR Layout—traffic backed up.",
+      "id": "BGL202507220016",
+      "edit_history_tweet_ids": ["BGL202507220016"],
+      "location": "HSR Layout",
+      "coordinates": [12.9102, 77.6399]
+    },
+    {
+      "text": "Waterlogging near Malleswaram railway underpass—vehicles slowly navigating.",
+      "id": "BGL202507220017",
+      "edit_history_tweet_ids": ["BGL202507220017"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Malleswaram",
+      "coordinates": [13.0102, 77.5717]
+    },
+    {
+      "text": "Traffic gridlock reported on Whitefield Main Road during peak rain hour.",
+      "id": "BGL202507220018",
+      "edit_history_tweet_ids": ["BGL202507220018"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Whitefield",
+      "coordinates": [12.9683, 77.7521]
+    },
+    {
+      "text": "Fallen tree near Basavanagudi circle, BBMP team clearing debris.",
+      "id": "BGL202507220019",
+      "edit_history_tweet_ids": ["BGL202507220019"],
+      "location": "Basavanagudi",
+      "coordinates": [12.9424, 77.5749]
+    },
+    {
+      "text": "Passengers stranded due to multiple flight delays at BLR airport.",
+      "id": "BGL202507220020",
+      "edit_history_tweet_ids": ["BGL202507220020"],
+      "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max",
+      "location": "Kempegowda International Airport",
+      "coordinates": [13.2005, 77.7092]
+    },
+    {
+    "text": "Rainwater flooded roads around Koramangala, major traffic slowdown.",
+    "id": "BGL202507220021",
+    "edit_history_tweet_ids": ["BGL202507220021"],
+    "location": "Koramangala",
+    "coordinates": [12.9367, 77.6102],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Tree fallen on road near Rajajinagar, clearing operation underway.",
+    "id": "BGL202507220022",
+    "edit_history_tweet_ids": ["BGL202507220022"],
+    "location": "Rajajinagar",
+    "coordinates": [12.9933, 77.5539]
+  },
+  {
+    "text": "Heavy waterlogging near KR Market, commuters stuck—expect long delays.",
+    "id": "BGL202507220023",
+    "edit_history_tweet_ids": ["BGL202507220023"],
+    "location": "KR Market",
+    "coordinates": [12.9602, 77.5829],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Collision reported near HSR Layout, delays expected in the area.",
+    "id": "BGL202507220024",
+    "edit_history_tweet_ids": ["BGL202507220024"],
+    "location": "HSR Layout",
+    "coordinates": [12.9141, 77.6358]
+  },
+  {
+    "text": "Storm toppled tree on Bannerghatta Road, traffic rerouted by police.",
+    "id": "BGL202507220025",
+    "edit_history_tweet_ids": ["BGL202507220025"],
+    "location": "Bannerghatta Road",
+    "coordinates": [12.8678, 77.6121],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Major pothole damage spotted on Bellandur, locals urge BBMP repair.",
+    "id": "BGL202507220026",
+    "edit_history_tweet_ids": ["BGL202507220026"],
+    "location": "Bellandur",
+    "coordinates": [12.9280, 77.6759]
+  },
+  {
+    "text": "Flights delayed at Kempegowda Airport due to runway congestion and rain.",
+    "id": "BGL202507220027",
+    "edit_history_tweet_ids": ["BGL202507220027"],
+    "location": "Yelahanka",
+    "coordinates": [13.0990, 77.5951],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Bike-skid incident at Marathahalli, minor injuries, traffic diverted.",
+    "id": "BGL202507220028",
+    "edit_history_tweet_ids": ["BGL202507220028"],
+    "location": "Marathahalli",
+    "coordinates": [12.9569, 77.6995]
+  },
+  {
+    "text": "Crater-like pothole at RT Nagar, commuters warning others.",
+    "id": "BGL202507220029",
+    "edit_history_tweet_ids": ["BGL202507220029"],
+    "location": "RT Nagar",
+    "coordinates": [13.0222, 77.5893]
+  },
+  {
+    "text": "Rainwater flooded roads around Indiranagar, major traffic slowdown.",
+    "id": "BGL202507220030",
+    "edit_history_tweet_ids": ["BGL202507220030"],
+    "location": "Indiranagar",
+    "coordinates": [12.9701, 77.6395],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Uprooted tree blocking lane at Hebbal after heavy winds.",
+    "id": "BGL202507220031",
+    "edit_history_tweet_ids": ["BGL202507220031"],
+    "location": "Hebbal",
+    "coordinates": [13.0358, 77.5867]
+  },
+  {
+    "text": "Accident on Old Airport Road—two vehicles collided, lane partially blocked.",
+    "id": "BGL202507220032",
+    "edit_history_tweet_ids": ["BGL202507220032"],
+    "location": "Old Airport Road",
+    "coordinates": [12.9593, 77.6581]
+  },
+  {
+    "text": "Multiple potholes on Majestic causing slow traffic and bike slips.",
+    "id": "BGL202507220033",
+    "edit_history_tweet_ids": ["BGL202507220033"],
+    "location": "Majestic",
+    "coordinates": [12.9789, 77.5741],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Signal failure causing pile-up at Basavanagudi, traffic police on-site.",
+    "id": "BGL202507220034",
+    "edit_history_tweet_ids": ["BGL202507220034"],
+    "location": "Basavanagudi",
+    "coordinates": [12.9429, 77.5715]
+  },
+  {
+    "text": "Massive traffic jam on BTM Layout—take alternate routes.",
+    "id": "BGL202507220035",
+    "edit_history_tweet_ids": ["BGL202507220035"],
+    "location": "BTM Layout",
+    "coordinates": [12.9179, 77.6091],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Bike-skid incident at Vijayanagar, minor injuries, traffic diverted.",
+    "id": "BGL202507220036",
+    "edit_history_tweet_ids": ["BGL202507220036"],
+    "location": "Vijayanagar",
+    "coordinates": [12.9793, 77.5463]
+  },
+  {
+    "text": "Waterlogging reported near Electronic City—vehicles moving slowly, avoid route.",
+    "id": "BGL202507220037",
+    "edit_history_tweet_ids": ["BGL202507220037"],
+    "location": "Electronic City",
+    "coordinates": [12.8472, 77.6625]
+  },
+  {
+    "text": "Crater-like pothole at Jayanagar, commuters warning others.",
+    "id": "BGL202507220038",
+    "edit_history_tweet_ids": ["BGL202507220038"],
+    "location": "Jayanagar",
+    "coordinates": [12.9263, 77.5954]
+  },
+  {
+    "text": "Rainwater flooded roads around Malleswaram, major traffic slowdown.",
+    "id": "BGL202507220039",
+    "edit_history_tweet_ids": ["BGL202507220039"],
+    "location": "Malleswaram",
+    "coordinates": [13.0115, 77.5673],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Tree fallen on road near Whitefield, clearing operation underway.",
+    "id": "BGL202507220040",
+    "edit_history_tweet_ids": ["BGL202507220040"],
+    "location": "Whitefield",
+    "coordinates": [12.9673, 77.7521]
+  },
+  {
+    "text": "Heavy traffic congestion at Silk Board due to signal malfunction and rain.",
+    "id": "BGL202507220041",
+    "edit_history_tweet_ids": ["BGL202507220041"],
+    "location": "Silk Board",
+    "coordinates": [12.9170, 77.6232],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Road caved in near Yeshwanthpur, barricaded by authorities. Expect diversions.",
+    "id": "BGL202507220042",
+    "edit_history_tweet_ids": ["BGL202507220042"],
+    "location": "Yeshwanthpur",
+    "coordinates": [13.0243, 77.5564]
+  },
+  {
+    "text": "Accident near Domlur flyover—vehicle overturned. Emergency services present.",
+    "id": "BGL202507220043",
+    "edit_history_tweet_ids": ["BGL202507220043"],
+    "location": "Domlur",
+    "coordinates": [12.9532, 77.6384],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Waterlogging at Lalbagh Road slowing down southbound traffic.",
+    "id": "BGL202507220044",
+    "edit_history_tweet_ids": ["BGL202507220044"],
+    "location": "Lalbagh Road",
+    "coordinates": [12.9548, 77.5849]
+  },
+  {
+    "text": "Signal blackout at Kalyan Nagar Junction, police manually directing traffic.",
+    "id": "BGL202507220045",
+    "edit_history_tweet_ids": ["BGL202507220045"],
+    "location": "Kalyan Nagar",
+    "coordinates": [13.0229, 77.6420]
+  },
+  {
+    "text": "Overflowing drain near JP Nagar 5th Phase—slippery roads and traffic jams.",
+    "id": "BGL202507220046",
+    "edit_history_tweet_ids": ["BGL202507220046"],
+    "location": "JP Nagar",
+    "coordinates": [12.9029, 77.5850],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Fallen transformer at Nagarbhavi, BESCOM team repairing—avoid the area.",
+    "id": "BGL202507220047",
+    "edit_history_tweet_ids": ["BGL202507220047"],
+    "location": "Nagarbhavi",
+    "coordinates": [12.9753, 77.5158]
+  },
+  {
+    "text": "Garbage pileup and bad stench reported on Tannery Road—residents complain.",
+    "id": "BGL202507220048",
+    "edit_history_tweet_ids": ["BGL202507220048"],
+    "location": "Tannery Road",
+    "coordinates": [13.0075, 77.6228]
+  },
+  {
+    "text": "Flyover maintenance at Nayandahalli causing traffic delays on Mysore Road.",
+    "id": "BGL202507220049",
+    "edit_history_tweet_ids": ["BGL202507220049"],
+    "location": "Nayandahalli",
+    "coordinates": [12.9420, 77.5252],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Traffic slow at Richmond Circle due to ongoing roadworks.",
+    "id": "BGL202507220050",
+    "edit_history_tweet_ids": ["BGL202507220050"],
+    "location": "Richmond Circle",
+    "coordinates": [12.9648, 77.6019]
+  },
+  {
+    "text": "Potholes reappeared after rain near Kengeri Bus Terminal—commuters alerting BBMP.",
+    "id": "BGL202507220051",
+    "edit_history_tweet_ids": ["BGL202507220051"],
+    "location": "Kengeri",
+    "coordinates": [12.9136, 77.4865],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Minor flooding outside MG Road Metro Station after heavy showers.",
+    "id": "BGL202507220052",
+    "edit_history_tweet_ids": ["BGL202507220052"],
+    "location": "MG Road",
+    "coordinates": [12.9758, 77.6055]
+  },
+  {
+    "text": "Cable-laying work causing partial road block near Hennur Cross.",
+    "id": "BGL202507220053",
+    "edit_history_tweet_ids": ["BGL202507220053"],
+    "location": "Hennur",
+    "coordinates": [13.0391, 77.6401]
+  },
+  {
+    "text": "Two-car collision reported near Frazer Town—minor injuries, vehicles cleared.",
+    "id": "BGL202507220054",
+    "edit_history_tweet_ids": ["BGL202507220054"],
+    "location": "Frazer Town",
+    "coordinates": [12.9948, 77.6195]
+  },
+  {
+    "text": "Flooded underpass near Ulsoor—use surface roads until cleared.",
+    "id": "BGL202507220055",
+    "edit_history_tweet_ids": ["BGL202507220055"],
+    "location": "Ulsoor",
+    "coordinates": [12.9834, 77.6275],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Drainage overflow at Hoskerehalli, BBMP team deployed.",
+    "id": "BGL202507220056",
+    "edit_history_tweet_ids": ["BGL202507220056"],
+    "location": "Hoskerehalli",
+    "coordinates": [12.9332, 77.5378]
+  },
+  {
+    "text": "Sewage water mixing with rainwater near Padmanabhanagar—health risk reported.",
+    "id": "BGL202507220057",
+    "edit_history_tweet_ids": ["BGL202507220057"],
+    "location": "Padmanabhanagar",
+    "coordinates": [12.9175, 77.5555],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Tree branches blocking road near Banashankari BDA Complex after storm.",
+    "id": "BGL202507220058",
+    "edit_history_tweet_ids": ["BGL202507220058"],
+    "location": "Banashankari",
+    "coordinates": [12.9208, 77.5642]
+  },
+  {
+    "text": "Autorickshaw protest near Town Hall leads to slow-moving traffic.",
+    "id": "BGL202507220059",
+    "edit_history_tweet_ids": ["BGL202507220059"],
+    "location": "Town Hall",
+    "coordinates": [12.9628, 77.5844],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Power pole leaning dangerously near Peenya—BESCOM alerted.",
+    "id": "BGL202507220060",
+    "edit_history_tweet_ids": ["BGL202507220060"],
+    "location": "Peenya",
+    "coordinates": [13.0385, 77.5171]
+  },
+  {
+    "text": "Debris from overnight construction blocking one lane at Whitefield Main Road.",
+    "id": "BGL202507220061",
+    "edit_history_tweet_ids": ["BGL202507220061"],
+    "location": "Whitefield",
+    "coordinates": [12.9721, 77.7509],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "BBMP garbage truck stalled at Rajajinagar 1st Block—traffic building.",
+    "id": "BGL202507220062",
+    "edit_history_tweet_ids": ["BGL202507220062"],
+    "location": "Rajajinagar",
+    "coordinates": [12.9901, 77.5524]
+  },
+  {
+    "text": "Stagnant rainwater in potholes near Basavanagudi Market—commuters slow down.",
+    "id": "BGL202507220063",
+    "edit_history_tweet_ids": ["BGL202507220063"],
+    "location": "Basavanagudi",
+    "coordinates": [12.9434, 77.5731]
+  },
+  {
+    "text": "Tree fallen across half the road at Indiranagar 80 Feet Road. Workers clearing now.",
+    "id": "BGL202507220064",
+    "edit_history_tweet_ids": ["BGL202507220064"],
+    "location": "Indiranagar",
+    "coordinates": [12.9710, 77.6416],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Flooding inside Manyata Tech Park basement parking reported by employees.",
+    "id": "BGL202507220065",
+    "edit_history_tweet_ids": ["BGL202507220065"],
+    "location": "Manyata Tech Park",
+    "coordinates": [13.0455, 77.6210]
+  },
+  {
+    "text": "Water stagnation near Subramanyanagar Metro Station entrance. Risk of slipping.",
+    "id": "BGL202507220066",
+    "edit_history_tweet_ids": ["BGL202507220066"],
+    "location": "Subramanyanagar",
+    "coordinates": [13.0028, 77.5532],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Power outage and traffic signal failure near Kaggadasapura Road.",
+    "id": "BGL202507220067",
+    "edit_history_tweet_ids": ["BGL202507220067"],
+    "location": "Kaggadasapura",
+    "coordinates": [12.9763, 77.6812]
+  },
+  {
+    "text": "Garbage overflow reported at Banashankari 3rd Stage BDA Complex area.",
+    "id": "BGL202507220068",
+    "edit_history_tweet_ids": ["BGL202507220068"],
+    "location": "Banashankari",
+    "coordinates": [12.9258, 77.5486]
+  },
+  {
+    "text": "Major jam at Majestic due to multiple buses halting outside designated bays.",
+    "id": "BGL202507220069",
+    "edit_history_tweet_ids": ["BGL202507220069"],
+    "location": "Majestic",
+    "coordinates": [12.9764, 77.5715],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Narrowed traffic lane near Chalukya Circle due to emergency BBMP road patching.",
+    "id": "BGL202507220070",
+    "edit_history_tweet_ids": ["BGL202507220070"],
+    "location": "Chalukya Circle",
+    "coordinates": [12.9813, 77.5851]
+  },
+  {
+    "text": "Broken median blocks 3rd Cross Road near Sadashivanagar Police Station.",
+    "id": "BGL202507220071",
+    "edit_history_tweet_ids": ["BGL202507220071"],
+    "location": "Sadashivanagar",
+    "coordinates": [13.0072, 77.5792]
+  },
+  {
+    "text": "Signal misconfiguration causing opposite green lights at BEL Circle—dangerous!",
+    "id": "BGL202507220072",
+    "edit_history_tweet_ids": ["BGL202507220072"],
+    "location": "BEL Circle",
+    "coordinates": [13.0389, 77.5484]
+  },
+  {
+    "text": "Manhole cover displaced near Hosur Road–Bommanahalli stretch. Risky for bikers.",
+    "id": "BGL202507220073",
+    "edit_history_tweet_ids": ["BGL202507220073"],
+    "location": "Bommanahalli",
+    "coordinates": [12.8926, 77.6223],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Overflowing nala behind KR Market—strong odor and traffic slowdown reported.",
+    "id": "BGL202507220074",
+    "edit_history_tweet_ids": ["BGL202507220074"],
+    "location": "KR Market",
+    "coordinates": [12.9592, 77.5782]
+  },
+  {
+    "text": "Severe puddling outside Metro Pillar 164 near Nagasandra Station—visibility poor.",
+    "id": "BGL202507220075",
+    "edit_history_tweet_ids": ["BGL202507220075"],
+    "location": "Nagasandra",
+    "coordinates": [13.0665, 77.5053]
+  },
+  {
+    "text": "Old flyover pillar base cracked near Hebbal—traffic diversion in place.",
+    "id": "BGL202507220076",
+    "edit_history_tweet_ids": ["BGL202507220076"],
+    "location": "Hebbal",
+    "coordinates": [13.0354, 77.5913],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Oil spill from tanker on Bannerghatta Road near Dairy Circle. Slippery surface alert.",
+    "id": "BGL202507220077",
+    "edit_history_tweet_ids": ["BGL202507220077"],
+    "location": "Bannerghatta Road",
+    "coordinates": [12.9251, 77.5953]
+  },
+  {
+    "text": "Bus breakdown at Corporation Circle flyover exit—lane partially blocked.",
+    "id": "BGL202507220078",
+    "edit_history_tweet_ids": ["BGL202507220078"],
+    "location": "Corporation Circle",
+    "coordinates": [12.9674, 77.5861],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Civic complaint of missing storm drain covers near Vijayanagar 2nd Stage.",
+    "id": "BGL202507220079",
+    "edit_history_tweet_ids": ["BGL202507220079"],
+    "location": "Vijayanagar",
+    "coordinates": [12.9761, 77.5302]
+  },
+  {
+    "text": "Signal timing error at JP Nagar Ring Road—heavy backlog on both sides.",
+    "id": "BGL202507220080",
+    "edit_history_tweet_ids": ["BGL202507220080"],
+    "location": "JP Nagar",
+    "coordinates": [12.9073, 77.5856]
+  },
+  {
+    "text": "Large pothole forming at entrance to NICE Road from Mysore Road junction.",
+    "id": "BGL202507220081",
+    "edit_history_tweet_ids": ["BGL202507220081"],
+    "location": "NICE Road – Mysore Rd",
+    "coordinates": [12.9039, 77.5023]
+  },
+  {
+    "text": "Rusted electrical junction box open on footpath at BTM Layout 2nd Stage.",
+    "id": "BGL202507220082",
+    "edit_history_tweet_ids": ["BGL202507220082"],
+    "location": "BTM Layout",
+    "coordinates": [12.9166, 77.6101],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Water leak from underground pipe near HAL Old Airport Road—lane closure likely.",
+    "id": "BGL202507220083",
+    "edit_history_tweet_ids": ["BGL202507220083"],
+    "location": "Old Airport Road",
+    "coordinates": [12.9619, 77.6644]
+  },
+  {
+    "text": "Tree pruning causing temporary block at Cambridge Layout—one-way enforced.",
+    "id": "BGL202507220084",
+    "edit_history_tweet_ids": ["BGL202507220084"],
+    "location": "Cambridge Layout",
+    "coordinates": [12.9735, 77.6337]
+  },
+  {
+    "text": "Accident between two-wheelers at Marathahalli Bridge—expect slowdowns.",
+    "id": "BGL202507220085",
+    "edit_history_tweet_ids": ["BGL202507220085"],
+    "location": "Marathahalli",
+    "coordinates": [12.9568, 77.7015],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Overflowing garbage bin near Commercial Street entrance—health hazard risk.",
+    "id": "BGL202507220086",
+    "edit_history_tweet_ids": ["BGL202507220086"],
+    "location": "Commercial Street",
+    "coordinates": [12.9819, 77.6067]
+  },
+  {
+    "text": "Traffic bottleneck at Silk Board due to temporary barricades for roadworks.",
+    "id": "BGL202507220087",
+    "edit_history_tweet_ids": ["BGL202507220087"],
+    "location": "Silk Board",
+    "coordinates": [12.9172, 77.6233],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Water supply line burst near Koramangala 4th Block. Avoid BDA Complex road.",
+    "id": "BGL202507220088",
+    "edit_history_tweet_ids": ["BGL202507220088"],
+    "location": "Koramangala",
+    "coordinates": [12.9351, 77.6227]
+  },
+  {
+    "text": "Underpass waterlogged at Nagavara signal post rains—approach with caution.",
+    "id": "BGL202507220089",
+    "edit_history_tweet_ids": ["BGL202507220089"],
+    "location": "Nagavara",
+    "coordinates": [13.0387, 77.6201],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Subhash Nagar flyover maintenance work today 2–5 PM. Take alternate route.",
+    "id": "BGL202507220090",
+    "edit_history_tweet_ids": ["BGL202507220090"],
+    "location": "Subhash Nagar",
+    "coordinates": [12.9840, 77.5695]
+  },
+  {
+    "text": "Water stagnation outside Gopalan Mall on Bannerghatta Road causing backflow.",
+    "id": "BGL202507220091",
+    "edit_history_tweet_ids": ["BGL202507220091"],
+    "location": "Bannerghatta Road",
+    "coordinates": [12.9077, 77.5854]
+  },
+  {
+    "text": "Speed breaker without markings on Kalyan Nagar Main Road—risk for riders.",
+    "id": "BGL202507220092",
+    "edit_history_tweet_ids": ["BGL202507220092"],
+    "location": "Kalyan Nagar",
+    "coordinates": [13.0252, 77.6410]
+  },
+  {
+    "text": "Signal blackout at Domlur flyover entrance—manual control in progress.",
+    "id": "BGL202507220093",
+    "edit_history_tweet_ids": ["BGL202507220093"],
+    "location": "Domlur",
+    "coordinates": [12.9565, 77.6412],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Water gushing from pipe burst near Yeshwanthpur TTMC—vehicles diverted.",
+    "id": "BGL202507220094",
+    "edit_history_tweet_ids": ["BGL202507220094"],
+    "location": "Yeshwanthpur",
+    "coordinates": [13.0196, 77.5528]
+  },
+  {
+    "text": "BDA excavation work at HSR Sector 7 leading to dust clouds. Cover advised.",
+    "id": "BGL202507220095",
+    "edit_history_tweet_ids": ["BGL202507220095"],
+    "location": "HSR Layout",
+    "coordinates": [12.9068, 77.6452],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Power cables sagging dangerously low at Kanakapura Main Road near ISRO Layout.",
+    "id": "BGL202507220096",
+    "edit_history_tweet_ids": ["BGL202507220096"],
+    "location": "Kanakapura Road",
+    "coordinates": [12.8856, 77.5470]
+  },
+  {
+    "text": "Two autorickshaws collided near Trinity Circle—minor injuries reported.",
+    "id": "BGL202507220097",
+    "edit_history_tweet_ids": ["BGL202507220097"],
+    "location": "Trinity Circle",
+    "coordinates": [12.9719, 77.6182]
+  },
+  {
+    "text": "Heavy commercial vehicle blocking Lavelle Road corner—traffic backing up.",
+    "id": "BGL202507220098",
+    "edit_history_tweet_ids": ["BGL202507220098"],
+    "location": "Lavelle Road",
+    "coordinates": [12.9713, 77.5960],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+    "text": "Leaking drain water across Ejipura Main Road—risk of skidding reported.",
+    "id": "BGL202507220099",
+    "edit_history_tweet_ids": ["BGL202507220099"],
+    "location": "Ejipura",
+    "coordinates": [12.9353, 77.6289]
+  },
+  {
+    "text": "Gantry frame collapse incident near NICE–Kanakapura toll gate. Emergency team deployed.",
+    "id": "BGL202507220100",
+    "edit_history_tweet_ids": ["BGL202507220100"],
+    "location": "NICE Kanakapura Rd",
+    "coordinates": [12.8524, 77.5001],
+    "image_url": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticleimages%2F2022%2F09%2F06%2Fbangalore-rains-reuters-1142548-1662418432.png?w=undefined&auto=format%2Ccompress&fit=max"
+  },
+  {
+      "text": "Heavy traffic reported on Madiwala\u2014long wait times expected.",
+      "id": "BGL202507220001",
+      "edit_history_tweet_ids": ["BGL202507220001"],
+      "location": "Nagawara",
+      "coordinates": [ 13.048817,77.625046],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Banashankari.",
+      "id": "BGL202507220002",
+      "edit_history_tweet_ids": ["BGL202507220002" ],
+      "location": "HBR Layout",
+      "coordinates": [13.020861,77.636622 ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Hebbal.",
+      "id": "BGL202507220003",
+      "edit_history_tweet_ids": ["BGL202507220003"],
+      "location": "Richmond Town",
+      "coordinates": [12.96366,77.598689],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Electronic City.",
+      "id": "BGL202507220004",
+      "edit_history_tweet_ids": ["BGL202507220004"],
+      "location": "Hebbal",
+      "coordinates": [13.036519,77.600935],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Construction activity near Madiwala narrowing road\u2014traffic buildup reported.",
+      "id": "BGL202507220005",
+      "edit_history_tweet_ids": [ "BGL202507220005"],
+      "location": "Ulsoor",
+      "coordinates": [12.987925,77.622638],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Roadwork at Richmond Town leading to diversions\u2014expect delays.",
+      "id": "BGL202507220006",
+      "edit_history_tweet_ids": ["BGL202507220006"],
+      "location": "Banashankari",
+      "coordinates": [12.911507,77.580783],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Water logging near Basavanagudi after rains\u2014traffic disrupted.",
+      "id": "BGL202507220007",
+      "edit_history_tweet_ids": ["BGL202507220007"],
+      "location": "Electronic City",
+      "coordinates": [12.839667,77.674103],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Whitefield.",
+      "id": "BGL202507220008",
+      "edit_history_tweet_ids": [ "BGL202507220008" ],
+      "location": "Whitefield",
+      "coordinates": [12.971007,77.755467 ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at HBR Layout, vehicles moving slowly.",
+      "id": "BGL202507220009",
+      "edit_history_tweet_ids": ["BGL202507220009"],
+      "location": "Whitefield",
+      "coordinates": [12.978498,77.752364],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at Madiwala, vehicles moving slowly.",
+      "id": "BGL202507220010",
+      "edit_history_tweet_ids": ["BGL202507220010"],
+      "location": "Ulsoor",
+      "coordinates": [12.991931,77.619478 ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Hebbal\u2014long wait times expected.",
+      "id": "BGL202507220011",
+      "edit_history_tweet_ids": ["BGL202507220011"],
+      "location": "Yeshwanthpur",
+      "coordinates": [13.032793,77.54815 ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Domlur.",
+      "id": "BGL202507220012",
+      "edit_history_tweet_ids": ["BGL202507220012"],
+      "location": "Domlur",
+      "coordinates": [12.950309,77.640306],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Domlur.",
+      "id": "BGL202507220013",
+      "edit_history_tweet_ids": [ "BGL202507220013"],
+      "location": "Whitefield",
+      "coordinates": [12.974828, 77.740313],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at Electronic City, vehicles moving slowly.",
+      "id": "BGL202507220014",
+      "edit_history_tweet_ids": ["BGL202507220014"],
+      "location": "Hebbal",
+      "coordinates": [13.037464, 77.599116],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Major congestion at Ulsoor, vehicles moving slowly.",
+      "id": "BGL202507220015",
+      "edit_history_tweet_ids": [
+        "BGL202507220015"
+      ],
+      "location": "Bellandur",
+      "coordinates": [
+        12.937702,
+        77.678009
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at BTM Layout, vehicles moving slowly.",
+      "id": "BGL202507220016",
+      "edit_history_tweet_ids": [
+        "BGL202507220016"
+      ],
+      "location": "Banashankari",
+      "coordinates": [
+        12.911052,
+        77.57241
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Richmond Town\u2014long wait times expected.",
+      "id": "BGL202507220017",
+      "edit_history_tweet_ids": [
+        "BGL202507220017"
+      ],
+      "location": "Domlur",
+      "coordinates": [
+        12.945234,
+        77.635543
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Rajajinagar\u2014long wait times expected.",
+      "id": "BGL202507220018",
+      "edit_history_tweet_ids": [
+        "BGL202507220018"
+      ],
+      "location": "Madiwala",
+      "coordinates": [
+        12.918414,
+        77.622117
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Local event near Domlur drawing crowds\u2014slight congestion.",
+      "id": "BGL202507220019",
+      "edit_history_tweet_ids": [
+        "BGL202507220019"
+      ],
+      "location": "Domlur",
+      "coordinates": [
+        12.954228,
+        77.643514
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Koramangala.",
+      "id": "BGL202507220020",
+      "edit_history_tweet_ids": [
+        "BGL202507220020"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.989213,
+        77.565245
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at Richmond Town, vehicles moving slowly.",
+      "id": "BGL202507220021",
+      "edit_history_tweet_ids": [
+        "BGL202507220021"
+      ],
+      "location": "Koramangala",
+      "coordinates": [
+        12.930571,
+        77.620414
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Local event near Basavanagudi drawing crowds\u2014slight congestion.",
+      "id": "BGL202507220022",
+      "edit_history_tweet_ids": [
+        "BGL202507220022"
+      ],
+      "location": "Electronic City",
+      "coordinates": [
+        12.844522,
+        77.673692
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at Indiranagar, vehicles moving slowly.",
+      "id": "BGL202507220023",
+      "edit_history_tweet_ids": [
+        "BGL202507220023"
+      ],
+      "location": "Madiwala",
+      "coordinates": [
+        12.932192,
+        77.626503
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Protest at Yeshwanthpur disrupting regular traffic flow.",
+      "id": "BGL202507220024",
+      "edit_history_tweet_ids": [
+        "BGL202507220024"
+      ],
+      "location": "Madiwala",
+      "coordinates": [
+        12.927895,
+        77.611021
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Road near Jayanagar partially blocked due to festival setup.",
+      "id": "BGL202507220025",
+      "edit_history_tweet_ids": [
+        "BGL202507220025"
+      ],
+      "location": "Jayanagar",
+      "coordinates": [
+        12.921035,
+        77.593906
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Basavanagudi\u2014long wait times expected.",
+      "id": "BGL202507220026",
+      "edit_history_tweet_ids": [
+        "BGL202507220026"
+      ],
+      "location": "HBR Layout",
+      "coordinates": [
+        13.021369,
+        77.63164
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at JP Nagar.",
+      "id": "BGL202507220027",
+      "edit_history_tweet_ids": [
+        "BGL202507220027"
+      ],
+      "location": "Indiranagar",
+      "coordinates": [
+        12.972695,
+        77.631948
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at Domlur, vehicles moving slowly.",
+      "id": "BGL202507220028",
+      "edit_history_tweet_ids": [
+        "BGL202507220028"
+      ],
+      "location": "MG Road",
+      "coordinates": [
+        12.983987,
+        77.596684
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at Richmond Town, vehicles moving slowly.",
+      "id": "BGL202507220029",
+      "edit_history_tweet_ids": [
+        "BGL202507220029"
+      ],
+      "location": "Yeshwanthpur",
+      "coordinates": [
+        13.035642,
+        77.540736
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Major congestion at Whitefield, vehicles moving slowly.",
+      "id": "BGL202507220030",
+      "edit_history_tweet_ids": [
+        "BGL202507220030"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.981045,
+        77.565531
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Potholes reported at Whitefield\u2014drivers urged to slow down.",
+      "id": "BGL202507220031",
+      "edit_history_tweet_ids": [
+        "BGL202507220031"
+      ],
+      "location": "Banashankari",
+      "coordinates": [
+        12.917034,
+        77.576511
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Jayanagar.",
+      "id": "BGL202507220032",
+      "edit_history_tweet_ids": [
+        "BGL202507220032"
+      ],
+      "location": "BTM Layout",
+      "coordinates": [
+        12.925636,
+        77.604154
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Major congestion at JP Nagar, vehicles moving slowly.",
+      "id": "BGL202507220033",
+      "edit_history_tweet_ids": [
+        "BGL202507220033"
+      ],
+      "location": "BTM Layout",
+      "coordinates": [
+        12.914668,
+        77.619887
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Local event near Jayanagar drawing crowds\u2014slight congestion.",
+      "id": "BGL202507220034",
+      "edit_history_tweet_ids": [
+        "BGL202507220034"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.991075,
+        77.554816
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at Electronic City, vehicles moving slowly.",
+      "id": "BGL202507220035",
+      "edit_history_tweet_ids": [
+        "BGL202507220035"
+      ],
+      "location": "Whitefield",
+      "coordinates": [
+        12.969802,
+        77.75357
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Indiranagar\u2014long wait times expected.",
+      "id": "BGL202507220036",
+      "edit_history_tweet_ids": [
+        "BGL202507220036"
+      ],
+      "location": "MG Road",
+      "coordinates": [
+        12.980687,
+        77.60556
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at HBR Layout.",
+      "id": "BGL202507220037",
+      "edit_history_tweet_ids": [
+        "BGL202507220037"
+      ],
+      "location": "JP Nagar",
+      "coordinates": [
+        12.910299,
+        77.58235
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at Indiranagar, vehicles moving slowly.",
+      "id": "BGL202507220038",
+      "edit_history_tweet_ids": [
+        "BGL202507220038"
+      ],
+      "location": "Madiwala",
+      "coordinates": [
+        12.931577,
+        77.625504
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at Ulsoor, vehicles moving slowly.",
+      "id": "BGL202507220039",
+      "edit_history_tweet_ids": [
+        "BGL202507220039"
+      ],
+      "location": "Jayanagar",
+      "coordinates": [
+        12.92191,
+        77.596886
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Major congestion at Koramangala, vehicles moving slowly.",
+      "id": "BGL202507220040",
+      "edit_history_tweet_ids": [
+        "BGL202507220040"
+      ],
+      "location": "Ulsoor",
+      "coordinates": [
+        12.98427,
+        77.615223
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at Indiranagar, vehicles moving slowly.",
+      "id": "BGL202507220041",
+      "edit_history_tweet_ids": [
+        "BGL202507220041"
+      ],
+      "location": "Koramangala",
+      "coordinates": [
+        12.930275,
+        77.61526
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Rajajinagar.",
+      "id": "BGL202507220042",
+      "edit_history_tweet_ids": [
+        "BGL202507220042"
+      ],
+      "location": "Domlur",
+      "coordinates": [
+        12.947899,
+        77.642094
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Major congestion at JP Nagar, vehicles moving slowly.",
+      "id": "BGL202507220043",
+      "edit_history_tweet_ids": [
+        "BGL202507220043"
+      ],
+      "location": "HBR Layout",
+      "coordinates": [
+        13.029024,
+        77.635373
+      ],
+      "image_url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-918334,resizemode-75,msid-121560302/news/new-updates/bengaluru-traffic-jam-orr-marathahalli-viral-video-shows-gridlock-at-130-am-furious-residents-blame-metro-construction-and-more.jpg"
+    },
+    {
+      "text": "Major congestion at Ulsoor, vehicles moving slowly.",
+      "id": "BGL202507220044",
+      "edit_history_tweet_ids": [
+        "BGL202507220044"
+      ],
+      "location": "Koramangala",
+      "coordinates": [
+        12.936165,
+        77.625828
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Jayanagar\u2014long wait times expected.",
+      "id": "BGL202507220045",
+      "edit_history_tweet_ids": [
+        "BGL202507220045"
+      ],
+      "location": "Richmond Town",
+      "coordinates": [
+        12.968116,
+        77.607512
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Basavanagudi\u2014long wait times expected.",
+      "id": "BGL202507220046",
+      "edit_history_tweet_ids": [
+        "BGL202507220046"
+      ],
+      "location": "HBR Layout",
+      "coordinates": [
+        13.027444,
+        77.646916
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Major congestion at Bellandur, vehicles moving slowly.",
+      "id": "BGL202507220047",
+      "edit_history_tweet_ids": [
+        "BGL202507220047"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        13.000639,
+        77.558142
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Indiranagar.",
+      "id": "BGL202507220048",
+      "edit_history_tweet_ids": [
+        "BGL202507220048"
+      ],
+      "location": "Ulsoor",
+      "coordinates": [
+        12.975866,
+        77.623083
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Water logging near Bellandur after rains\u2014traffic disrupted.",
+      "id": "BGL202507220049",
+      "edit_history_tweet_ids": [
+        "BGL202507220049"
+      ],
+      "location": "Jayanagar",
+      "coordinates": [
+        12.915569,
+        77.586908
+      ],
+      "image_url": "https://static.toiimg.com/photo/imgsize-222750,msid-97829655/97829655.jpg"
+    },
+    {
+      "text": "Heavy traffic reported on Jayanagar\u2014long wait times expected.",
+      "id": "BGL202507220050",
+      "edit_history_tweet_ids": [
+        "BGL202507220050"
+      ],
+      "location": "Nagawara",
+      "coordinates": [
+        13.039196,
+        77.634383
+      ],
+      "image_url": "https://images.indianexpress.com/2022/06/bengaluru-road-repair.jpg"
+    },
+    {
+      "text": "Local event near BTM Layout drawing crowds\u2014slight congestion.",
+      "id": "BGL202507220051",
+      "edit_history_tweet_ids": [
+        "BGL202507220051"
+      ],
+      "location": "Electronic City",
+      "coordinates": [
+        12.840368,
+        77.673587
+      ]
+    },
+    {
+      "text": "Major congestion at Hebbal, vehicles moving slowly.",
+      "id": "BGL202507220052",
+      "edit_history_tweet_ids": [
+        "BGL202507220052"
+      ],
+      "location": "Jayanagar",
+      "coordinates": [
+        12.917689,
+        77.594404
+      ]
+    },
+    {
+      "text": "Major congestion at Indiranagar, vehicles moving slowly.",
+      "id": "BGL202507220053",
+      "edit_history_tweet_ids": [
+        "BGL202507220053"
+      ],
+      "location": "Richmond Town",
+      "coordinates": [
+        12.959034,
+        77.598551
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Madiwala\u2014long wait times expected.",
+      "id": "BGL202507220054",
+      "edit_history_tweet_ids": [
+        "BGL202507220054"
+      ],
+      "location": "HBR Layout",
+      "coordinates": [
+        13.021226,
+        77.630553
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Ulsoor.",
+      "id": "BGL202507220055",
+      "edit_history_tweet_ids": [
+        "BGL202507220055"
+      ],
+      "location": "Indiranagar",
+      "coordinates": [
+        12.962133,
+        77.642184
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Rajajinagar.",
+      "id": "BGL202507220056",
+      "edit_history_tweet_ids": [
+        "BGL202507220056"
+      ],
+      "location": "Jayanagar",
+      "coordinates": [
+        12.917415,
+        77.586742
+      ]
+    },
+    {
+      "text": "Major congestion at Jayanagar, vehicles moving slowly.",
+      "id": "BGL202507220057",
+      "edit_history_tweet_ids": [
+        "BGL202507220057"
+      ],
+      "location": "Banashankari",
+      "coordinates": [
+        12.914632,
+        77.580157
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Yeshwanthpur.",
+      "id": "BGL202507220058",
+      "edit_history_tweet_ids": [
+        "BGL202507220058"
+      ],
+      "location": "MG Road",
+      "coordinates": [
+        12.972073,
+        77.610569
+      ]
+    },
+    {
+      "text": "Severe road damage near Rajajinagar causing traffic slowdown.",
+      "id": "BGL202507220059",
+      "edit_history_tweet_ids": [
+        "BGL202507220059"
+      ],
+      "location": "Yeshwanthpur",
+      "coordinates": [
+        13.037387,
+        77.535751
+      ]
+    },
+    {
+      "text": "Roadwork at Koramangala leading to diversions\u2014expect delays.",
+      "id": "BGL202507220060",
+      "edit_history_tweet_ids": [
+        "BGL202507220060"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.981475,
+        77.551447
+      ]
+    },
+    {
+      "text": "Major congestion at MG Road, vehicles moving slowly.",
+      "id": "BGL202507220061",
+      "edit_history_tweet_ids": [
+        "BGL202507220061"
+      ],
+      "location": "Indiranagar",
+      "coordinates": [
+        12.966847,
+        77.643793
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Jayanagar\u2014long wait times expected.",
+      "id": "BGL202507220062",
+      "edit_history_tweet_ids": [
+        "BGL202507220062"
+      ],
+      "location": "Ulsoor",
+      "coordinates": [
+        12.977104,
+        77.618846
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on HBR Layout\u2014long wait times expected.",
+      "id": "BGL202507220063",
+      "edit_history_tweet_ids": [
+        "BGL202507220063"
+      ],
+      "location": "Basavanagudi",
+      "coordinates": [
+        12.948603,
+        77.575861
+      ]
+    },
+    {
+      "text": "Major congestion at Domlur, vehicles moving slowly.",
+      "id": "BGL202507220064",
+      "edit_history_tweet_ids": [
+        "BGL202507220064"
+      ],
+      "location": "Yeshwanthpur",
+      "coordinates": [
+        13.032362,
+        77.531106
+      ]
+    },
+    {
+      "text": "Major congestion at Yeshwanthpur, vehicles moving slowly.",
+      "id": "BGL202507220065",
+      "edit_history_tweet_ids": [
+        "BGL202507220065"
+      ],
+      "location": "Nagawara",
+      "coordinates": [
+        13.032397,
+        77.629341
+      ]
+    },
+    {
+      "text": "Local event near Nagawara drawing crowds\u2014slight congestion.",
+      "id": "BGL202507220066",
+      "edit_history_tweet_ids": [
+        "BGL202507220066"
+      ],
+      "location": "JP Nagar",
+      "coordinates": [
+        12.91194,
+        77.575425
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at JP Nagar.",
+      "id": "BGL202507220067",
+      "edit_history_tweet_ids": [
+        "BGL202507220067"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.982538,
+        77.552888
+      ]
+    },
+    {
+      "text": "Major congestion at MG Road, vehicles moving slowly.",
+      "id": "BGL202507220068",
+      "edit_history_tweet_ids": [
+        "BGL202507220068"
+      ],
+      "location": "Ulsoor",
+      "coordinates": [
+        12.984101,
+        77.621438
+      ]
+    },
+    {
+      "text": "Major congestion at Koramangala, vehicles moving slowly.",
+      "id": "BGL202507220069",
+      "edit_history_tweet_ids": [
+        "BGL202507220069"
+      ],
+      "location": "Basavanagudi",
+      "coordinates": [
+        12.936018,
+        77.57518
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Madiwala\u2014long wait times expected.",
+      "id": "BGL202507220070",
+      "edit_history_tweet_ids": [
+        "BGL202507220070"
+      ],
+      "location": "Jayanagar",
+      "coordinates": [
+        12.927815,
+        77.596182
+      ]
+    },
+    {
+      "text": "Major congestion at Yeshwanthpur, vehicles moving slowly.",
+      "id": "BGL202507220071",
+      "edit_history_tweet_ids": [
+        "BGL202507220071"
+      ],
+      "location": "Basavanagudi",
+      "coordinates": [
+        12.939008,
+        77.578967
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on MG Road\u2014long wait times expected.",
+      "id": "BGL202507220072",
+      "edit_history_tweet_ids": [
+        "BGL202507220072"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.984981,
+        77.550593
+      ]
+    },
+    {
+      "text": "Major congestion at Madiwala, vehicles moving slowly.",
+      "id": "BGL202507220073",
+      "edit_history_tweet_ids": [
+        "BGL202507220073"
+      ],
+      "location": "Hebbal",
+      "coordinates": [
+        13.040234,
+        77.592433
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Rajajinagar.",
+      "id": "BGL202507220074",
+      "edit_history_tweet_ids": [
+        "BGL202507220074"
+      ],
+      "location": "Koramangala",
+      "coordinates": [
+        12.93484,
+        77.619758
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Basavanagudi.",
+      "id": "BGL202507220075",
+      "edit_history_tweet_ids": [
+        "BGL202507220075"
+      ],
+      "location": "HBR Layout",
+      "coordinates": [
+        13.037899,
+        77.64308
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Jayanagar\u2014long wait times expected.",
+      "id": "BGL202507220076",
+      "edit_history_tweet_ids": [
+        "BGL202507220076"
+      ],
+      "location": "JP Nagar",
+      "coordinates": [
+        12.909372,
+        77.582133
+      ]
+    },
+    {
+      "text": "Major congestion at MG Road, vehicles moving slowly.",
+      "id": "BGL202507220077",
+      "edit_history_tweet_ids": [
+        "BGL202507220077"
+      ],
+      "location": "JP Nagar",
+      "coordinates": [
+        12.911769,
+        77.580293
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Yeshwanthpur.",
+      "id": "BGL202507220078",
+      "edit_history_tweet_ids": [
+        "BGL202507220078"
+      ],
+      "location": "Electronic City",
+      "coordinates": [
+        12.842561,
+        77.672014
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Jayanagar.",
+      "id": "BGL202507220079",
+      "edit_history_tweet_ids": [
+        "BGL202507220079"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.998291,
+        77.564552
+      ]
+    },
+    {
+      "text": "Roadwork at HBR Layout leading to diversions\u2014expect delays.",
+      "id": "BGL202507220080",
+      "edit_history_tweet_ids": [
+        "BGL202507220080"
+      ],
+      "location": "Electronic City",
+      "coordinates": [
+        12.842185,
+        77.666733
+      ]
+    },
+    {
+      "text": "Major congestion at Jayanagar, vehicles moving slowly.",
+      "id": "BGL202507220081",
+      "edit_history_tweet_ids": [
+        "BGL202507220081"
+      ],
+      "location": "Basavanagudi",
+      "coordinates": [
+        12.951075,
+        77.580021
+      ]
+    },
+    {
+      "text": "Roadwork at Electronic City leading to diversions\u2014expect delays.",
+      "id": "BGL202507220082",
+      "edit_history_tweet_ids": [
+        "BGL202507220082"
+      ],
+      "location": "Electronic City",
+      "coordinates": [
+        12.851669,
+        77.679829
+      ]
+    },
+    {
+      "text": "Commuters stuck in bumper-to-bumper traffic at Koramangala.",
+      "id": "BGL202507220083",
+      "edit_history_tweet_ids": [
+        "BGL202507220083"
+      ],
+      "location": "Yeshwanthpur",
+      "coordinates": [
+        13.034896,
+        77.549788
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Ulsoor\u2014long wait times expected.",
+      "id": "BGL202507220084",
+      "edit_history_tweet_ids": [
+        "BGL202507220084"
+      ],
+      "location": "Whitefield",
+      "coordinates": [
+        12.979124,
+        77.749127
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Hebbal\u2014long wait times expected.",
+      "id": "BGL202507220085",
+      "edit_history_tweet_ids": [
+        "BGL202507220085"
+      ],
+      "location": "Nagawara",
+      "coordinates": [
+        13.035744,
+        77.625613
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Indiranagar\u2014long wait times expected.",
+      "id": "BGL202507220086",
+      "edit_history_tweet_ids": [
+        "BGL202507220086"
+      ],
+      "location": "Yeshwanthpur",
+      "coordinates": [
+        13.032669,
+        77.541241
+      ]
+    },
+    {
+      "text": "Major congestion at Hebbal, vehicles moving slowly.",
+      "id": "BGL202507220087",
+      "edit_history_tweet_ids": [
+        "BGL202507220087"
+      ],
+      "location": "HBR Layout",
+      "coordinates": [
+        13.020234,
+        77.640701
+      ]
+    },
+    {
+      "text": "Major congestion at Madiwala, vehicles moving slowly.",
+      "id": "BGL202507220088",
+      "edit_history_tweet_ids": [
+        "BGL202507220088"
+      ],
+      "location": "Ulsoor",
+      "coordinates": [
+        12.978291,
+        77.627189
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Madiwala\u2014long wait times expected.",
+      "id": "BGL202507220089",
+      "edit_history_tweet_ids": [
+        "BGL202507220089"
+      ],
+      "location": "Rajajinagar",
+      "coordinates": [
+        12.998487,
+        77.547105
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on MG Road\u2014long wait times expected.",
+      "id": "BGL202507220090",
+      "edit_history_tweet_ids": [
+        "BGL202507220090"
+      ],
+      "location": "Nagawara",
+      "coordinates": [
+        13.045818,
+        77.629233
+      ]
+    },
+    {
+      "text": "Major congestion at Ulsoor, vehicles moving slowly.",
+      "id": "BGL202507220091",
+      "edit_history_tweet_ids": [
+        "BGL202507220091"
+      ],
+      "location": "Yeshwanthpur",
+      "coordinates": [
+        13.029731,
+        77.537528
+      ]
+    },
+    {
+      "text": "Heavy traffic reported on Koramangala\u2014long wait times expected.",
+      "id": "BGL202507220092",
+      "edit_history_tweet_ids": ["BGL202507220092"],
+      "location": "Madiwala",
+      "coordinates": [12.923008, 77.617656]
+    },
+    {
+      "text": "Heavy traffic reported on Yeshwanthpur\u2014long wait times expected.",
+      "id": "BGL202507220093",
+      "edit_history_tweet_ids": ["BGL202507220093"],
+      "location": "HBR Layout",
+      "coordinates": [13.037144,77.643402]
+    },
+    {
+      "text": "Flooded road near Electronic City\u2014vehicles struggling to move.",
+      "id": "BGL202507220094",
+      "edit_history_tweet_ids": ["BGL202507220094"],
+      "location": "Banashankari",
+      "coordinates": [ 12.915358, 77.56496 ]
+    },
+    {
+      "text": "Major congestion at Rajajinagar, vehicles moving slowly.",
+      "id": "BGL202507220095",
+      "edit_history_tweet_ids": ["BGL202507220095"],
+      "location": "Bellandur",
+      "coordinates": [12.944513,77.683178]
+    },
+    {
+      "text": "Major congestion at Richmond Town, vehicles moving slowly.",
+      "id": "BGL202507220096",
+      "edit_history_tweet_ids": ["BGL202507220096" ],
+      "location": "MG Road",
+      "coordinates": [ 12.967664, 77.600739]
+    },
+    {
+      "text": "Heavy traffic reported on Hebbal\u2014long wait times expected.",
+      "id": "BGL202507220097",
+      "edit_history_tweet_ids": ["BGL202507220097"],
+      "location": "BTM Layout",
+      "coordinates": [12.912234, 77.607451]
+    },
+    {
+      "text": "Roadwork at Richmond Town leading to diversions\u2014expect delays.",
+      "id": "BGL202507220098",
+      "edit_history_tweet_ids": ["BGL202507220098"],
+      "location": "Electronic City",
+      "coordinates": [12.852737,77.673104]
+    },
+    {
+      "text": "Heavy traffic reported on Yeshwanthpur\u2014long wait times expected.",
+      "id": "BGL202507220099",
+      "edit_history_tweet_ids": ["BGL202507220099"],
+      "location": "Bellandur",
+      "coordinates": [12.934221,77.669929]
+    },
+    {
+      "text": "Major congestion at Koramangala, vehicles moving slowly.",
+      "id": "BGL202507220100",
+      "edit_history_tweet_ids": ["BGL202507220100"],
+      "location": "Hebbal",
+      "coordinates": [13.035883,77.605173]
+    },
+    {
+      "text": "Bangalore Open Air music festival continues July\u202f21\u201322 at Palace Grounds\u2014expect heavy crowds, noise, and traffic diversions around Sampangi Rama Nagar.",
+      "id": "BLR202507200041",
+      "edit_history_tweet_ids": [
+        "BLR202507200041"
+      ],
+      "image_url": "https://www.shutterstock.com/image-photo/pushkar-rajasthan-india-november-06-600nw-2431623153.jpg",
+      "location": "Palace Grounds",
+      "coordinates": [
+        12.9984,
+        77.5914
+      ]
+    },
+    {
+      "text": "Second day of Bangalore Open Air on July\u202f22\u2014entering/leaving venues may face security bottlenecks, use MG Road\u2011Cunningham perimeter.",
+      "id": "BLR202507200042",
+      "edit_history_tweet_ids": [
+        "BLR202507200042"
+      ],
+      "image_url": "https://www.shutterstock.com/image-photo/pushkar-rajasthan-india-november-06-600nw-2431623153.jpg",
+      "location": "Palace Grounds",
+      "coordinates": [
+        12.9985,
+        77.5915
+      ]
+    },
+    {
+      "text": "Joseph & the Amazing Technicolor Dreamcoat musical running July\u202f17\u201119\u2014crowd dispersal on Museum Road and Richmond Road causes evening gridlocks.",
+      "id": "BLR202507200043",
+      "edit_history_tweet_ids": [
+        "BLR202507200043"
+      ],
+      "image_url": "https://www.shutterstock.com/image-photo/pushkar-rajasthan-india-november-06-600nw-2431623153.jpg",
+      "location": "Good Shepherd Auditorium, Richmond Town",
+      "coordinates": [
+        12.9716,
+        77.5944
+      ]
+    },
+    {
+      "text": "Post\u2011show exodus for musical on July\u202f19\u2014heavy pedestrian crossing on Museum Road, temporary barricades delayed traffic till 10\u202fPM.",
+      "id": "BLR202507200044",
+      "edit_history_tweet_ids": [
+        "BLR202507200044"
+      ],
+      "image_url": "https://www.shutterstock.com/image-photo/pushkar-rajasthan-india-november-06-600nw-2431623153.jpg",
+      "location": "Richmond Road, near Museum Rd",
+      "coordinates": [
+        12.9715,
+        77.5943
+      ]
+    },
+    {
+      "text": "AHA! Theatre for Children Festival at Ranga Shankara from July\u202f15\u201319\u2014large crowds in JP Nagar evenings, expect slow traffic on 100\u2011Feet Road.",
+      "id": "BLR202507200045",
+      "edit_history_tweet_ids": [
+        "BLR202507200045"
+      ],
+      "image_url": "https://www.shutterstock.com/image-photo/pushkar-rajasthan-india-november-06-600nw-2431623153.jpg",
+      "location": "Ranga Shankara, JP Nagar",
+      "coordinates": [
+        12.925,
+        77.569
+      ]
+    },
+    {
+      "text": "Final evening of children\u2019s theatre fest July\u202f19\u2014vehicle movement restricted around KP Puram junction, footpaths overcrowded.",
+      "id": "BLR202507200046",
+      "edit_history_tweet_ids": [
+        "BLR202507200046"
+      ],
+      "image_url": "https://www.shutterstock.com/image-photo/pushkar-rajasthan-india-november-06-600nw-2431623153.jpg",
+      "location": "JP Nagar, near Ranga Shankara",
+      "coordinates": [
+        12.9252,
+        77.5691
+      ]
+    },
+    {
+      "text": "Waterlogging reported on Tumkur Road—vehicles moving slowly.",
+      "id": "BGL202507220004",
+      "edit_history_tweet_ids": [
+        "BGL202507220004"
+      ],
+      "location": "Tumkur Road",
+      "coordinates": [
+        12.966578,
+        77.736465
+      ]
+    },
+    {
+      "text": "Traffic jam at Hebbal flyover southbound—consider alternate routes.",
+      "id": "BGL202507220005",
+      "edit_history_tweet_ids": [
+        "BGL202507220005"
+      ],
+      "location": "Hebbal Flyover",
+      "coordinates": [
+        13.002004,
+        77.729572
+      ]
+    },
+    {
+      "text": "Rainwater under ORR service road bridge—lane partially submerged.",
+      "id": "BGL202507220006",
+      "edit_history_tweet_ids": [
+        "BGL202507220006"
+      ],
+      "location": "ORR Service Road",
+      "coordinates": [
+        12.97761,
+        77.728396
+      ]
+    },
+    {
+      "text": "Metro construction causing diversions near exhibition area.",
+      "id": "BGL202507220007",
+      "edit_history_tweet_ids": [
+        "BGL202507220007"
+      ],
+      "location": "Exhibition Area",
+      "coordinates": [
+        12.993553,
+        77.702408
+      ]
+    },
+    {
+      "text": "Vehicle breakdown near logistics gate—expect minor delays.",
+      "id": "BGL202507220008",
+      "edit_history_tweet_ids": [
+        "BGL202507220008"
+      ],
+      "location": "Logistics Park",
+      "coordinates": [
+        13.000432,
+        77.703145
+      ]
+    },
+    {
+      "text": "Heavy footfall due to cultural fest at BIEC—pedestrian congestion.",
+      "id": "BGL202507220009",
+      "edit_history_tweet_ids": [
+        "BGL202507220009"
+      ],
+      "location": "BIEC Main Entrance",
+      "coordinates": [
+        12.955945,
+        77.713632
+      ]
+    },
+    {
+      "text": "Overflowing storm drain near service road—avoid inner lanes.",
+      "id": "BGL202507220010",
+      "edit_history_tweet_ids": [
+        "BGL202507220010"
+      ],
+      "location": "ORR Drain Section",
+      "coordinates": [
+        12.966069,
+        77.717355
+      ]
+    },
+    {
+      "text": "Bus stuck in flooded underpass—traffic backed up.",
+      "id": "BGL202507220011",
+      "edit_history_tweet_ids": [
+        "BGL202507220011"
+      ],
+      "location": "BIEC Underpass",
+      "coordinates": [
+        12.988475,
+        77.717785
+      ]
+    },
+    {
+      "text": "Festival crowd at expo center—vehicle entry restricted.",
+      "id": "BGL202507220012",
+      "edit_history_tweet_ids": [
+        "BGL202507220012"
+      ],
+      "location": "Expo Hall",
+      "coordinates": [
+        12.990249,
+        77.705448
+      ]
+    },
+    {
+      "text": "Slush near parking area—caution advised for two-wheelers.",
+      "id": "BGL202507220013",
+      "edit_history_tweet_ids": [
+        "BGL202507220013"
+      ],
+      "location": "BIEC Parking Zone",
+      "coordinates": [
+        12.962155,
+        77.7122
+      ]
+    },
+    {
+      "text": "Backup due to stalled truck—service road congested.",
+      "id": "BGL202507220014",
+      "edit_history_tweet_ids": [
+        "BGL202507220014"
+      ],
+      "location": "Outer Ring Road",
+      "coordinates": [
+        12.983172,
+        77.713082
+      ]
+    },
+    {
+      "text": "Waterlogging near BIEC gate after heavy rainfall.",
+      "id": "BGL202507220015",
+      "edit_history_tweet_ids": [
+        "BGL202507220015"
+      ],
+      "location": "BIEC Entrance",
+      "coordinates": [
+        12.987395,
+        77.698464
+      ]
+    },
+    {
+      "text": "Temporary police barricades for event—traffic rerouted.",
+      "id": "BGL202507220016",
+      "edit_history_tweet_ids": [
+        "BGL202507220016"
+      ],
+      "location": "Event Perimeter",
+      "coordinates": [
+        12.997692,
+        77.704323
+      ]
+    },
+    {
+      "text": "Muddy patch causing minor skids near side lane.",
+      "id": "BGL202507220017",
+      "edit_history_tweet_ids": [
+        "BGL202507220017"
+      ],
+      "location": "Side Lane",
+      "coordinates": [
+        12.959387,
+        77.696498
+      ]
+    },
+    {
+      "text": "Water splash zone forming at median pothole.",
+      "id": "BGL202507220018",
+      "edit_history_tweet_ids": [
+        "BGL202507220018"
+      ],
+      "location": "Tumkur Road Median",
+      "coordinates": [
+        13.004152,
+        77.70648
+      ]
+    },
+    {
+      "text": "Event vendor stalls spilled onto road—traffic narrowing.",
+      "id": "BGL202507220019",
+      "edit_history_tweet_ids": [
+        "BGL202507220019"
+      ],
+      "location": "Event Vendor Zone",
+      "coordinates": [
+        12.995822,
+        77.721535
+      ]
+    },
+    {
+      "text": "Multiple vehicle queue near main access road.",
+      "id": "BGL202507220020",
+      "edit_history_tweet_ids": [
+        "BGL202507220020"
+      ],
+      "location": "Access Road",
+      "coordinates": [
+        12.979854,
+        77.738421
+      ]
+    },
+    {
+      "text": "Garbage overflow and waterlogging blocking service lane.",
+      "id": "BGL202507220021",
+      "edit_history_tweet_ids": [
+        "BGL202507220021"
+      ],
+      "location": "Service Lane",
+      "coordinates": [
+        12.984114,
+        77.694782
+      ]
+    },
+    {
+      "text": "Pedestrian crowd exiting event—avoid via vehicles.",
+      "id": "BGL202507220022",
+      "edit_history_tweet_ids": [
+        "BGL202507220022"
+      ],
+      "location": "Exit Zone",
+      "coordinates": [
+        12.998497,
+        77.743139
+      ]
+    },
+    {
+      "text": "Low visibility due to heavy rain—drive slow.",
+      "id": "BGL202507220023",
+      "edit_history_tweet_ids": [
+        "BGL202507220023"
+      ],
+      "location": "Rainbelt Near BIEC",
+      "coordinates": [
+        12.974364,
+        77.710856
+      ]
+    },
+    {
+      "text": "Slow moving traffic due to expo visitors.",
+      "id": "BGL202507220024",
+      "edit_history_tweet_ids": [
+        "BGL202507220024"
+      ],
+      "location": "Visitor Gate",
+      "coordinates": [
+        12.988308,
+        77.702468
+      ]
+    },
+    {
+      "text": "Rains cause ditch to overflow near event exit.",
+      "id": "BGL202507220025",
+      "edit_history_tweet_ids": [
+        "BGL202507220025"
+      ],
+      "location": "Event Exit",
+      "coordinates": [
+        12.962771,
+        77.710612
+      ]
+    },
+    {
+      "text": "Two-wheeler accident reported due to waterlogging.",
+      "id": "BGL202507220026",
+      "edit_history_tweet_ids": [
+        "BGL202507220026"
+      ],
+      "location": "Corner Junction",
+      "coordinates": [
+        12.975731,
+        77.716736
+      ]
+    },
+    {
+      "text": "Congestion due to school buses and event vans.",
+      "id": "BGL202507220027",
+      "edit_history_tweet_ids": [
+        "BGL202507220027"
+      ],
+      "location": "Bus Drop Zone",
+      "coordinates": [
+        12.973921,
+        77.696925
+      ]
+    },
+    {
+      "text": "Temporary lane closure due to water repair work.",
+      "id": "BGL202507220028",
+      "edit_history_tweet_ids": [
+        "BGL202507220028"
+      ],
+      "location": "Repair Lane",
+      "coordinates": [
+        12.966509,
+        77.695302
+      ]
+    },
+    {
+      "text": "Waterlogging reported on Tumkur Road—vehicles moving slowly.",
+      "id": "BGL202507220004",
+      "edit_history_tweet_ids": [
+        "BGL202507220004"
+      ],
+      "location": "Tumkur Road",
+      "coordinates": [13.062587, 77.468738]
+    },
+    {
+      "text": "Google Agentic AI Day hackathon event",
+      "id": "BGL202507220005",
+      "edit_history_tweet_ids": [
+        "BGL202507220005"
+      ],
+      "location": "BIEC Center",
+      "coordinates": [13.062203, 77.476019]
+    },
+    {
+      "text": "Rainwater under ORR service road bridge—lane partially submerged.",
+      "id": "BGL202507220006",
+      "edit_history_tweet_ids": [
+        "BGL202507220006"
+      ],
+      "location": "Anchepalya",
+      "coordinates": [13.062716, 77.480825]
+    },
+    {
+      "text": "Metro construction causing diversions near exhibition area.",
+      "id": "BGL202507220007",
+      "edit_history_tweet_ids": [
+        "BGL202507220007"
+      ],
+      "location": "Exhibition Area",
+      "coordinates": [13.065404, 77.473473]
+    },
+    {
+      "text": "Vehicle breakdown near logistics gate—expect minor delays.",
+      "id": "BGL202507220008",
+      "edit_history_tweet_ids": [
+        "BGL202507220008"
+      ],
+      "location": "Logistics Park",
+      "coordinates": [
+        13.000432,
+        77.703145]
+    },
+    {
+      "text": "Cultural event near BIEC.",
+      "id": "BGL202507220009",
+      "edit_history_tweet_ids": [
+        "BGL202507220009"
+      ],
+      "location": "BIEC Main Entrance",
+      "coordinates": [
+       13.058813, 
+       77.474259
+      ]
+    },
+    {
+      "text": "Overflowing storm drain near service road—avoid inner lanes.",
+      "id": "BGL202507220010",
+      "edit_history_tweet_ids": [
+        "BGL202507220010"
+      ],
+      "location": "ORR Drain Section",
+      "coordinates": [
+        12.966069,
+        77.717355
+      ]
+    },
+    {
+      "text": "Bus stuck in flooded underpass—traffic backed up.",
+      "id": "BGL202507220011",
+      "edit_history_tweet_ids": [
+        "BGL202507220011"
+      ],
+      "location": "BIEC Underpass",
+      "coordinates": [
+        12.988475,
+        77.717785
+      ]
+    },
+    {
+      "text": "Festival crowd at expo center—vehicle entry restricted.",
+      "id": "BGL202507220012",
+      "edit_history_tweet_ids": [
+        "BGL202507220012"
+      ],
+      "location": "Expo Hall",
+      "coordinates": [
+        12.990249,
+        77.705448
+      ]
+    },
+    {
+      "text": "Slush near parking area—caution advised for two-wheelers.",
+      "id": "BGL202507220013",
+      "edit_history_tweet_ids": [
+        "BGL202507220013"
+      ],
+      "location": "BIEC Parking Zone",
+      "coordinates": [
+        12.962155,
+        77.7122
+      ]
+    },
+    {
+      "text": "Backup due to stalled truck—service road congested.",
+      "id": "BGL202507220014",
+      "edit_history_tweet_ids": [
+        "BGL202507220014"
+      ],
+      "location": "Outer Ring Road",
+      "coordinates": [
+        12.983172,
+        77.713082
+      ]
+    },
+    {
+      "text": "Waterlogging near BIEC gate after heavy rainfall.",
+      "id": "BGL202507220015",
+      "edit_history_tweet_ids": [
+        "BGL202507220015"
+      ],
+      "location": "BIEC Entrance",
+      "coordinates": [
+        12.987395,
+        77.698464
+      ]
+    },
+    {
+      "text": "Temporary police barricades for event—traffic rerouted.",
+      "id": "BGL202507220016",
+      "edit_history_tweet_ids": [
+        "BGL202507220016"
+      ],
+      "location": "Event Perimeter",
+      "coordinates": [
+        12.997692,
+        77.704323
+      ]
+    },
+    {
+      "text": "Muddy patch causing minor skids near side lane.",
+      "id": "BGL202507220017",
+      "edit_history_tweet_ids": [
+        "BGL202507220017"
+      ],
+      "location": "Side Lane",
+      "coordinates": [
+        12.959387,
+        77.696498
+      ]
+    },
+    {
+      "text": "Water splash zone forming at median pothole.",
+      "id": "BGL202507220018",
+      "edit_history_tweet_ids": [
+        "BGL202507220018"
+      ],
+      "location": "Tumkur Road Median",
+      "coordinates": [
+        13.004152,
+        77.70648
+      ]
+    },
+    {
+      "text": "Event vendor stalls spilled onto road—traffic narrowing.",
+      "id": "BGL202507220019",
+      "edit_history_tweet_ids": [
+        "BGL202507220019"
+      ],
+      "location": "Event Vendor Zone",
+      "coordinates": [
+        12.995822,
+        77.721535
+      ]
+    },
+    {
+      "text": "Multiple vehicle queue near main access road.",
+      "id": "BGL202507220020",
+      "edit_history_tweet_ids": [
+        "BGL202507220020"
+      ],
+      "location": "Access Road",
+      "coordinates": [
+        12.979854,
+        77.738421
+      ]
+    },
+    {
+      "text": "Garbage overflow and waterlogging blocking service lane.",
+      "id": "BGL202507220021",
+      "edit_history_tweet_ids": [
+        "BGL202507220021"
+      ],
+      "location": "Service Lane",
+      "coordinates": [
+        12.984114,
+        77.694782
+      ]
+    },
+    {
+      "text": "Pedestrian crowd exiting event—avoid via vehicles.",
+      "id": "BGL202507220022",
+      "edit_history_tweet_ids": [
+        "BGL202507220022"
+      ],
+      "location": "Exit Zone",
+      "coordinates": [
+        12.998497,
+        77.743139
+      ]
+    },
+    {
+      "text": "Low visibility due to heavy rain—drive slow.",
+      "id": "BGL202507220023",
+      "edit_history_tweet_ids": [
+        "BGL202507220023"
+      ],
+      "location": "Rainbelt Near BIEC",
+      "coordinates": [
+        12.974364,
+        77.710856
+      ]
+    },
+    {
+      "text": "Slow moving traffic due to expo visitors.",
+      "id": "BGL202507220024",
+      "edit_history_tweet_ids": [
+        "BGL202507220024"
+      ],
+      "location": "Visitor Gate",
+      "coordinates": [
+        12.988308,
+        77.702468
+      ]
+    },
+    {
+      "text": "Rains cause ditch to overflow near event exit.",
+      "id": "BGL202507220025",
+      "edit_history_tweet_ids": [
+        "BGL202507220025"
+      ],
+      "location": "Event Exit",
+      "coordinates": [
+        12.962771,
+        77.710612
+      ]
+    },
+    {
+      "text": "Two-wheeler accident reported due to waterlogging.",
+      "id": "BGL202507220026",
+      "edit_history_tweet_ids": [
+        "BGL202507220026"
+      ],
+      "location": "Corner Junction",
+      "coordinates": [
+        12.975731,
+        77.716736
+      ]
+    },
+    {
+      "text": "Congestion due to school buses and event vans.",
+      "id": "BGL202507220027",
+      "edit_history_tweet_ids": [
+        "BGL202507220027"
+      ],
+      "location": "Bus Drop Zone",
+      "coordinates": [
+        12.973921,
+        77.696925
+      ]
+    },
+    {
+      "text": "Temporary lane closure due to water repair work.",
+      "id": "BGL202507220028",
+      "edit_history_tweet_ids": [
+        "BGL202507220028"
+      ],
+      "location": "Repair Lane",
+      "coordinates": [
+        12.966509,
+        77.695302
+      ] 
+    }, 
+    {
+      "text": "Live folk dance performance at BIEC plaza attracting large crowds.",
+      "id": "BGL202507230001",
+      "edit_history_tweet_ids": [
+        "BGL202507230001"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.981441,
+        77.719921
+      ]
+    },
+    {
+      "text": "Kannada literature book fair underway at Expo Hall C—visitors welcome.",
+      "id": "BGL202507230002",
+      "edit_history_tweet_ids": [
+        "BGL202507230002"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.980927,
+        77.717945
+      ]
+    },
+    {
+      "text": "Cultural parade by school children ongoing near main gate.",
+      "id": "BGL202507230003",
+      "edit_history_tweet_ids": [
+        "BGL202507230003"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.978612,
+        77.718967
+      ]
+    },
+    {
+      "text": "Live Carnatic music concert draws audience near lawn stage.",
+      "id": "BGL202507230004",
+      "edit_history_tweet_ids": [
+        "BGL202507230004"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.980129,
+        77.721091
+      ]
+    },
+    {
+      "text": "Food stalls serving regional cuisine setup beside entrance gate.",
+      "id": "BGL202507230005",
+      "edit_history_tweet_ids": [
+        "BGL202507230005"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.982477,
+        77.718832
+      ]
+    },
+    {
+      "text": "Art exhibition featuring local artists held in Convention Block B.",
+      "id": "BGL202507230006",
+      "edit_history_tweet_ids": [
+        "BGL202507230006"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.978739,
+        77.717655
+      ]
+    },
+    {
+      "text": "Street play on Bengaluru heritage being performed at outdoor arena.",
+      "id": "BGL202507230007",
+      "edit_history_tweet_ids": [
+        "BGL202507230007"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.978773,
+        77.719029
+      ]
+    },
+    {
+      "text": "Evening light and sound show to begin at 7PM—expect crowds.",
+      "id": "BGL202507230008",
+      "edit_history_tweet_ids": [
+        "BGL202507230008"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.981729,
+        77.719652
+      ]
+    },
+    {
+      "text": "Traditional crafts fair draws visitors at cultural dome zone.",
+      "id": "BGL202507230009",
+      "edit_history_tweet_ids": [
+        "BGL202507230009"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.979433,
+        77.719102
+      ]
+    },
+    {
+      "text": "Open mic poetry session scheduled at Community Pavilion at 6PM.",
+      "id": "BGL202507230010",
+      "edit_history_tweet_ids": [
+        "BGL202507230010"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.982011,
+        77.721318
+      ]
+    },
+    {
+      "text": "Dasara celebrations with traditional music and fireworks ongoing at amphitheatre.",
+      "id": "BGL202507230011",
+      "edit_history_tweet_ids": [
+        "BGL202507230011"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.981485,
+        77.717351
+      ]
+    },
+    {
+      "text": "Diwali Mela inaugurated—lanterns, sweets, and footfall increasing.",
+      "id": "BGL202507230012",
+      "edit_history_tweet_ids": [
+        "BGL202507230012"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.978637,
+        77.717196
+      ]
+    },
+    {
+      "text": "Sports meet underway at indoor stadium—volleyball and badminton matches ongoing.",
+      "id": "BGL202507230013",
+      "edit_history_tweet_ids": [
+        "BGL202507230013"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.977861,
+        77.717932
+      ]
+    },
+    {
+      "text": "Marathon flagged off at BIEC main gate—runners on 5K track.",
+      "id": "BGL202507230014",
+      "edit_history_tweet_ids": [
+        "BGL202507230014"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.979944,
+        77.721864
+      ]
+    },
+    {
+      "text": "School annual day celebration with prize distribution and performances.",
+      "id": "BGL202507230015",
+      "edit_history_tweet_ids": [
+        "BGL202507230015"
+      ],
+      "location": "BIEC",
+      "coordinates": [
+        12.980762,
+        77.719373
+      ]
+    }
     ]
   }

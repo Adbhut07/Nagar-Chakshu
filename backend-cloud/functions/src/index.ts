@@ -12,15 +12,21 @@ import summaryRoute from "./routes/summary/getIncidents";
 import predictionsRoute from "./routes/predictions/predictions";
 import processedRoute from "./routes/processed/processed";
 import aiSearchRoute from "./ai-search/aiSearch";
+import sentimentRoute from "./routes/sentiments/sentiments";
 
 // Import scheduled functions
-import { notifyUsersOnNewIncidents } from "./scheduler/notificationCron";
 import { 
-  syncFirestoreToVertexAI, 
-  syncOnDocumentChange, 
-  syncOnDocumentDelete, 
-  fullSyncFirestoreToVertexAI 
-} from "./scheduler/scheduledSync";
+  notifyUsersOnNewIncidents, 
+  testNotificationScheduler, 
+  createTestUser, 
+  cleanupTestData 
+} from "./scheduler/notificationCron";
+// import { 
+//   syncFirestoreToVertexAI, 
+//   syncOnDocumentChange, 
+//   syncOnDocumentDelete, 
+//   fullSyncFirestoreToVertexAI 
+// } from "./scheduler/scheduledSync";
 
 const app = express();
 
@@ -117,6 +123,7 @@ app.use("/api/summary", summaryRoute);
 app.use("/api/predictions", predictionsRoute);
 app.use("/api/processed", processedRoute);
 app.use("/api/ai-search", aiSearchRoute);
+app.use("/api/sentiments", sentimentRoute);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -157,12 +164,17 @@ app.use((req, res) => {
 export const api = functions.https.onRequest(app);
 
 // Export scheduled functions
-export { notifyUsersOnNewIncidents };
+export { 
+  notifyUsersOnNewIncidents, 
+  testNotificationScheduler, 
+  createTestUser, 
+  cleanupTestData 
+};
 
 // Export Vertex AI sync functions
-export { 
-  syncFirestoreToVertexAI, 
-  syncOnDocumentChange, 
-  syncOnDocumentDelete, 
-  fullSyncFirestoreToVertexAI 
-};
+// export { 
+//   syncFirestoreToVertexAI, 
+//   syncOnDocumentChange, 
+//   syncOnDocumentDelete, 
+//   fullSyncFirestoreToVertexAI 
+// };

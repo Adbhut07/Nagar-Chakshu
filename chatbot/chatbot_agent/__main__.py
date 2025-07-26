@@ -7,6 +7,7 @@ import asyncio # Import asyncio
 from contextlib import AsyncExitStack # For MCP exit stack
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 # Use relative imports within the agent package
@@ -76,7 +77,7 @@ async def main(): # Make main async
 
         # Configuration for the A2A server
         # Use environment variables or defaults
-        host = os.getenv("SPEAKER_A2A_HOST", "127.0.0.1")
+        host = os.getenv("SPEAKER_A2A_HOST", "0.0.0.0")
         port = int(os.getenv("SPEAKER_A2A_PORT", 8004))
         
         # Create the FastAPI app using the helper
@@ -86,6 +87,43 @@ async def main(): # Make main async
             description=agent_instance.description,
             task_manager=task_manager_instance 
         )
+        
+        # Add CORS middleware to allow multiple origins
+        # Development mode - allow all origins (set CORS_ALLOW_ALL=true in .env)
+        allow_all_origins = os.getenv("CORS_ALLOW_ALL", "false").lower() == "true"
+        
+        if allow_all_origins:
+            # Development mode - allow all origins
+            app.add_middleware(
+                CORSMiddleware,
+                allow_origins=["*"],
+                allow_credentials=False,  # Must be False when allow_origins=["*"]
+                allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                allow_headers=["*"],
+            )
+        else:
+            # Production mode - specific origins only
+            allowed_origins = [
+                "http://localhost:3000",  # Next.js development server
+                "http://localhost:3001",  # Alternative frontend port
+                "https://nagar-chakshu.vercel.app",  # Production domain
+                "https://your-staging-domain.com",  # Staging domain
+                # Add more origins as needed
+            ]
+            
+            # Get additional origins from environment variable if provided
+            env_origins = os.getenv("ALLOWED_ORIGINS", "")
+            if env_origins:
+                env_origins_list = [origin.strip() for origin in env_origins.split(",") if origin.strip()]
+                allowed_origins.extend(env_origins_list)
+            
+            app.add_middleware(
+                CORSMiddleware,
+                allow_origins=allowed_origins,
+                allow_credentials=True,
+                allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                allow_headers=["*"],
+            )
         
         print(f"NagarChakshu chatbot server starting on {host}:{port}")
         
