@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { fetchSentimentData, fetchSummarizedData } from '@/lib/api';
 import { useEffect, useRef, useState } from 'react';
 
-const Map = () => {
+const MoodMap = () => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const [map, setMap] = useState<google.maps.Map | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -510,7 +510,7 @@ const Map = () => {
 
             try {
 
-                const sentiment = incident.sentiment || 'default';
+                const sentiment = incident.categories[0] || 'default';
 
                 const markerIcon = getMarkerIconForSentimentData(sentiment);
 
@@ -614,7 +614,7 @@ const Map = () => {
 
             const radiusInMeters = Math.round(radius * 1000);
 
-            const response = await fetchSentimentData(
+            const response = await fetchSummarizedData(
                 { lat, lng },
                 radiusInMeters,
                 token
@@ -725,7 +725,7 @@ const Map = () => {
 
         const mapInstance = new google.maps.Map(mapRef.current, {
             center: { lat: lat, lng: lng }, // Center of India
-            zoom: 14,
+            zoom: 12,
             mapTypeId: 'roadmap'
         });
 
@@ -771,8 +771,8 @@ const Map = () => {
     if (!isLoaded || !userProfile) {
         return (
             <div style={{
-                width: '900px',
-                height: '600px',
+                width: '600px',
+                height: '400px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -793,7 +793,7 @@ const Map = () => {
     }
 
     return (
-        <div style={{ width: '900px', height: '600px' }}>
+        <div style={{ width: '600px', height: '400px' }}>
             <div
                 ref={mapRef}
                 style={{
@@ -812,4 +812,4 @@ const Map = () => {
     );
 };
 
-export default Map;
+export default MoodMap;

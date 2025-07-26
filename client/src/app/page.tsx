@@ -9,6 +9,8 @@ import { toast } from "sonner"
 import LiveData from "@/components/LiveData"
 import ProtectedRoute from "@/components/AuthGuard"
 import SummarizedData from "@/components/SummarizedData"
+import MoodMap from "@/components/MoodMap"
+import { useRouter } from "next/navigation"
 
 // Define proper types
 interface Location {
@@ -20,12 +22,38 @@ interface ProcessedData {
   [key: string]: any
 }
 
+const fadeInTexts = [
+  "Mood map of your city",
+  "Live Incidents",
+  "Real-time sentiment analysis"
+]
+
 export default function HomePage() {
   const [showReportModal, setShowReportModal] = useState(false)
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 })
   const [processedData, setProcessedData] = useState<any>(null)
   const [summarizedData, setSummarizedData] = useState<any>(null)
   const [hideLiveData, setHideLiveData] = useState<boolean>(false)
+  const [visibleTexts, setVisibleTexts] = useState<number[]>([])
+
+  const router = useRouter();
+
+
+
+
+
+  useEffect(() => {
+    fadeInTexts.forEach((_, index) => {
+      setTimeout(
+        () => {
+          setVisibleTexts((prev) => [...prev, index])
+        },
+        index * 200 + 500,
+      ) // Start after 500ms, then 200ms intervals
+    })
+  }, [])
+
+
 
   // Single context call
   const { user, userProfile } = useAuth()
@@ -199,6 +227,14 @@ export default function HomePage() {
     return () => clearTimeout(timeoutId)
   }, [location.latitude, location.longitude, user, userProfile])
 
+
+
+
+  const handleClickMap = () => {
+
+    router.push('/map')
+  }
+
   return (
     <ProtectedRoute>
       <div className="min-h-screen  bg-black">
@@ -261,22 +297,109 @@ export default function HomePage() {
           </div>
 
           {/* Middle Column - Responsive Layout */}
-          <div className="w-full lg:flex-[3] border-b lg:border-b-0 lg:border-r border-gray-800 p-3 sm:p-4 lg:p-6 overflow-y-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="h-full min-h-[200px] lg:min-h-0 bg-gray-900/30 rounded-xl border border-gray-800 border-dashed flex items-center justify-center"
-            >
-              <div className="text-center text-gray-500 p-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-gray-800 rounded-full flex items-center justify-center">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded"></div>
+          <div className="w-full justify-center lg:flex-[3] border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-800 p-2 sm:p-6 lg:p-8 overflow-y-auto">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex flex-col items-center justify-center space-y-8">
+                {/* Main Title Section */}
+                <div className="text-center ">
+                  <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-2xl sm:text-sm lg:text-xl xl:text-2xl font-bold bg-gradient-to-r from-orange-500 via-purple-500 to-orange-500 bg-clip-text text-transparent leading-tight"
+                  >
+                    Visualizing the Pulse of City
+                  </motion.h1>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium mb-2">Middle Section</h3>
-                <p className="text-xs sm:text-sm">Add your component here</p>
+
+                {/* Animated Tags Section */}
+                <div className="w-full max-w-4xl">
+                  <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-2">
+                    <AnimatePresence>
+                      {fadeInTexts.map((text, index) => (
+                        <motion.span
+                          key={index}
+                          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                          animate={
+                            visibleTexts.includes(index)
+                              ? {
+                                opacity: 1,
+                                scale: 1,
+                                y: 0,
+                              }
+                              : {
+                                opacity: 0,
+                                scale: 0.8,
+                                y: 20,
+                              }
+                          }
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.25, 0.46, 0.45, 0.94],
+                            delay: index * 0.1,
+                          }}
+                          className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs sm:text-sm font-medium border border-gray-200 dark:border-gray-600 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                        >
+                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-orange-400 to-purple-400 rounded-full mr-2"></div>
+                          {text}
+                        </motion.span>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Main Content Area */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+                  className="w-full flex justify-center"
+                >
+                  <MoodMap />
+                </motion.div>
+
+                {/* Additional Info Section */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
+                  className="text-center flex justify-center items-center gap-6"
+                >
+
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">
+                      Powered by real-time data analytics and machine learning
+                    </p>
+                    <div className="flex items-center justify-center space-x-4 text-xs text-gray-400 dark:text-gray-600">
+                      <span className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-1.5 animate-pulse"></div>
+                        Live Data
+                      </span>
+                      <span className="flex items-center">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-1.5"></div>
+                        Updated Every 5min
+                      </span>
+                      <span className="flex items-center">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full mr-1.5"></div>
+                        AI Insights
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="text-white">
+                    <button
+                      onClick={handleClickMap}
+                      className="text-xs px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 transition-colors duration-200 backdrop-blur-sm border border-white/20 shadow-sm"
+                    >
+                      View full map 🔗
+                    </button>
+                  </div>
+
+                </motion.div>
               </div>
-            </motion.div>
+            </div>
           </div>
+
 
           {/* Right Column - Responsive Layout */}
           <div className="w-full lg:flex-2 p-3 sm:p-4 lg:p-6 overflow-y-auto">

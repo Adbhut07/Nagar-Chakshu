@@ -79,7 +79,7 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
 
   if (!processedData || processedData.length === 0) {
     return (
-      <div className="w-[480px] h-10">
+      <div className="w-[380px] h-10">
         <div className="bg-gray-950/90 backdrop-blur-xl border border-gray-800/50 rounded-xl shadow-2xl h-full flex items-center justify-center">
           <p className="text-gray-400 text-sm">Fetching live data from different sources</p>
         </div>
@@ -88,7 +88,7 @@ const LiveData: React.FC<LiveDataProps> = ({ processedData }) => {
   }
 
   return (
-    <div className="w-[460px] h-60">
+    <div className="w-[380px] h-60">
       <div className="bg-black backdrop-blur-xl border border-white rounded-xl shadow-2xl h-full overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-gray-800/50">

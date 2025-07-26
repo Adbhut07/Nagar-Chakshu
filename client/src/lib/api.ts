@@ -476,4 +476,37 @@ export async function fetchSummarizedData(
 }
 
 
+export async function fetchSentimentData(
+  location: { lat: number; lng: number },
+  radius: number,
+  token: string
+) {
+  try {
+    const queryParams = new URLSearchParams({
+      lat: location.lat.toString(),
+      lng: location.lng.toString(),
+      radius: radius.toString()
+    });
+
+    const res = await fetch(`${API_BASE_URL}/sentiments?${queryParams.toString()}`, {
+      method: "GET",
+      headers: createAuthHeaders(token)
+    });
+
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Fetch sentiment data Error Response:", errorText);
+      throw new Error(`Failed to fetch sentiment data: ${res.status} ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch sentiment data error:", error);
+    throw error;
+  }
+}
+
+
 
