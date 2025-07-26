@@ -6,7 +6,6 @@ const db = admin.firestore();
 
 // Interface for processed data structure
 interface ProcessedData {
-  advice: string;
   categories: string[];
   coordinates: {
     lat: number;
@@ -24,7 +23,6 @@ interface ProcessedData {
 
 interface ProcessedResponse {
   id: string;
-  advice: string;
   categories: string[];
   coordinates: {
     lat: number;
@@ -125,7 +123,6 @@ router.get("/", verifyToken, async (req: express.Request, res: express.Response)
 
           results.push({
             id: doc.id,
-            advice: data.advice,
             categories: data.categories,
             coordinates: data.coordinates,
             description: data.description,
