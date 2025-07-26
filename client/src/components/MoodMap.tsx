@@ -3,7 +3,6 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { fetchSentimentData, fetchSummarizedData } from '@/lib/api';
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 
 const Map = () => {
     const mapRef = useRef<HTMLDivElement | null>(null);
@@ -771,14 +770,17 @@ const Map = () => {
 
     if (!isLoaded || !userProfile) {
         return (
-            <div className="h-screen bg-black flex items-center justify-center">
-                <div className="bg-gray-900/90 border border-gray-700 rounded-xl p-8 text-center">
-                    <div className="text-white text-lg font-medium mb-2">Loading Google Maps...</div>
-                    <div className="text-gray-400 text-sm">Please wait while we initialize the map</div>
-                    <div className="mt-4 flex justify-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                    </div>
-                </div>
+            <div style={{
+                width: '600px',
+                height: '400px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#f0f0f0',
+                border: '1px solid #ddd',
+                borderRadius: '8px'
+            }}>
+                Loading Google Maps...
             </div>
         );
     }
@@ -820,272 +822,21 @@ const Map = () => {
 }
 
     return (
-        <div className="h-screen bg-black text-white flex">
-            {/* Map Container */}
-            <div className="flex-1 relative overflow-hidden">
-                <div
-                    ref={mapRef}
-                    style={{
-                        width: '100%',
-                        height: '100%'
-                    }}
-                />
-            </div>
+        <div style={{ width: '600px', height: '400px' }}>
+            <div
+                ref={mapRef}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '8px'
+                }}
+            />
 
-            {/* Right Panel */}
-            <div className="w-80 bg-black border-l-2 border-gray-700 h-full overflow-y-auto">
-                {/* Toggle Button */}
-                <div className="p-6 pb-4 border-b border-gray- 700">
-                    <button
-                        onClick={handleToggle}
-                        className="w-full py-3 px-4 flex items-center text-left rounded-lg transition-all duration-200 bg-gray-900 hover:bg-gray-800 text-white border-2 border-gray-700 hover:border-gray-600"
-                    >
-                        {isSentiment ? (
-                            <>
-                                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                </svg>
-                                Show Summarized Data
-                            </>
-                        ) : (
-                            <>
-                                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M15 14h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Show Sentiment Data
-                            </>
-                        )}
-                    </button>
-                </div>
-
-                {/* Animated Text */}
-                <div className="px-6 py-4 border-b border-gray-700">
-                    <motion.p
-                        key={isSentiment ? 'sentiment' : 'summary'}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-sm text-gray-400"
-                    >
-                        {isSentiment 
-                            ? "Analyzing real-time citizen sentiment across Bengaluru..." 
-                            : "Generating comprehensive data insights and trends..."
-                        }
-                    </motion.p>
-                </div>
-
-                {/* Data Content */}
-                <div className="p-6 space-y-4">
-                    {/* Sentiment Analysis Panel */}
-                    {isSentiment && sentimentData.length > 0 && (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="space-y-4"
-                        >
-                            {/* Dynamic Sentiment Categories based on actual data */}
-                            {(() => {
-                                // Get unique sentiments from API data
-                                const sentimentTypes = Array.from(new Set(sentimentData.map(item => item.sentiment?.toLowerCase()).filter(Boolean)));
-                                
-                                // Group sentiments by category
-                                const negativeEmojis = ['angry', 'frustrated', 'worried', 'disappointed', 'helpless'];
-                                const neutralEmojis = ['calm', 'indifferent', 'uncertain', 'waiting'];
-                                const positiveEmojis = ['happy', 'excited', 'hopeful', 'grateful', 'proud'];
-                                
-                                const categories = [
-                                    {
-                                        name: 'Negative Sentiment',
-                                        color: 'red',
-                                        emojis: sentimentTypes.filter(s => negativeEmojis.includes(s)),
-                                        data: sentimentData.filter(item => negativeEmojis.includes(item.sentiment?.toLowerCase()))
-                                    },
-                                    {
-                                        name: 'Neutral Sentiment', 
-                                        color: 'yellow',
-                                        emojis: sentimentTypes.filter(s => neutralEmojis.includes(s)),
-                                        data: sentimentData.filter(item => neutralEmojis.includes(item.sentiment?.toLowerCase()))
-                                    },
-                                    {
-                                        name: 'Positive Sentiment',
-                                        color: 'green', 
-                                        emojis: sentimentTypes.filter(s => positiveEmojis.includes(s)),
-                                        data: sentimentData.filter(item => positiveEmojis.includes(item.sentiment?.toLowerCase()))
-                                    }
-                                ];
-
-                                return categories.map((category, index) => {
-                                    if (category.data.length === 0) return null;
-                                    
-                                    const percentage = Math.round((category.data.length / sentimentData.length) * 100);
-                                    
-                                    return (
-                                        <motion.div 
-                                            key={category.name}
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{ duration: 0.5, delay: (index + 1) * 0.1 }}
-                                            className="bg-gray-900 rounded-lg p-4 border-2 border-gray-700 hover:border-gray-600 transition-all duration-200"
-                                        >
-                                            <h3 className={`font-semibold mb-2 text-${category.color}-400`}>{category.name}</h3>
-                                            <div className="space-y-2">
-                                                {/* Show emoji breakdown */}
-                                                {category.emojis.length > 0 && (
-                                                    <div className="mb-3">
-                                                        <div className="text-xs text-gray-400 mb-1">Detected emotions:</div>
-                                                        <div className="flex flex-wrap gap-1">
-                                                            {category.emojis.map(emoji => {
-                                                                const count = category.data.filter(item => item.sentiment?.toLowerCase() === emoji).length;
-                                                                const emojiPercentage = Math.round((count / category.data.length) * 100);
-                                                                return (
-                                                                    <span key={emoji} className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-600">
-                                                                        {emoji} ({emojiPercentage}%)
-                                                                    </span>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                                
-                                                <div className="flex justify-between">
-                                                    <span className="text-sm">Total Reports</span>
-                                                    <span className="text-sm font-medium">{percentage}%</span>
-                                                </div>
-                                                <div className="w-full bg-gray-800 rounded-full h-2 border border-gray-600">
-                                                    <motion.div 
-                                                        initial={{ width: 0 }}
-                                                        animate={{ width: `${percentage}%` }}
-                                                        transition={{ duration: 1, delay: (index + 1) * 0.3 }}
-                                                        className={`bg-${category.color}-500 h-2 rounded-full`}
-                                                    ></motion.div>
-                                                </div>
-                                                
-                                                {/* Show actual count */}
-                                                <div className="text-xs text-gray-400 mt-1">
-                                                    {category.data.length} out of {sentimentData.length} reports
-                                                </div>
-                                            </div>
-                                        </motion.div>
-                                    );
-                                }).filter(Boolean);
-                            })()}
-                        </motion.div>
-                    )}
-
-                    {/* Summarized Data Panel */}
-                    {!isSentiment && summarizedData.length > 0 && (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="space-y-4"
-                        >
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: 0.1 }}
-                                className="bg-gray-900 rounded-lg p-4 border-2 border-gray-700 hover:border-blue-500 transition-all duration-200"
-                            >
-                                <h3 className="font-semibold mb-2 text-blue-400">Total Reports</h3>
-                                <p className="text-2xl font-bold">{summarizedData.length}</p>
-                                <p className="text-sm text-gray-400">From {Array.from(new Set(summarizedData.map(item => item.location?.split(',')[0]))).length} locations</p>
-                            </motion.div>
-
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                                className="bg-gray-900 rounded-lg p-4 border-2 border-gray-700 hover:border-purple-500 transition-all duration-200"
-                            >
-                                <h3 className="font-semibold mb-2 text-purple-400">Resolved Issues</h3>
-                                <p className="text-2xl font-bold">{summarizedData.filter(item => item.resolution_time && getEtaText(item) === "Resolved").length}</p>
-                                <p className="text-sm text-gray-400">
-                                    {Math.round((summarizedData.filter(item => item.resolution_time && getEtaText(item) === "Resolved").length / summarizedData.length) * 100) || 0}% resolution rate
-                                </p>
-                            </motion.div>
-
-                            {/* Dynamic Category Breakdown */}
-                            {(() => {
-                                // Get all unique categories from the API data
-                                const allCategories = summarizedData.flatMap(item => item.categories || []);
-                                const categoryCount: Record<string, number> = {};
-                                allCategories.forEach(cat => {
-                                    categoryCount[cat] = (categoryCount[cat] || 0) + 1;
-                                });
-                                
-                                // Sort categories by count and take top 2
-                                const topCategories = Object.entries(categoryCount)
-                                    .sort(([,a], [,b]) => (b as number) - (a as number))
-                                    .slice(0, 2);
-
-                                return topCategories.map(([category, count], index) => (
-                                    <motion.div 
-                                        key={category}
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.5, delay: 0.3 + (index * 0.1) }}
-                                        className="bg-gray-900 rounded-lg p-4 border-2 border-gray-700 hover:border-orange-500 transition-all duration-200"
-                                    >
-                                        <h3 className={`font-semibold mb-2 ${index === 0 ? 'text-orange-400' : 'text-pink-400'}`}>
-                                            {category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')} Issues
-                                        </h3>
-                                        <p className="text-2xl font-bold">{count}</p>
-                                        <p className="text-sm text-gray-400">
-                                            {Math.round((count / summarizedData.length) * 100)}% of all reports
-                                        </p>
-                                    </motion.div>
-                                ));
-                            })()}
-
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: 0.4 }}
-                                className="bg-gray-900 rounded-lg p-4 border-2 border-gray-700 hover:border-cyan-500 transition-all duration-200"
-                            >
-                                <h3 className="font-semibold mb-2 text-cyan-400">Active Areas</h3>
-                                <div className="space-y-2 text-sm">
-                                    {(() => {
-                                        // Count reports per area and sort by frequency
-                                        const areaCount: Record<string, number> = {};
-                                        summarizedData.forEach(item => {
-                                            const area = item.location?.split(',')[0] || 'Unknown';
-                                            areaCount[area] = (areaCount[area] || 0) + 1;
-                                        });
-                                        
-                                        return Object.entries(areaCount)
-                                            .sort(([,a], [,b]) => (b as number) - (a as number))
-                                            .slice(0, 3)
-                                            .map(([area, count], index) => (
-                                                <div key={area} className="flex justify-between">
-                                                    <span>{area} ({count} reports)</span>
-                                                    <span className={
-                                                        index === 0 ? "text-cyan-400" : 
-                                                        index === 1 ? "text-yellow-400" : 
-                                                        "text-green-400"
-                                                    }>
-                                                        {index === 0 ? "High" : index === 1 ? "Medium" : "Low"}
-                                                    </span>
-                                                </div>
-                                            ));
-                                    })()}
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    )}
-
-                    {/* Empty State */}
-                    {((isSentiment && sentimentData.length === 0) || (!isSentiment && summarizedData.length === 0)) && (
-                        <div className="flex items-center justify-center h-40">
-                            <div className="text-center">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                                <p className="text-gray-400 text-sm">Loading data...</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+            <button onClick={handleToggle}>
+                {
+                    isSentiment ? 'Show Summarized Data' : 'Show Sentiment Data'
+                }
+            </button>
         </div>
     );
 };

@@ -122,7 +122,6 @@ class PredictiveAgent:
                     "coordinates": data.get('coordinates', {'lat': 0, 'lng': 0}),
                     "geohash": data.get('geohash', ''),
                     "location": data.get('location', ''),
-                    "source_city": data.get('source_city', ''),
                     "resolution_time": resolution_time,
                     "prediction": prediction,
                 }

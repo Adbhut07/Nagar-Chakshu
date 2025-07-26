@@ -146,7 +146,7 @@ class SynthesisAgent:
         
         distance = self._calculate_distance(lat1, lng1, lat2, lng2)
         
-        if distance > 5:  # 100m = 0.1km
+        if distance > 0.007:  
             return False
         
         # Check if any categories match
@@ -185,24 +185,15 @@ class SynthesisAgent:
         try:
             # Prepare input text
             input_text = " ".join([data.get('description', '') for data in cluster_data])
-            
-            prompt = f"Generate a concise but bit detailed summary for the following data points:\n{input_text}\n\nSummary:"
+
+            prompt = f"Generate a concise summary, dont miss any important details for the following data points:\n{input_text}\n\nSummary:"
             response = model.generate_content(prompt)
             return response.text.strip()
         except Exception as e:
             logger.error(f"Error generating summary: {e}")
             return "Summary generation failed due to an error."
         
-    def get_intelligent_advice(self, intelligent_summary: str) -> str:
-        """Generate intelligent advice based on the summary using Gemini model"""
-        try:
-            prompt = f"Based on the following summary, provide actionable advice in few lines:\n{intelligent_summary}\n\nAdvice:"
-            response = model.generate_content(prompt)
-            return response.text.strip()
-        except Exception as e:
-            logger.error(f"Error generating advice: {e}")
-            return "Advice generation failed due to an error."
-        
+  
     def get_resolution_time(self,categories: list[str]) -> datetime:
         """Returns the latest valid_upto from the matched categories."""
         durations = [
@@ -219,9 +210,7 @@ class SynthesisAgent:
         
         lat = cluster_data[0].get('coordinates', {}).get('lat', 0)
         lng = cluster_data[0].get('coordinates', {}).get('lng', 0)
-        
-        location = cluster_data[0].get('location', 'Unknown Location')
-        source_city = cluster_data[0].get('source_city', 'Unknown City')
+
         
         
         # Collect all categories
@@ -236,7 +225,6 @@ class SynthesisAgent:
         unique_categories = list(set(all_categories))
         
         intelligent_cluster_summary  =  self.get_intelligent_summary(cluster_data)
-        intelligent_advice = self.get_intelligent_advice(intelligent_cluster_summary)
         image_urls = [data.get('image_url') for data in cluster_data if 'image_url' in data]
         descriptions = [data.get('description', '') for data in cluster_data]
         resolution_time = self.get_resolution_time(unique_categories)
@@ -255,11 +243,10 @@ class SynthesisAgent:
                 'lng': lng
             },
             'categories': unique_categories,
-            'advice': intelligent_advice,
             'descriptions': descriptions,
-            'location': location,
-            'source_city': source_city,
-            'geohash':hash_code
+            'geohash':hash_code,
+            'location': cluster_data[0].get('location', 'Unknown Location'),
+            'votes':0
         }
         
     def store_summaries(self) -> None:
