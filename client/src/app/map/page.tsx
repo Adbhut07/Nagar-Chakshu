@@ -835,7 +835,7 @@ const Map = () => {
             {/* Right Panel */}
             <div className="w-80 bg-black border-l-2 border-gray-700 h-full overflow-y-auto">
                 {/* Toggle Button */}
-                <div className="p-6 pb-4 border-b border-gray-700">
+                <div className="p-6 pb-4 border-b border-gray- 700">
                     <button
                         onClick={handleToggle}
                         className="w-full py-3 px-4 flex items-center text-left rounded-lg transition-all duration-200 bg-gray-900 hover:bg-gray-800 text-white border-2 border-gray-700 hover:border-gray-600"
