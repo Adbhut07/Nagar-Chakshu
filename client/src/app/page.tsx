@@ -11,6 +11,7 @@ import ProtectedRoute from "@/components/AuthGuard"
 import SummarizedData from "@/components/SummarizedData"
 import MoodMap from "@/components/MoodMap"
 import { useRouter } from "next/navigation"
+import Chatbot from "@/components/Chatbot"
 
 // Define proper types
 interface Location {
@@ -302,14 +303,36 @@ export default function HomePage() {
               <div className="flex flex-col items-center justify-center space-y-8">
                 {/* Main Title Section */}
                 <div className="text-center ">
-                  <motion.h1
+                  {/* <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-2xl sm:text-sm lg:text-xl xl:text-2xl font-bold bg-gradient-to-r from-orange-500 via-purple-500 to-orange-500 bg-clip-text text-transparent leading-tight"
+                    
                   >
-                    Visualizing the Pulse of City
-                  </motion.h1>
+                    
+                  </motion.h1> */}
+
+
+                  
+      <div className="text-2xl text-white font-sans flex items-center justify-center text-center">
+        <span>Visualizing the </span>
+        <motion.span
+          className="text-orange-500 text-2xl font-bold mx-2 inline-block"
+          animate={{ opacity: [1, 0.3, 1] }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut"
+          }}
+        >
+          Pulse
+        </motion.span>
+        <span> of City</span>
+      </div>
+    
+
+
                 </div>
 
                 {/* Animated Tags Section */}
@@ -401,21 +424,17 @@ export default function HomePage() {
           </div>
 
 
-          {/* Right Column - Responsive Layout */}
-          <div className="w-full lg:flex-2 p-3 sm:p-4 lg:p-6 overflow-y-auto">
+
+
+          {/* Right Column - Chatbot */}
+          <div className="w-full lg:flex-2 p-3 sm:p-4 lg:p-6 ">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="h-full min-h-[200px] lg:min-h-0 bg-gray-900/30 rounded-xl border border-gray-800 border-dashed flex items-center justify-center"
+              className="h-full min-h-[400px] lg:min-h-[600px]"
             >
-              <div className="text-center text-gray-500 p-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-gray-800 rounded-full flex items-center justify-center">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded"></div>
-                </div>
-                <h3 className="text-base sm:text-lg font-medium mb-2">Right Section</h3>
-                <p className="text-xs sm:text-sm">Add your component here</p>
-              </div>
+              <Chatbot />
             </motion.div>
           </div>
         </div>
