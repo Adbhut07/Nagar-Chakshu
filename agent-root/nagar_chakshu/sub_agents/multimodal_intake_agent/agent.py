@@ -93,6 +93,7 @@ class MultiModalIntakeService:
             return self.user_reports
         except Exception as e:
             logger.error(f"Error fetching user reports: {e}")
+            print('Error fetching user reports:')
             return []
         
     def download_media(self, url):
@@ -182,54 +183,6 @@ class MultiModalIntakeService:
             return False
         
         
-    def _get_city_from_coordinates(self, coords: Dict[str, float]) -> str:
-        """Get city name from coordinates using reverse geocoding"""
-        try:
-            lat = coords.get('latitude') or coords.get('lat')
-            lng = coords.get('longitude') or coords.get('lng')
-
-            if lat is None or lng is None:
-                return "Unknown"
-
-            # Use Nominatim (OpenStreetMap) for reverse geocoding
-            city_name = self._reverse_geocode(lat, lng)
-            return city_name if city_name else "Unknown"
-
-        except Exception:
-            return "Unknown"
-
-    def _reverse_geocode(self, lat: float, lng: float) -> str:
-        """Perform reverse geocoding to get city name using Google Maps Geocoding API"""
-        try:
-            # Get API key from environment variable
-            api_key = os.getenv('GOOGLE_GEOCODING_API_KEY')
-            if not api_key:
-                return "Unknown"
-
-            url = "https://maps.googleapis.com/maps/api/geocode/json"
-            params = {
-                'latlng': f"{lat},{lng}",
-                'key': api_key
-            }
-
-            response = requests.get(url, params=params, timeout=5)
-            
-            
-            if response.status_code == 200:
-                results = response.json().get("results", [])
-                for result in results:
-                    for component in result.get("address_components", []):
-                        types = component.get("types", [])
-                        if "locality" in types:
-                            return component.get("long_name")
-                        elif "administrative_area_level_2" in types:
-                            return component.get("long_name")
-                        elif "administrative_area_level_1" in types:
-                            return component.get("long_name")
-            return "Unknown"
-
-        except Exception:
-            return "Unknown"
         
     def categorize_content(self, description: str, score_output: bool = False) -> List[str] | List[Tuple[str, int]]:
         """
@@ -315,7 +268,6 @@ class MultiModalIntakeService:
                 return None
             
             text_content = data_item.get("description", "")
-            location = self._get_city_from_coordinates(data_item.get("location", {}))
             coordinates = {
                 'lat': data_item.get("location", {}).get("latitude"),
                 'lng': data_item.get("location", {}).get("longitude")
@@ -333,12 +285,11 @@ class MultiModalIntakeService:
                 "description": data_item.get("description", ""),
                 "categories": categories,  # Now an array
                 "advice": advice,
-                "location": location,
                 "coordinates": coordinates,
                 "resolution_time": resolution_time,
                 "source_id": data_item.get("id", f"unknown_id_{random.randint(1000, 9999)}"),
-                "source_city": data_item.get("source_city", location),
                 "image_url": data_item.get("mediaUrl", ""),
+                "location": data_item.get("place", {}).get("name", "Unknown Location"),
             }
 
     def process_reports(self) -> List[Dict[str, Any]]:

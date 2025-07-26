@@ -241,7 +241,7 @@ class DataFusingService:
             dict: Result with data or error information
         """
         api_endpoint = f"{self.base_api_url}/api/twitter-feed"
-        take_data = 200# Number of random items to select
+        take_data = 200 
         
         try:
             async with httpx.AsyncClient() as client:
@@ -319,21 +319,8 @@ class DataFusingService:
         for item in data:
             processed_item = item.copy()
 
-            # Normalize coordinates first
-            coords = self.normalize_coordinates(processed_item)
-
-            if coords:
-                processed_item['coordinates'] = coords
-
-                # Find city name based on coordinates
-                city_name = self._get_city_from_coordinates(coords)
-            else:
-                # Fallback if no coordinates available
-                city_name = "Unknown"
-
             processed_item.update({
-                'fetched_at': current_time,
-                'source_city': city_name
+                'fetched_at': current_time
             })
 
             processed_data.append(processed_item)
@@ -504,7 +491,6 @@ class DataFusingService:
             "coordinates": coordinates,
             "resolution_time": resolution_time,
             "source_id": data_item.get("id", f"unknown_{idx}"),
-            "source_city": data_item.get("source_city", location),
             "image_url": data_item.get("image_url"),
         }
     

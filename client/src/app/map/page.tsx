@@ -437,7 +437,7 @@ const Map = () => {
                 ${incident.location || 'Unknown Location'}
             </h3>
             <p style="margin: 0 0 10px 0; color: #666; font-size: 13px; line-height: 1.4;">
-                ${incident.advice || 'No advice available'}
+                ${incident.summary || 'No summary available'}
             </p>
             <div style="margin-bottom: 8px;">
                 <span style="background: ${getIncidentColor(category)}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; text-transform: uppercase; font-weight: bold;">
@@ -449,7 +449,7 @@ const Map = () => {
                 </span>` : ''}
             </div>
             <div style="color: #888; font-size: 12px;">
-                <strong>Resolution Time:</strong> ${formatResolutionTime(incident.resolution_time)}
+                <strong>Resolution Time: ${getEtaText(incident)}</strong>
             </div>
         </div>
     `
@@ -791,6 +791,35 @@ const Map = () => {
         setIsSentiment(!isSentiment);
 
     }
+
+   const getEtaText = (data:any)=>{
+
+   
+    const etaInSeconds = data.resolution_time._seconds;
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    const remainingSeconds = etaInSeconds - nowInSeconds;
+
+    if (remainingSeconds > 0) {
+        const days = Math.floor(remainingSeconds / 86400);
+        const hours = Math.floor((remainingSeconds % 86400) / 3600);
+        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+
+        let etaText = '';
+
+        if (days > 0) {
+            etaText = hours > 0 ? `${days}d ${hours}h ${minutes}m` : `${days}d ${minutes}m`;
+        } else if (hours > 0) {
+            etaText = `${hours}h ${minutes}m`;
+        } else {
+            etaText = `${minutes}m`;
+        }
+
+        return etaText
+    } else {
+        return "Resolved"
+    }
+
+}
 
     return (
         <div style={{ width: '900px', height: '600px' }}>
