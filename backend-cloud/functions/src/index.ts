@@ -13,6 +13,8 @@ import predictionsRoute from "./routes/predictions/predictions";
 import processedRoute from "./routes/processed/processed";
 import aiSearchRoute from "./ai-search/aiSearch";
 import sentimentRoute from "./routes/sentiments/sentiments";
+import voteRoute from "./routes/vote/vote";
+import notificationsRoute from "./routes/notifications/notifications";
 
 // Import scheduled functions
 import { 
@@ -38,6 +40,7 @@ const allowedOrigins = [
   'http://127.0.0.1:3001',
   'https://localhost:3000',
   'https://192.168.18.159:3000',
+  'https://nagar-chakshu-backend.asdevx.com',
   // Add your actual production domains here
   'https://nagar-chakshu.vercel.app',
   'https://nagar-chakshu-adbhut07s-projects.vercel.app',
@@ -124,6 +127,8 @@ app.use("/api/predictions", predictionsRoute);
 app.use("/api/processed", processedRoute);
 app.use("/api/ai-search", aiSearchRoute);
 app.use("/api/sentiments", sentimentRoute);
+app.use("/api/vote", voteRoute);
+app.use("/api/notifications", notificationsRoute);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
