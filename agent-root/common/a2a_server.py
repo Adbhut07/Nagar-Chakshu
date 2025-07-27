@@ -5,6 +5,7 @@ from typing import Dict, Any, Callable, Optional
 
 from fastapi import FastAPI, Body
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 class AgentRequest(BaseModel):
@@ -22,12 +23,37 @@ def create_agent_server(
     description: str, 
     task_manager: Any, 
     endpoints: Optional[Dict[str, Callable]] = None,
-    well_known_path: Optional[str] = None
+    well_known_path: Optional[str] = None,
+    allowed_origins: Optional[list] = None
 ) -> FastAPI:
     """
     Create a FastAPI server for an agent following A2A protocol.
     """
     app = FastAPI(title=f"{name} Agent", description=description)
+    
+    # Configure CORS
+    if allowed_origins is None:
+        # Default allowed origins - you can customize these
+        allowed_origins = [
+            "http://localhost:3000",  # Next.js development
+            "https://localhost:3000", # Next.js development with HTTPS
+            "http://localhost:3001",  # Alternative development port
+            "https://localhost:3001", # Alternative development port with HTTPS
+            # Add your production domains here
+            # "https://yourdomain.com",
+            # "https://www.yourdomain.com",
+            # Add Google Compute Engine external IP if needed
+            # "http://YOUR_GCE_EXTERNAL_IP",
+            # "https://YOUR_GCE_EXTERNAL_IP",
+        ]
+    
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=True,
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["*"],
+    )
     
     # Determine .well-known path
     if well_known_path is None:
