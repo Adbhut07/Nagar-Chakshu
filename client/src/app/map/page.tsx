@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { fetchSentimentData, fetchSummarizedData } from '@/lib/api';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import FloatingChatbot from '@/components/FloatingChatbot';
 
 const Map = () => {
     const mapRef = useRef<HTMLDivElement | null>(null);
@@ -1086,6 +1087,9 @@ const Map = () => {
                     )}
                 </div>
             </div>
+            
+            {/* Floating Chatbot */}
+            <FloatingChatbot />
         </div>
     );
 };

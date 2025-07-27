@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { MessageCircle, Bot, User, Send, Loader2, Sparkles } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
+import { sendChatMessage, generateSessionId } from "@/lib/chatbotService"
 
 interface Message {
   id: string
@@ -13,23 +15,36 @@ interface Message {
   timestamp: Date
 }
 
-export default function Chatbot() {
+export default function Chatbot({ isFloating = false }: { isFloating?: boolean }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [sessionId] = useState(() => generateSessionId())
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const { user } = useAuth()
+
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    if (scrollAreaRef.current) {
+      const scrollElement = scrollAreaRef.current;
+      setTimeout(() => {
+        scrollElement.scrollTo({
+          top: scrollElement.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 50);
+    }
+  };
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
-    }
+    scrollToBottom();
   }, [messages])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!input.trim() || isLoading) return
+    if (!input.trim() || isLoading || !user) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -39,21 +54,55 @@ export default function Chatbot() {
     }
 
     setMessages((prev) => [...prev, userMessage])
+    const currentInput = input.trim()
     setInput("")
     setIsLoading(true)
 
-    // Simulate brief processing time for better UX
-    setTimeout(() => {
+    try {
+      const response = await sendChatMessage(currentInput, user.uid, sessionId)
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          "Thank you for your message. The AI assistant is currently being configured. Please check back soon for intelligent responses about traffic, events, and city services in your area.",
+        content: response.data.final_response || "I'm sorry, I couldn't process your request. Please try again.",
         timestamp: new Date(),
       }
+      
       setMessages((prev) => [...prev, assistantMessage])
+      // Explicitly scroll after adding response
+      setTimeout(scrollToBottom, 100);
+    } catch (error) {
+      console.error('Chatbot API error:', error)
+      
+      let errorContent = "I'm experiencing some technical difficulties. Please try again later.";
+      
+      if (error instanceof Error) {
+        if (error.message.includes('Chatbot API URL not configured')) {
+          errorContent = "Chatbot service is not properly configured. Please contact support.";
+        } else if (error.message.includes('400')) {
+          errorContent = "Invalid request format. Please try rephrasing your message.";
+        } else if (error.message.includes('404')) {
+          errorContent = "Chatbot service is currently unavailable. Please try again later.";
+        } else if (error.message.includes('500')) {
+          errorContent = "Server error occurred. Please try again in a few moments.";
+        } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          errorContent = "Network connection issue. Please check your internet connection and try again.";
+        }
+      }
+      
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: errorContent,
+        timestamp: new Date(),
+      }
+      
+      setMessages((prev) => [...prev, errorMessage])
+      // Explicitly scroll after adding error message
+      setTimeout(scrollToBottom, 100);
+    } finally {
       setIsLoading(false)
-    }, 1200)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +116,7 @@ export default function Chatbot() {
   }
 
   return (
-    <Card className="h-[85vh] max-w-2xl mx-auto bg-black/95 backdrop-blur-xl border border-white shadow-2xl flex flex-col overflow-hidden">
+    <Card className={`${isFloating ? 'h-full' : 'h-[85vh] max-w-2xl mx-auto'} bg-black/95 backdrop-blur-xl border border-white shadow-2xl flex flex-col overflow-hidden`}>
       <CardHeader className="pb-4 border-b border-white/10 bg-black/80 backdrop-blur-sm">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -96,6 +145,7 @@ export default function Chatbot() {
         <div
           className="flex-1 px-6 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
           ref={scrollAreaRef}
+          style={isFloating ? { maxHeight: '400px', overflowY: 'auto' } : {}}
         >
           <div className="space-y-6">
             {messages.length === 0 && (
@@ -190,9 +240,9 @@ export default function Chatbot() {
               <Input
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Ask about city services, traffic, events..."
+                placeholder={user ? "Ask about city services, traffic, events..." : "Please sign in to use the chatbot"}
                 className="bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder-gray-400 focus:border-white/40 focus:ring-2 focus:ring-white/20 transition-all duration-200 text-sm h-11 rounded-xl shadow-lg pr-16"
-                disabled={isLoading}
+                disabled={isLoading || !user}
                 maxLength={500}
               />
               <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
@@ -203,7 +253,7 @@ export default function Chatbot() {
               type="submit"
               size="icon"
               className="bg-gradient-to-r from-white/20 to-white/15 backdrop-blur-sm hover:from-white/30 hover:to-white/25 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-white/20 h-11 w-11 rounded-xl border border-white/30"
-              disabled={isLoading || !input.trim()}
+              disabled={isLoading || !input.trim() || !user}
             >
               {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </Button>
