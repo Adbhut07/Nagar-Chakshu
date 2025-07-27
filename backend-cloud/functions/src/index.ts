@@ -41,12 +41,10 @@ const allowedOrigins = [
   'https://localhost:3000',
   'https://192.168.18.159:3000',
   'https://nagar-chakshu-backend.asdevx.com',
+  'https://nagar-chakshu.asdevx.com',
   // Add your actual production domains here
   'https://nagar-chakshu.vercel.app',
-  'https://nagar-chakshu-adbhut07s-projects.vercel.app',
-  // Add your Firebase hosting domain if you're using it
-  'https://your-project-id.web.app',
-  'https://your-project-id.firebaseapp.com'
+  'https://nagar-chakshu-adbhut07s-projects.vercel.app'
 ];
 
 // Enhanced CORS configuration

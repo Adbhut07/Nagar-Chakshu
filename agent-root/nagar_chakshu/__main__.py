@@ -79,12 +79,37 @@ async def main(): # Make main async
         host = os.getenv("SPEAKER_A2A_HOST", "127.0.0.1")
         port = int(os.getenv("SPEAKER_A2A_PORT", 8003))
         
+        # Configure CORS origins
+        allow_all_origins = os.getenv("CORS_ALLOW_ALL", "false").lower() == "true"
+        
+        if allow_all_origins:
+            # Development mode - allow all origins
+            allowed_origins = ["*"]
+        else:
+            # Production mode - specific origins only
+            allowed_origins = [
+                "http://localhost:3000",
+                "http://localhost:3001", 
+                "https://localhost:3000",
+                "https://localhost:3001",
+                # Add your production domains here
+                # "https://yourdomain.com",
+                # "https://www.yourdomain.com",
+            ]
+            
+            # Get additional origins from environment variable if provided
+            env_origins = os.getenv("ALLOWED_ORIGINS", "")
+            if env_origins:
+                env_origins_list = [origin.strip() for origin in env_origins.split(",") if origin.strip()]
+                allowed_origins.extend(env_origins_list)
+        
         # Create the FastAPI app using the helper
-        # Pass the agent name, description, and the task manager instance
+        # Pass the agent name, description, task manager instance, and allowed origins
         app = create_agent_server(
             name=agent_instance.name,
             description=agent_instance.description,
-            task_manager=task_manager_instance 
+            task_manager=task_manager_instance,
+            allowed_origins=allowed_origins
         )
         
         logger.info(f"NagarChakshu server starting on {host}:{port}")
