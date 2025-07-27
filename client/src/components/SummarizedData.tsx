@@ -3,14 +3,20 @@
 import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { MapPin, Clock, Users, AlertCircle } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
+import { voteForIncident, removeVoteForIncident, checkUserVoteStatus, getIncidentVotes } from "@/lib/api"
+import { toast } from "sonner"
 
 type SummarizedDataItem = {
+  id?: string
   summary: string
   advice: string
   occurrences: number
   resolution_time: any
   categories: string[]
   location: string
+  votes?: number
+  userHasVoted?: boolean
 }
 
 type LiveDataProps = {
@@ -24,6 +30,11 @@ const SummarizedData: React.FC<LiveDataProps> = ({ summarizedData, setHideLiveDa
   const [loadingProgress, setLoadingProgress] = useState(0)
   const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  
+  // Voting state - simplified to just track vote counts
+  const [votesData, setVotesData] = useState<{[key: string]: number}>({})
+  const [votingLoading, setVotingLoading] = useState<{[key: string]: boolean}>({})
+  const { user } = useAuth()
 
   const totalLoadingTime = 20000
   const stepDuration = totalLoadingTime / 4
@@ -66,6 +77,99 @@ const SummarizedData: React.FC<LiveDataProps> = ({ summarizedData, setHideLiveDa
       color: "from-orange-400 to-orange-600",
     },
   ]
+
+  // Voting functionality - simplified
+  const handleVote = async (incidentId: string) => {
+    if (!user || !incidentId) {
+      toast.error("Please sign in to vote")
+      return
+    }
+
+    setVotingLoading(prev => ({ ...prev, [incidentId]: true }))
+
+    try {
+      const token = await user.getIdToken()
+      
+      try {
+        // First try to add a vote
+        await voteForIncident(incidentId, token)
+        // If successful, update local vote count
+        setVotesData(prev => ({
+          ...prev,
+          [incidentId]: (prev[incidentId] || 0) + 1
+        }))
+        toast.success("Vote added successfully")
+      } catch (voteError: any) {
+        console.log("Vote Error:", voteError); // Debug log to see error structure
+        
+        // Check for 409 error in multiple ways
+        const is409Error = 
+          voteError.status === 409 || 
+          voteError.message?.includes("409") ||
+          voteError.message?.includes("already voted") ||
+          voteError.message?.toLowerCase().includes("conflict");
+        
+        if (is409Error) {
+          // Show beautiful toast confirmation for removing vote
+          toast.custom((toastId) => (
+            <div className="bg-gradient-to-r from-slate-800 to-slate-900 border border-slate-600 rounded-xl p-4 shadow-2xl backdrop-blur-xl max-w-md">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+                  <h3 className="text-white font-semibold text-sm">Vote Already Cast</h3>
+                </div>
+                <p className="text-slate-300 text-xs leading-relaxed">
+                  You have already voted for this incident. Would you like to remove your vote?
+                </p>
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={async () => {
+                      toast.dismiss(toastId);
+                      try {
+                        await removeVoteForIncident(incidentId, token);
+                        setVotesData(prev => ({
+                          ...prev,
+                          [incidentId]: Math.max(0, (prev[incidentId] || 0) - 1)
+                        }));
+                        toast.success("Vote removed successfully");
+                      } catch (removeError) {
+                        console.error("Error removing vote:", removeError);
+                        toast.error("Failed to remove vote");
+                      }
+                    }}
+                    className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs font-medium rounded-lg transition-colors duration-200"
+                  >
+                    Remove Vote
+                  </button>
+                  <button
+                    onClick={() => {
+                      toast.dismiss(toastId);
+                      toast.info("Vote action cancelled");
+                    }}
+                    className="px-3 py-1.5 bg-slate-600 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-colors duration-200"
+                  >
+                    Keep Vote
+                  </button>
+                </div>
+              </div>
+            </div>
+          ), {
+            duration: 10000, // 10 seconds to make decision
+            position: 'top-center',
+          });
+        } else {
+          // Handle other vote errors
+          console.error("Error voting:", voteError)
+          toast.error("Failed to add vote")
+        }
+      }
+    } catch (error) {
+      console.error("Error in voting process:", error)
+      toast.error("Failed to process vote")
+    } finally {
+      setVotingLoading(prev => ({ ...prev, [incidentId]: false }))
+    }
+  }
 
   // Handle loading sequence with improved timing
   useEffect(() => {
@@ -144,6 +248,21 @@ const getEtaText = (data: SummarizedDataItem) => {
       setHideLiveData(true)
     }
   }, [isLoading, setHideLiveData])
+
+  // Initialize vote counts from data
+  useEffect(() => {
+    if (summarizedData && summarizedData.length > 0) {
+      // Initialize voting data with existing votes from data
+      const initialVotesData: {[key: string]: number} = {}
+      
+      summarizedData.forEach((item, index) => {
+        const incidentId = item.id || `incident_${index}`
+        initialVotesData[incidentId] = item.votes || 0 // Use existing votes from data or default to 0
+      })
+      
+      setVotesData(initialVotesData)
+    }
+  }, [summarizedData])
 
   // Loading State
   if (isLoading) {
@@ -290,6 +409,35 @@ const getEtaText = (data: SummarizedDataItem) => {
                         <Clock className="w-4 h-4 flex-shrink-0" />
                         <span className="text-xs font-medium">
                          {getEtaText(data)}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Voting Section */}
+                    {user && (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleVote(data.id || `incident_${index}`)}
+                          disabled={votingLoading[data.id || `incident_${index}`]}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
+                            votingLoading[data.id || `incident_${index}`]
+                              ? 'bg-slate-600 text-slate-400 cursor-not-allowed'
+                              : 'bg-blue-500 hover:bg-blue-600 text-white cursor-pointer'
+                          }`}
+                        >
+                          {votingLoading[data.id || `incident_${index}`] ? 'Processing...' : 'Vote'}
+                        </button>
+                        <span className="text-xs font-medium text-slate-400">
+                          {votesData[data.id || `incident_${index}`] || 0} votes
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Show vote count for non-logged users */}
+                    {!user && (
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <span className="text-xs font-medium">
+                          {votesData[data.id || `incident_${index}`] || 0} votes
                         </span>
                       </div>
                     )}

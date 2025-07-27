@@ -508,5 +508,92 @@ export async function fetchSentimentData(
   }
 }
 
+// Voting API Functions
+export async function voteForIncident(incidentId: string, token: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/vote`, {
+      method: "POST",
+      headers: createAuthHeaders(token),
+      body: JSON.stringify({ incidentId })
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Vote Error Response:", errorText);
+      throw new Error(`Failed to vote: ${res.status} ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Vote error:", error);
+    throw error;
+  }
+}
+
+export async function removeVoteForIncident(incidentId: string, token: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/vote`, {
+      method: "DELETE",
+      headers: createAuthHeaders(token),
+      body: JSON.stringify({ incidentId })
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Remove vote Error Response:", errorText);
+      throw new Error(`Failed to remove vote: ${res.status} ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Remove vote error:", error);
+    throw error;
+  }
+}
+
+export async function checkUserVoteStatus(incidentId: string, token: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/vote/status/${incidentId}`, {
+      method: "GET",
+      headers: createAuthHeaders(token)
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Check vote status Error Response:", errorText);
+      throw new Error(`Failed to check vote status: ${res.status} ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Check vote status error:", error);
+    throw error;
+  }
+}
+
+export async function getIncidentVotes(incidentId: string, token: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/vote/incident/${incidentId}`, {
+      method: "GET",
+      headers: createAuthHeaders(token)
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Get incident votes Error Response:", errorText);
+      throw new Error(`Failed to get incident votes: ${res.status} ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Get incident votes error:", error);
+    throw error;
+  }
+}
+
 
 
