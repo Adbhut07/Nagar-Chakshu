@@ -66,7 +66,7 @@ const SignIn: React.FC = () => {
             You are already signed in to NagarChakshu AI.
           </p>
           <button
-            onClick={() => router.push("/dashboard")}
+            onClick={() => router.push("/")}
             className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white text-black font-medium rounded-lg hover:bg-white/90 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
           >
             Access Dashboard

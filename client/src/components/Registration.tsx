@@ -132,7 +132,7 @@ const Registration: React.FC = () => {
 
     console.log('Starting registration with FCM token:', fcmToken ? 'Available' : 'Not available')
     await registerUser(additionalData)
-    router.push("/dashboard")
+    router.push("/")
   } catch (error: any) {
     console.error("Registration error:", error)
     setError(error.message || "Failed to complete registration")
